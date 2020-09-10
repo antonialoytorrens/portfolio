@@ -40,6 +40,7 @@ ALLOWED_HOSTS = ["*"]
 INSTALLED_APPS = [
     'main',
     'jazzmin',
+    'sorl.thumbnail',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

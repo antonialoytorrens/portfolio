@@ -1,5 +1,5 @@
-{% load static %} {% load i18n %}
 <!DOCTYPE html>
+{% load static %} {% load i18n %} {% load thumbnail %}
 <html lang="{{ LANGUAGE_CODE }}">
     <head>
         <meta charset="utf-8" />
@@ -22,7 +22,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
             <a class="navbar-brand js-scroll-trigger" href="#page-top">
                 <span class="d-block d-lg-none">Antoni Aloy Torrens</span>
-                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{% static 'assets/img/profile.jpg' %}" alt="" /></span>
+                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{% static 'assets/img/profile.jpg' %}" longdesc="Imagen de perfil de Antoni Aloy Torrens" alt="Imagen de perfil del autor" /></span>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -33,7 +33,7 @@
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">{% trans "Habilidades" %}</a></li>
                      <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">{% trans "Proyectos" %}</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#interests">{% trans "Aficiones" %}</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#awards">{% trans "Premios y Certificados" %}</a></li>
+                    {% comment %}<li class="nav-item"><a class="nav-link js-scroll-trigger" href="#awards">{% trans "Premios y Certificados" %}</a></li>{% endcomment %}
                 </ul>
             </div>
         </nav>
@@ -48,15 +48,15 @@
                     </h1>
                     <div class="subheading mb-5">
                         {% trans "Binissalem, Mallorca, España" %} · 
-                        <a class="btn-link text-lowercase" href="mailto:antoni.aloytorrens@gmail.com">antoni.aloytorrens@gmail.com</a>
+                        <a class="btn-link text-lowercase" href="mailto:antoni.aloytorrens@gmail.com" target="_blank">antoni.aloytorrens@gmail.com</a>
                     </div>
                     <p class="lead mb-5">{% trans "He cursado el Bachillerato de Ciencias Tecnológicas en el IES Binissalem, luego una Formación Profesional de Grado Superior de Desarrollo de Aplicaciones Web en el CIFP Pau Casesnoves de Inca y actualmente estoy estudiando la carrera de la Ingeniería Informática en la UOC." %}<br/>
                     {% trans "También he estudiado música (especialidad piano) a l'Escola Municipal de Música de Binissalem (EMMB) durante cuatro años (2007-2012) y al Conservatorio Municipal de Música Antoni Torrandell de Inca (2012-presente)." %}</p>
-                <span class="d-lg-none"><img width="100" height="200" class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{% static 'assets/img/profile.jpg' %}" alt="" /></span>
+                <span class="d-lg-none"><img width="100" height="200" class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{% static 'assets/img/profile.jpg' %}" longdesc="Imagen de perfil de Antoni Aloy Torrens" alt="Imagen de perfil del autor"  /></span>
                     <div class="social-icons">
-                        <a class="social-icon" href="https://www.linkedin.com/in/antoni-aloy-torrens-7283481b2/"><i class="fab fa-linkedin-in"></i></a>
-                        <a class="social-icon" href="https://github.com/antonialoytorrens"><i class="fab fa-github"></i></a>
-                        <a class="social-icon" href="https://gitlab.com/antoni.aloytorrens"><i class="fab fa-gitlab"></i></a>
+                        <a class="social-icon" href="https://www.linkedin.com/in/antoni-aloy-torrens-7283481b2/" target="_blank"><em class="fab fa-linkedin-in"></em></a>
+                        <a class="social-icon" href="https://github.com/antonialoytorrens" target="_blank"><em class="fab fa-github"></em></a>
+                        <a class="social-icon" href="https://gitlab.com/antoni.aloytorrens" target="_blank"><em class="fab fa-gitlab"></em></a>
                     </div>
                 </div>
             </section>
@@ -68,8 +68,8 @@
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">{% trans "Desarrollador Web Júnior" %}</h3>
-                            <div class="subheading mb-3"><a class="btn-link" href="https://apsl.net">APSL S.L.</a>, Advanced Programming Solutions</div>
-                            <p>{% trans "Trabajando en el desarrollo de tests de aceptación con la tecnología de "%}<a class="btn-link" href="https://robotframework.org/">Robot Framework</a>.</p>
+                            <div class="subheading mb-3"><a class="btn-link" href="https://apsl.net" target="_blank">APSL S.L.</a>, Advanced Programming Solutions</div>
+                            <p>{% trans "Desarrollo de tests de aceptación con la tecnología de "%}<a class="btn-link" href="https://robotframework.org/" target="_blank">Robot Framework</a>.</p>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary">{% trans "Junio 2019 - Julio 2019" %}</span></div>
                     </div>
@@ -82,21 +82,27 @@
                     <h2 class="mb-5">{% trans "Educación" %}</h2>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
-                            <h3 class="mb-0"><a class="btn-link" href="https://paucasesnovescifp.cat/">CIFP Pau Casesnoves</a></h3>
+                            <h3 class="mb-0"><a class="btn-link" href="https://paucasesnovescifp.cat/" target="_blank">CIFP Pau Casesnoves</a></h3>
                             <div class="subheading mb-3">{% trans "Ciclo Formativo de Grado Superior" %}</div>
                             <div>{% trans "Desarrollo de Aplicaciones Web" %}</div>
                             <p>{% trans "Media" %}: 7.5/10</p>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary">{% trans "Septiembre 2018 - Junio 2020" %}</span></div>
                     </div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between">
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                         <div class="flex-grow-1">
-                            <h3 class="mb-0"><a class="btn-link" href="http://emmat.incaciutat.com/">{% trans "Conservatorio Municipal de Música Antoni Torrandell" %}</a></h3>
+                            <h3 class="mb-0"><a class="btn-link" href="http://emmat.incaciutat.com/" target="_blank">{% trans "Conservatorio Municipal de Música Antoni Torrandell" %}</a></h3>
                             <div class="subheading mb-3">{% trans "Grado Medio" %}</div>
                             <div>{% trans "Especialidad Piano" %}</div>
                             <!--<p>GPA: 3.56</p>-->
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary">{% trans "Septiembre 2012 - Presente" %}</span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-0"><a class="btn-link" href="https://lpi.org/v/LPI000456258/gjlxpst22w" target="_blank">{% trans "Certificación de Linux Essentials" %}</a></h3>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary">{% trans "Septiembre 2019 - Junio 2020" %}</span></div>
                     </div>
                 </div>
             </section>
@@ -107,61 +113,61 @@
                     <h2 class="mb-5">{% trans "Habilidades" %}</h2>
                     <div class="subheading mb-3">{% trans "Lenguajes de programación" %}</div>
                     <ul class="list-inline dev-icons">
-                        <li class="list-inline-item"><img src="{% static 'assets/img/html5.svg' %}"/></li>
-                        <li class="list-inline-item"><img src="{% static 'assets/img/css.svg' %}"/></li>
-                        <li class="list-inline-item"><img src="{% static 'assets/img/javascript.svg' %}"/></li>
-                        <li class="list-inline-item"><img src="{% static 'assets/img/git.svg' %}"/></li>
-                        <li class="list-inline-item"><img src="{% static 'assets/img/java.svg' %}"/></li>
-                        <li class="list-inline-item"><img src="{% static 'assets/img/python.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="HTML5" longdesc="HTML5 Logo" data-toggle="tooltip" data-html="true" title="<b>HTML5</b>" src="{% static 'assets/img/html5.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="CSS3" longdesc="CSS3 Logo" data-toggle="tooltip" data-html="true" title="<b>CSS3</b>" src="{% static 'assets/img/css.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="JavaScript" longdesc="JavaScript Logo" data-toggle="tooltip" data-html="true" title="<b>JavaScript</b>" src="{% static 'assets/img/javascript.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="Git" longdesc="Git Logo" data-toggle="tooltip" data-html="true" title="<b>Git</b>" src="{% static 'assets/img/git.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="Java" longdesc="Java Logo" data-toggle="tooltip" data-html="true" title="<b>Java</b>" src="{% static 'assets/img/java.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="Python" longdesc="Python Logo" data-toggle="tooltip" data-html="true" title="<b>Python</b>" src="{% static 'assets/img/python.svg' %}"/></li>
                     </ul>
-                    <div class="subheading mb-3">{% trans "Lenguajes de Datos" %}</div>
+                    <div class="subheading mb-3">{% trans "Bases de Datos" %}</div>
                     <ul class="list-inline dev-icons">
-                        <li class="list-inline-item"><img src="{% static 'assets/img/docker.svg' %}"/></li>
-                        <li class="list-inline-item"><img src="{% static 'assets/img/mysql.svg' %}"/></li>
-                        <li class="list-inline-item"><img src="{% static 'assets/img/postgresql.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="MySQL" longdesc="MySQL Logo" data-toggle="tooltip" data-html="true" title="<b>MySQL</b>" src="{% static 'assets/img/mysql.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="PostgreSQL" longdesc="PostgreSQL Logo" data-toggle="tooltip" data-html="true" title="<b>PostgreSQL</b>" src="{% static 'assets/img/postgresql.svg' %}"/></li>
                     </ul>
                     <div class="subheading mb-3">{% trans "Librerías y frameworks" %}</div>
                     <ul class="list-inline dev-icons">
-                    <li class="list-inline-item"><img src="{% static 'assets/img/jquery.svg' %}"/></li>
-                        <li class="list-inline-item"><img src="{% static 'assets/img/django.svg' %}"/></li>
-                        <li class="list-inline-item"><img src="{% static 'assets/img/qt.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="Bootstrap" longdesc="Bootstrap Logo" data-toggle="tooltip" data-html="true" title="<b>Bootstrap</b>" src="{% static 'assets/img/bootstrap.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="JQuery" longdesc="JQuery Logo" data-toggle="tooltip" data-html="true" title="<b>JQuery</b>" src="{% static 'assets/img/jquery.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="Django" longdesc="Django Logo" data-toggle="tooltip" data-html="true" title="<b>Django</b>" src="{% static 'assets/img/django.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="Qt" longdesc="Qt Logo" data-toggle="tooltip" data-html="true" title="<b>Qt</b>" src="{% static 'assets/img/qt.svg' %}"/></li>
                     </ul>
-                    <div class="subheading mb-3">{% trans "Sistemas Operativos" %}</div>
+                    <div class="subheading mb-3">{% trans "Sistemas" %}</div>
                     <ul class="list-inline dev-icons">
-                        <li class="list-inline-item"><img src="{% static 'assets/img/linux.svg' %}"/></li>
-                        <li class="list-inline-item"><img src="{% static 'assets/img/ubuntu.svg' %}"/></li>
-                        <li class="list-inline-item"><img src="{% static 'assets/img/debian.svg' %}"/></li>
-                        <li class="list-inline-item"><img src="{% static 'assets/img/alpine.svg' %}"/></li>
-                        <li class="list-inline-item"><img src="{% static 'assets/img/postmarketos.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="Docker" longdesc="Docker Logo" data-toggle="tooltip" data-html="true" title="<b>Docker</b>" src="{% static 'assets/img/docker.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="Linux" longdesc="Linux Logo" data-toggle="tooltip" data-html="true" title="<b>Linux</b>" src="{% static 'assets/img/linux.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="Ubuntu" longdesc="Ubuntu Logo" data-toggle="tooltip" data-html="true" title="<b>Ubuntu</b>" src="{% static 'assets/img/ubuntu.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="Debian" longdesc="Debian Logo" data-toggle="tooltip" data-html="true" title="<b>Debian</b>" src="{% static 'assets/img/debian.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="PostmarketOS" longdesc="PostmarketOS Logo" data-toggle="tooltip" data-html="true" title="<b>PostmarketOS</b>" src="{% static 'assets/img/postmarketos.svg' %}"/></li>
                     </ul>
                     <div class="subheading mb-3">{% trans "Herramientas" %}</div>
                      <ul class="list-inline dev-icons">
-                        <li class="list-inline-item"><img src="{% static 'assets/img/code.svg' %}"/></li>
-                        <li class="list-inline-item"><img src="{% static 'assets/img/netbeans.svg' %}"/></li>
-                        <li class="list-inline-item"><img src="{% static 'assets/img/pycharm.svg' %}"/></li>
-                        <li class="list-inline-item"><img src="{% static 'assets/img/glade.svg' %}"/></li>
-                        <li class="list-inline-item"><img src="{% static 'assets/img/bash.svg' %}"/></li>
-                        <li class="list-inline-item"><img src="{% static 'assets/img/gimp.svg' %}"/></li>
-                        <li class="list-inline-item"><img src="{% static 'assets/img/openshot.svg' %}"/></li>
-                        <li class="list-inline-item"><img src="{% static 'assets/img/audacity.svg' %}"/></li>
-                        <li class="list-inline-item"><img src="{% static 'assets/img/libreoffice.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="Visual Studio Code" longdesc="Visual Studio Code Logo" data-toggle="tooltip" data-html="true" title="<b>Visual Studio Code</b>" src="{% static 'assets/img/code.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="NetBeans" longdesc="NetBeans Logo" data-toggle="tooltip" data-html="true" title="<b>NetBeans</b>" src="{% static 'assets/img/netbeans.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="PyCharm" longdesc="PyCharm Logo" data-toggle="tooltip" data-html="true" title="<b>PyCharm</b>" src="{% static 'assets/img/pycharm.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="Glade" longdesc="Glade Logo" data-toggle="tooltip" data-html="true" title="<b>Glade</b>" src="{% static 'assets/img/glade.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="Bash" longdesc="Bash Logo" data-toggle="tooltip" data-html="true" title="<b>Bash</b>" src="{% static 'assets/img/bash.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="GIMP" longdesc="GIMP Logo" data-toggle="tooltip" data-html="true" title="<b>GIMP</b>" src="{% static 'assets/img/gimp.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="OpenShot Video Editor" longdesc="OpenShot Video Editor Logo" data-toggle="tooltip" data-html="true" title="<b>OpenShot Video Editor</b>" src="{% static 'assets/img/openshot.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="Audacity" longdesc="Audacity Logo" data-toggle="tooltip" data-html="true" title="<b>Audacity</b>" src="{% static 'assets/img/audacity.svg' %}"/></li>
+                        <li class="list-inline-item"><img alt="LibreOffice" longdesc="LibreOffice Logo" data-toggle="tooltip" data-html="true" title="<b>LibreOffice</b>" src="{% static 'assets/img/libreoffice.svg' %}"/></li>
                     </ul>
                     <!--<div class="subheading mb-3">Workflow</div>
                     <ul class="fa-ul mb-0">
                         <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
+                            <span class="fa-li"><em class="fas fa-check"></em></span>
                             Mobile-First, Responsive Design
                         </li>
                         <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
+                            <span class="fa-li"><em class="fas fa-check"></em></span>
                             Cross Browser Testing & Debugging
                         </li>
                         <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
+                            <span class="fa-li"><em class="fas fa-check"></em></span>
                             Cross Functional Teams
                         </li>
                         <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
+                            <span class="fa-li"><em class="fas fa-check"></em></span>
                             Agile Development & Scrum
                         </li>
                     </ul>
@@ -172,18 +178,21 @@
             <section class="resume-section" id="projects">
                 <div class="resume-section-content">
                     <h2 class="mb-5">{% trans "Proyectos" %}</h2>
-                    <div class="row row-eq-height bg-white">
-                    {% for project in projects %}
-                        <div class="col-md-12">
-                            <div class="card mb-4 h-100 box-shadow">
-                                <!--<img class="card-img-top" src="{% static 'original-img/diseno.jpg' %}" style="height: 225px; width: 100%; display: block;">-->
+                    <div class="row">
+                        <div class="col-12">
+                        {% for project in projects %}
+                            {% thumbnail project.image "300x300" crop="center" as im %}
+                            <div class="card mb-4 box-shadow" style="width:300px">
+                                <img class="card-img-top" longdesc="{{ project.longdesc }}" alt="{{ project.alt }}" src="{{ im.url }}" style="display: block;">
+                            {% endthumbnail %}
                                 <div class="card-body">
-                                    <p class="lead font-weight-bold">{% trans "Diseño" %}</p>
-                                    <p class="lead regular text-justify">{% trans "Diseñamos su jardín de forma personal. En función del espacio disponible y analizando lo que usted desea, realizamos un diseño. Tras la elaboración de un presupuesto sin compromiso, realizamos el proyecto con nuestros recursos propios." %}</p>
+                                    <p class="lead font-weight-bold">{{ project.title }}</p>
+                                    <p class="lead regular text-justify">{{ project.subtitle }}</p>
+                                    <p><a class="btn-link" href="{{ project.web_link }}" target="_blank">{{ project.web_name }}</a></p>
                                 </div>
                             </div>
+                        {% endfor %}
                         </div>
-                    {% endfor %}
                     </div>
                 </div>
             </section>
@@ -198,21 +207,23 @@
             </section>
             <hr class="m-0" />
             <!-- Awards-->
+            {% comment %}
             <section class="resume-section" id="awards">
                 <div class="resume-section-content">
                     <h2 class="mb-5">{% trans "Premios y Certificados" %}</h2>
                     <ul class="fa-ul mb-0">
                         <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
+                            <span class="fa-li"><em class="fas fa-trophy text-warning"></em></span>
                             {% trans "Título de Grado Superior en Desarrollo de Aplicaciones Web" %}
                         </li>
                         <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
+                            <span class="fa-li"><em class="fas fa-trophy text-warning"></em></span>
                             {% trans "Certificación de Linux Essentials" %}
                         </li>
                     </ul>
                 </div>
             </section>
+            {% endcomment %}
         </div>
         <!-- Bootstrap 4.5.0 core JS-->
         <script src="{% static 'js/jquery.min.js' %}"></script>
@@ -225,5 +236,10 @@
         Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
         Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
         <script src="{% static 'js/scripts.js' %}"></script>
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+        </script>
     </body>
 </html>
