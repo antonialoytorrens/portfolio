@@ -80,7 +80,7 @@ dump.rdb
 
 # bittstop
 _docs_html/
-#media/
+media/cache/
 provisioner/site.retry
 
 # Virtualenv
