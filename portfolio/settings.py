@@ -39,8 +39,12 @@ ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     'main',
+    'cookielaw',
     'jazzmin',
     'sorl.thumbnail',
+    'django_extensions',
+    'debug_toolbar',
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -57,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 LANGUAGES = (
@@ -64,6 +69,9 @@ LANGUAGES = (
     ("es", "Español"),
     ("en", "English"),
 )
+MODELTRANSLATION_LANGUAGES = ("ca", "es", "en")
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'ca'
+MODELTRANSLATION_FALLBACK_LANGUAGES = ("en", "es")
 
 ROOT_URLCONF = 'portfolio.urls'
 
@@ -71,7 +79,6 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
-        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 "django.contrib.auth.context_processors.auth",
@@ -82,6 +89,10 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.tz",
                 "django.template.context_processors.request",
+            ],
+            "loaders": [
+                    "django.template.loaders.filesystem.Loader",
+                    "django.template.loaders.app_directories.Loader",
             ],
         },
     },

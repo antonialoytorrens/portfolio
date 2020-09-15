@@ -11,3 +11,4 @@ django-jazzmin==2.2.7
 sorl-thumbnail==12.6.3
 django-compressor==2.4
 django-cookie-law==2.0.3
+django-modeltranslation==0.15.2

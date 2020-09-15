@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-{% load static %} {% load i18n %} {% load thumbnail %}
+{% load static %} {% load cookielaw_tags %} {% load i18n %} {% load thumbnail %}
 <html lang="{{ LANGUAGE_CODE }}">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Resume - Start Bootstrap Theme</title>
+        <meta name="description" content="Web Curriculum Vitae" />
+        <meta name="author" content="Antoni Aloy Torrens" />
+        <title>Antoni Aloy Torrens</title>
         <link rel="icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}" />
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet" type="text/css" />
@@ -16,6 +16,12 @@
         <link href="{% static 'fontawesome-5.14.0/css/all.min.css' %}" rel="stylesheet" />
         <link href="{% static 'css/index.css' %}" rel="stylesheet" />
         <link href="{% static 'css/equal-height-columns.css' %}" rel="stylesheet" />
+        <!-- Selectpicker -->
+        <link href="{% static 'css/bootstrap-select.min.css' %}" rel="stylesheet" />
+        <!-- Cookielaw -->
+        <link href="{% static 'css/cookielaw.css' %}" rel="stylesheet" />
+        <!-- Flags CSS -->
+    <link href="{% static 'flag-icon-css-master/css/flag-icon.min.css' %}" rel="stylesheet">
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -31,9 +37,38 @@
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">{% trans "Experiencia" %}</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">{% trans "Educación" %}</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">{% trans "Habilidades" %}</a></li>
-                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">{% trans "Proyectos" %}</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">{% trans "Proyectos" %}</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#interests">{% trans "Aficiones" %}</a></li>
                     {% comment %}<li class="nav-item"><a class="nav-link js-scroll-trigger" href="#awards">{% trans "Premios y Certificados" %}</a></li>{% endcomment %}
+                    <li class="nav-item">
+                    <form id="formLang" action="{% url 'set_language' %}" method="post">
+                        {% csrf_token %}
+                        <select id="lang" name="language" class="selectpicker" data-width="fit" style="background: transparent;">
+                            {% get_current_language as LANGUAGE_CODE %} {% get_available_languages as LANGUAGES %}
+                            {% get_language_info_list for LANGUAGES as languages %}
+                            {% for language in languages %}
+                            {% if language.code == 'ca' %}
+                            <option
+                                data-content='<span id="ca" class="flag-icon flag-icon-es-ca flag-icon-squared"></span> {{ language.name_local|capfirst }}'
+                                value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                                {{ language.name_local|capfirst }}</option>
+                            {% endif %}
+                            {% if language.code == 'es' %}
+                            <option
+                                data-content='<span id="es" class="flag-icon flag-icon-es flag-icon-squared"></span> {{ language.name_local|capfirst }}'
+                                value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                                {{ language.name_local|capfirst }}</option>
+                            {% endif %}
+                            {% if language.code == 'en' %}
+                            <option
+                                data-content='<span id="ca" class="flag-icon flag-icon-us flag-icon-squared"></span> {{ language.name_local|capfirst }}'
+                                value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                                {{ language.name_local|capfirst }}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </form>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -50,10 +85,10 @@
                         {% trans "Binissalem, Mallorca, España" %} · 
                         <a class="btn-link text-lowercase" href="mailto:antoni.aloytorrens@gmail.com" target="_blank">antoni.aloytorrens@gmail.com</a>
                     </div>
-                    <p class="lead mb-5">{% trans "He cursado el Bachillerato de Ciencias Tecnológicas en el IES Binissalem, luego una Formación Profesional de Grado Superior de Desarrollo de Aplicaciones Web en el CIFP Pau Casesnoves de Inca y actualmente estoy estudiando la carrera de la Ingeniería Informática en la UOC." %}<br/>
+                    <p class="lead text-justify mb-5">{% trans "He cursado el Bachillerato de Ciencias Tecnológicas en el IES Binissalem, luego una Formación Profesional de Grado Superior de Desarrollo de Aplicaciones Web en el CIFP Pau Casesnoves de Inca y actualmente estoy estudiando la carrera de la Ingeniería Informática en la UOC." %}<br/>
                     {% trans "También he estudiado música (especialidad piano) a l'Escola Municipal de Música de Binissalem (EMMB) durante cuatro años (2007-2012) y al Conservatorio Municipal de Música Antoni Torrandell de Inca (2012-presente)." %}</p>
                     <div class="d-flex justify-content-center"><span class="d-lg-none"><img width="100" height="200" class="img-fluid img-profile mx-auto mb-5" src="{% static 'assets/img/profile.jpg' %}" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImagen+de+Perfil%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EEsta+es+la+imagen+de+perfil+de+Antoni+Aloy+Torrens%3C%2Fbody%3E%3C%2Fhtml%3E" alt="Imagen de perfil del autor"  /></span></div>
-                    <div class="social-icons">
+                    <div class="social-icons text-center">
                         <a class="social-icon" href="https://www.linkedin.com/in/antoni-aloy-torrens-7283481b2/" target="_blank"><em class="fab fa-linkedin-in"><p style="display: none;">LinkedIn</p></em></a>
                         <a class="social-icon" href="https://github.com/antonialoytorrens" target="_blank"><em class="fab fa-github"><p style="display: none;">GitHub</p></em></a>
                         <a class="social-icon" href="https://gitlab.com/antoni.aloytorrens" target="_blank"><em class="fab fa-gitlab"><p style="display: none;">GitLab</p></em></a>
@@ -66,7 +101,7 @@
                 <div class="resume-section-content">
                     <h2 class="mb-5">{% trans "Experiencia" %}</h2>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
+                        <div class="flex-grow-1 mr-5">
                             <h3 class="mb-0">{% trans "Desarrollador Web Júnior" %}</h3>
                             <div class="subheading mb-3"><a class="btn-link" href="https://apsl.net" target="_blank">APSL S.L.</a>, Advanced Programming Solutions</div>
                             <p>{% trans "Desarrollo de tests de aceptación con la tecnología de "%}<a class="btn-link" href="https://robotframework.org/" target="_blank">Robot Framework</a>.</p>
@@ -81,7 +116,7 @@
                 <div class="resume-section-content">
                     <h2 class="mb-5">{% trans "Educación" %}</h2>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
+                        <div class="flex-grow-1 mr-5">
                             <h3 class="mb-0"><a class="btn-link" href="https://paucasesnovescifp.cat/" target="_blank">CIFP Pau Casesnoves</a></h3>
                             <div class="subheading mb-3">{% trans "Ciclo Formativo de Grado Superior" %}</div>
                             <div>{% trans "Desarrollo de Aplicaciones Web" %}</div>
@@ -90,7 +125,7 @@
                         <div class="flex-shrink-0"><span class="text-primary">{% trans "Septiembre 2018 - Junio 2020" %}</span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
+                        <div class="flex-grow-1 mr-5">
                             <h3 class="mb-0"><a class="btn-link" href="http://emmat.incaciutat.com/" target="_blank">{% trans "Conservatorio Municipal de Música Antoni Torrandell" %}</a></h3>
                             <div class="subheading mb-3">{% trans "Grado Medio" %}</div>
                             <div>{% trans "Especialidad Piano" %}</div>
@@ -99,7 +134,7 @@
                         <div class="flex-shrink-0"><span class="text-primary">{% trans "Septiembre 2012 - Presente" %}</span></div>
                     </div>
                     <div class="d-flex flex-column flex-md-row justify-content-between">
-                        <div class="flex-grow-1">
+                        <div class="flex-grow-1 mr-5">
                             <h3 class="mb-0"><a class="btn-link" href="https://lpi.org/v/LPI000456258/gjlxpst22w" target="_blank">{% trans "Certificación de Linux Essentials" %}</a></h3>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary">{% trans "Septiembre 2019 - Junio 2020" %}</span></div>
@@ -175,12 +210,12 @@
             </section>
             <hr class="m-0" />
             <!-- Projects-->
-            <section class="resume-section max-width-none" id="projects">
+            <section class="resume-section" id="projects">
                 <div class="resume-section-content">
                     <h2 class="mb-5">{% trans "Proyectos" %}</h2>
                     <div class="row display-sm-grid row-eq-height justify-content-center">
                         {% for project in projects %}
-                        <div class="col-xxl-3 col-xsl-6 col-xl-4 col-mmd-12">
+                        <div class="col-xsl-6 col-xl-4 col-mmd-12">
                             {% thumbnail project.image "440x440" crop="center" as im %}
                             <div class="card mb-4 box-shadow w-100 h-100">
                                 <img class="card-img-top" longdesc="{{ project.longdesc }}" alt="{{ project.alt }}" src="{{ im.url }}" style="display: block;">
@@ -201,11 +236,15 @@
             <section class="resume-section" id="interests">
                 <div class="resume-section-content">
                     <h2 class="mb-5">{% trans "Aficiones" %}</h2>
-                    <p>{% lorem 240 w random %}</p>
-                    <p class="mb-0">{% lorem 240 w random %}</p>
+                    <p class="lead text-justify">Aparte de desarrollar páginas web, también me gusta mucho el mundo de la música, tocar el piano y hacer de intérprete en algunos conciertos.</p>
+                    <p class="lead mb-0 text-justify">También suelo ir de excursión o viajar para disfrutar del aire libre y conocer sitios nuevos.</p>
                 </div>
             </section>
             <hr class="m-0" />
+            <div class="disclaimer">
+<a href="http://validator.w3.org/check/referer"><img src="http://validator.w3.org/images/vxhtml10" alt="Valid XHTML 1.0!" height="31" width="88"></a><span class="dot">&nbsp;·</span>
+<a href="/WAI/WCAG1AAA-Conformance" title="Explanation of Level Triple-A Conformance"><img height="32" width="88" src="http://www.w3.org/WAI/wcag1AAA" alt="Level Triple-A conformance icon, W3C-WAI Web Content Accessibility Guidelines 1.0"></a> 
+</div>
             <!-- Awards-->
             {% comment %}
             <section class="resume-section" id="awards">
@@ -225,6 +264,11 @@
             </section>
             {% endcomment %}
         </div>
+
+Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+        Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+        {% cookielaw_banner %}
+
         <!-- Bootstrap 4.5.0 core JS-->
         <script src="{% static 'js/jquery.min.js' %}"></script>
         <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
@@ -232,13 +276,19 @@
         <script src="{% static 'js/jquery.easing.min.js' %}"></script>
         <!-- Font Awesome icons (free version)-->
         <script src="{% static 'fontawesome-5.14.0/js/all.min.js' %}"></script>
+        <!-- Cookielaw -->
+        <script src="{% static 'js/cookielaw.js' %}"></script>
+        <!-- Selectpicker -->
+        <!-- 1.13.14 compiled and minified JavaScript -->
+        <script src="{% static 'js/bootstrap-select.min.js' %}"></script>
         <!-- Core theme JS-->
-        Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
-        Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
         <script src="{% static 'js/scripts.js' %}"></script>
         <script>
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()
+                $("#lang").change(function() {
+                    $("#formLang").submit();
+                });   
             })
         </script>
     </body>

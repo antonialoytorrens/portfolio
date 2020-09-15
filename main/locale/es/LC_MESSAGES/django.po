@@ -1,0 +1,141 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-09-15 18:20+0200\n"
+"PO-Revision-Date: 2020-09-15 18:07+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.3\n"
+
+#: main/templates/html/index.html:30
+msgid "Sobre mí"
+msgstr "Sobre mí"
+
+#: main/templates/html/index.html:31 main/templates/html/index.html:68
+msgid "Experiencia"
+msgstr "Experiencia"
+
+#: main/templates/html/index.html:32 main/templates/html/index.html:83
+msgid "Educación"
+msgstr "Educación"
+
+#: main/templates/html/index.html:33 main/templates/html/index.html:114
+msgid "Habilidades"
+msgstr "Habilidades"
+
+#: main/templates/html/index.html:34 main/templates/html/index.html:181
+msgid "Proyectos"
+msgstr "Proyectos"
+
+#: main/templates/html/index.html:35 main/templates/html/index.html:204
+msgid "Aficiones"
+msgstr "Aficiones"
+
+#: main/templates/html/index.html:51
+msgid "Binissalem, Mallorca, España"
+msgstr "Binissalem, Mallorca, España"
+
+#: main/templates/html/index.html:54
+msgid ""
+"He cursado el Bachillerato de Ciencias Tecnológicas en el IES Binissalem, "
+"luego una Formación Profesional de Grado Superior de Desarrollo de "
+"Aplicaciones Web en el CIFP Pau Casesnoves de Inca y actualmente estoy "
+"estudiando la carrera de la Ingeniería Informática en la UOC."
+msgstr ""
+"He cursado el Bachillerato de Ciencias Tecnológicas en el IES Binissalem, "
+"luego una Formación Profesional de Grado Superior de Desarrollo de "
+"Aplicaciones Web en el CIFP Pau Casesnoves de Inca y actualmente estoy "
+"estudiando la carrera de la Ingeniería Informática en la UOC."
+
+#: main/templates/html/index.html:55
+msgid ""
+"También he estudiado música (especialidad piano) a l'Escola Municipal de "
+"Música de Binissalem (EMMB) durante cuatro años (2007-2012) y al "
+"Conservatorio Municipal de Música Antoni Torrandell de Inca (2012-presente)."
+msgstr ""
+"También he estudiado música (especialidad piano) a l'Escola Municipal de "
+"Música de Binissalem (EMMB) durante cuatro años (2007-2012) y al "
+"Conservatorio Municipal de Música Antoni Torrandell de Inca (2012-presente)."
+
+#: main/templates/html/index.html:71
+msgid "Desarrollador Web Júnior"
+msgstr "Desarrollador Web Júnior"
+
+#: main/templates/html/index.html:73
+msgid "Desarrollo de tests de aceptación con la tecnología de "
+msgstr "Desarrollo de tests de aceptación con la tecnología de "
+
+#: main/templates/html/index.html:75
+msgid "Junio 2019 - Julio 2019"
+msgstr "Junio 2019 - Julio 2019"
+
+#: main/templates/html/index.html:87
+msgid "Ciclo Formativo de Grado Superior"
+msgstr "Ciclo Formativo de Grado Superior"
+
+#: main/templates/html/index.html:88
+msgid "Desarrollo de Aplicaciones Web"
+msgstr "Desarrollo de Aplicaciones Web"
+
+#: main/templates/html/index.html:89
+msgid "Media"
+msgstr "Media"
+
+#: main/templates/html/index.html:91
+msgid "Septiembre 2018 - Junio 2020"
+msgstr "Septiembre 2018 - Junio 2020"
+
+#: main/templates/html/index.html:95
+msgid "Conservatorio Municipal de Música Antoni Torrandell"
+msgstr "Conservatorio Municipal de Música Antoni Torrandell"
+
+#: main/templates/html/index.html:96
+msgid "Grado Medio"
+msgstr "Grado Medio"
+
+#: main/templates/html/index.html:97
+msgid "Especialidad Piano"
+msgstr "Especialidad Piano"
+
+#: main/templates/html/index.html:100
+msgid "Septiembre 2012 - Presente"
+msgstr "Septiembre 2012 - Presente"
+
+#: main/templates/html/index.html:104
+msgid "Certificación de Linux Essentials"
+msgstr "Certificación de Linux Essentials"
+
+#: main/templates/html/index.html:106
+msgid "Septiembre 2019 - Junio 2020"
+msgstr "Septiembre 2019 - Junio 2020"
+
+#: main/templates/html/index.html:115
+msgid "Lenguajes de programación"
+msgstr "Lenguajes de programación"
+
+#: main/templates/html/index.html:124
+msgid "Bases de Datos"
+msgstr "Bases de Datos"
+
+#: main/templates/html/index.html:129
+msgid "Librerías y frameworks"
+msgstr "Librerías y frameworks"
+
+#: main/templates/html/index.html:136
+msgid "Sistemas"
+msgstr "Sistemas"
+
+#: main/templates/html/index.html:144
+msgid "Herramientas"
+msgstr "Herramientas"
