@@ -20,6 +20,7 @@ from django.views.generic import TemplateView
 from main import views
 from django.urls import include
 from django.conf.urls.static import static
+from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,10 +28,8 @@ urlpatterns = [
     path("", views.PortfolioList.as_view(template_name='html/index.html'), name="index")
 ]
 
-# DEBUG-TOOLBAR. Només es fa si està en DEBUG=True
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
-        path('__debug__/', include(debug_toolbar.urls)),
+    path('__debug__/', include(debug_toolbar.urls)),
     ] + urlpatterns
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

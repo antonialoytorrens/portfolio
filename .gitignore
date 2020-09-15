@@ -56,7 +56,6 @@ htmlcov/
 *.pot
 .staticfiles/
 .media/
-static/
 
 # Sphinx documentation
 docs/_build/

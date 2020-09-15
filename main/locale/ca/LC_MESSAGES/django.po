@@ -7,132 +7,168 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-15 18:10+0200\n"
-"PO-Revision-Date: 2020-09-15 18:24+0200\n"
+"POT-Creation-Date: 2020-09-16 00:06+0200\n"
+"PO-Revision-Date: 2020-09-16 00:10+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Last-Translator: \n"
-"Language-Team: \n"
 "X-Generator: Poedit 2.3\n"
 
-#: main/templates/html/index.html:30
+#: main/templates/base.html:45
 msgid "Sobre mí"
 msgstr "Sobre mi"
 
-#: main/templates/html/index.html:31
-msgid "Experiencia Profesional"
-msgstr "Experiència"
-
-#: main/templates/html/index.html:32 main/templates/html/index.html:83
-msgid "Educación"
-msgstr "Educació"
-
-#: main/templates/html/index.html:33 main/templates/html/index.html:114
-msgid "Habilidades"
-msgstr "Habilitats"
-
-#: main/templates/html/index.html:34 main/templates/html/index.html:181
-msgid "Proyectos"
-msgstr "Projectes"
-
-#: main/templates/html/index.html:35 main/templates/html/index.html:204
-msgid "Aficiones"
-msgstr "Aficions"
-
-#: main/templates/html/index.html:51
-msgid "Binissalem, Mallorca, España"
-msgstr "Binissalem, Mallorca, Espanya"
-
-#: main/templates/html/index.html:54
-msgid ""
-"He cursado el Bachillerato de Ciencias Tecnológicas en el IES Binissalem, "
-"luego una Formación Profesional de Grado Superior de Desarrollo de "
-"Aplicaciones Web en el CIFP Pau Casesnoves de Inca y actualmente estoy "
-"estudiando la carrera de la Ingeniería Informática en la UOC."
-msgstr ""
-
-#: main/templates/html/index.html:55
-msgid ""
-"También he estudiado música (especialidad piano) a l'Escola Municipal de "
-"Música de Binissalem (EMMB) durante cuatro años (2007-2012) y al "
-"Conservatorio Municipal de Música Antoni Torrandell de Inca (2012-presente)."
-msgstr ""
-
-#: main/templates/html/index.html:68
+#: main/templates/base.html:46 main/templates/base.html:112
 msgid "Experiencia"
 msgstr "Experiència"
 
-#: main/templates/html/index.html:71
+#: main/templates/base.html:47 main/templates/base.html:127
+msgid "Educación"
+msgstr "Educació"
+
+#: main/templates/base.html:48 main/templates/base.html:158
+msgid "Habilidades"
+msgstr "Habilitats"
+
+#: main/templates/base.html:49 main/templates/base.html:225
+msgid "Proyectos"
+msgstr "Projectes"
+
+#: main/templates/base.html:50 main/templates/base.html:248
+msgid "Aficiones"
+msgstr "Aficions"
+
+#: main/templates/base.html:56
+msgid "Elige idioma"
+msgstr "Tria idioma"
+
+#: main/templates/base.html:96
+msgid "Binissalem, Mallorca, España"
+msgstr "Binissalem, Mallorca, Espanya"
+
+#: main/templates/base.html:99
+msgid "Me dedico a la programación y al desarrollo de páginas web. "
+msgstr ""
+
+#: main/templates/base.html:115
 msgid "Desarrollador Web Júnior"
 msgstr "Desenvolupador Web Júnior"
 
-#: main/templates/html/index.html:73
+#: main/templates/base.html:117
 msgid "Desarrollo de tests de aceptación con la tecnología de "
 msgstr "Desenvolupament de tests d'acceptació amb la tecnologia de "
 
-#: main/templates/html/index.html:75
+#: main/templates/base.html:119
 msgid "Junio 2019 - Julio 2019"
 msgstr "Juny 2019 - Juliol 2019"
 
-#: main/templates/html/index.html:87
+#: main/templates/base.html:131
 msgid "Ciclo Formativo de Grado Superior"
 msgstr "Cicle Formatiu de Grau Superior"
 
-#: main/templates/html/index.html:88
+#: main/templates/base.html:132
 msgid "Desarrollo de Aplicaciones Web"
 msgstr "Desenvolupament d'Aplicacions Web"
 
-#: main/templates/html/index.html:89
+#: main/templates/base.html:133
 msgid "Media"
 msgstr "Mitjana"
 
-#: main/templates/html/index.html:91
+#: main/templates/base.html:135
 msgid "Septiembre 2018 - Junio 2020"
 msgstr "Setembre 2018 - Juny 2020"
 
-#: main/templates/html/index.html:95
+#: main/templates/base.html:139
 msgid "Conservatorio Municipal de Música Antoni Torrandell"
 msgstr "Conservatori Municipal de Música Antoni Torrandell"
 
-#: main/templates/html/index.html:96
+#: main/templates/base.html:140
 msgid "Grado Medio"
 msgstr "Grau Mitjà"
 
-#: main/templates/html/index.html:97
+#: main/templates/base.html:141
 msgid "Especialidad Piano"
 msgstr "Especialitat Piano"
 
-#: main/templates/html/index.html:100
+#: main/templates/base.html:144
 msgid "Septiembre 2012 - Presente"
 msgstr "Setembre 2012 - Present"
 
-#: main/templates/html/index.html:104
+#: main/templates/base.html:148
 msgid "Certificación de Linux Essentials"
 msgstr "Certificació de Linux Essentials"
 
-#: main/templates/html/index.html:106
+#: main/templates/base.html:150
 msgid "Septiembre 2019 - Junio 2020"
 msgstr "Setembre 2019 - Juny 2020"
 
-#: main/templates/html/index.html:115
+#: main/templates/base.html:159
 msgid "Lenguajes de programación"
 msgstr "Llenguatges de Programació"
 
-#: main/templates/html/index.html:124
+#: main/templates/base.html:168
 msgid "Bases de Datos"
 msgstr "Bases de Dades"
 
-#: main/templates/html/index.html:129
+#: main/templates/base.html:173
 msgid "Librerías y frameworks"
 msgstr "Llibreries i frameworks"
 
-#: main/templates/html/index.html:136
+#: main/templates/base.html:180
 msgid "Sistemas"
 msgstr "Sistemes"
 
-#: main/templates/html/index.html:144
+#: main/templates/base.html:188
 msgid "Herramientas"
 msgstr "Eines"
+
+#: main/templates/base.html:249
+msgid ""
+"Aparte de desarrollar páginas web, también me gusta mucho el mundo de la "
+"música, tocar el piano y hacer de intérprete en algunos conciertos."
+msgstr ""
+"A part de desenvolupar pàgines web, també m'agrada molt el món de la música, "
+"tocar el piano i fer d'intèrpret en alguns concerts."
+
+#: main/templates/base.html:250
+msgid ""
+"También suelo ir de excursión o viajar para disfrutar del aire libre y "
+"conocer sitios nuevos."
+msgstr ""
+"També acostumo a anar d'excursió o viatjar per gaudir de l'aire lliure i "
+"conèixer llocs nous."
+
+#: main/templates/base.html:266
+msgid "Iconos hechos por"
+msgstr "Icones fetes per"
+
+#: main/templates/base.html:266
+msgid "y"
+msgstr "i"
+
+#: main/templates/base.html:266
+msgid "desde"
+msgstr "des de"
+
+#: main/templates/cookielaw/banner.html:7
+msgid "AVISO DE COOKIES"
+msgstr "AVÍS DE COOKIES"
+
+#: main/templates/cookielaw/banner.html:8
+msgid ""
+"Se utilizan cookies propias y de terceros con la finalidad de ofrecer un "
+"mejor contenido para la web."
+msgstr ""
+"S'utilitzen galetes pròpies i de tercers amb la finalitat d'oferir un millor "
+"contingut per la web."
+
+#: main/templates/cookielaw/banner.html:10
+msgid "ESTOY DE ACUERDO"
+msgstr "ESTIC D'ACORD"
+
+#~ msgid "Experiencia Profesional"
+#~ msgstr "Experiència"
