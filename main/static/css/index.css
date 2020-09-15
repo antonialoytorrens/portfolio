@@ -3,7 +3,11 @@
 }
 
 .btn-link {
-    color: #0537FF !important;
+    color: #0537FF;
+}
+
+#sideNav {
+    background: #8A4228 !important;
 }
 
 
@@ -36,6 +40,22 @@
 
 
 /****************/
+
+
+/* Cookielaw */
+
+.cookieInfo {
+    background: white;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1030;
+    width: 100vw;
+    border-top: 0.1rem solid black;
+}
+
+
+/************/
 
 .list-inline-item img {
     width: 3rem;
