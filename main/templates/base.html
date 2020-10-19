@@ -9,8 +9,8 @@
         <title>Antoni Aloy Torrens</title>
         <link rel="icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}" />
         <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet" type="text/css" />
-        <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
+        <link href="{% static 'css/saira-extra-condensed-500-700.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'css/muli-400-400i-800-800i.css' %}" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
         <link href="{% static 'fontawesome-5.14.0/css/all.min.css' %}" rel="stylesheet" />
@@ -37,7 +37,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
             <a class="navbar-brand js-scroll-trigger" href="#page-top">
                 <span class="d-block d-lg-none">Antoni Aloy Torrens</span>
-                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{% static 'assets/img/profile.jpg' %}" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImagen+de+Perfil%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EEsta+es+la+imagen+de+perfil+de+Antoni+Aloy+Torrens%3C%2Fbody%3E%3C%2Fhtml%3E" alt="Imagen de perfil del autor" /></span>
+                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{% static 'assets/img/profile.webp' %}" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImagen+de+Perfil%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EEsta+es+la+imagen+de+perfil+de+Antoni+Aloy+Torrens%3C%2Fbody%3E%3C%2Fhtml%3E" alt="Imagen de perfil del autor" /></span>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -96,7 +96,7 @@
                         <a class="btn-link text-lowercase" href="mailto:antoni.aloytorrens@gmail.com" target="_blank">antoni.aloytorrens@gmail.com</a>
                     </div>
                     <p class="lead text-justify mb-5">{% trans "Me dedico a la programación y al desarrollo de páginas web. " %}</p>
-                    <div class="d-flex justify-content-center"><span class="d-lg-none"><img width="100" height="200" class="img-fluid img-profile mx-auto mb-5" src="{% static 'assets/img/profile.jpg' %}" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImagen+de+Perfil%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EEsta+es+la+imagen+de+perfil+de+Antoni+Aloy+Torrens%3C%2Fbody%3E%3C%2Fhtml%3E" alt="Imagen de perfil del autor"  /></span></div>
+                    <div class="d-flex justify-content-center"><span class="d-lg-none"><img width="100" height="200" class="img-fluid img-profile mx-auto mb-5" src="{% static 'assets/img/profile.webp' %}" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImagen+de+Perfil%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EEsta+es+la+imagen+de+perfil+de+Antoni+Aloy+Torrens%3C%2Fbody%3E%3C%2Fhtml%3E" alt="Imagen de perfil del autor"  /></span></div>
                     <div class="social-icons text-center">
                         <a class="social-icon" href="https://www.linkedin.com/in/antoni-aloy-torrens-7283481b2/" target="_blank"><em class="fab fa-linkedin-in"></em><span class="d-none">LinkedIn</span></a>
                         <a class="social-icon" href="https://github.com/antonialoytorrens" target="_blank"><em class="fab fa-github"></em><span class="d-none">GitHub</span></a>
@@ -256,7 +256,7 @@
                         <a target="_blank" href="http://www.w3.org/WAI/WCAG1A-Conformance"
                             title="Explanation of Level A Conformance">
                         <img height="32" width="88" 
-                                src="{% static 'assets/img/wcag1A.png' %}"
+                                src="{% static 'assets/img/wcag1A.webp' %}"
                                 alt="Level A conformance icon, 
                                 W3C-WAI Web Content Accessibility Guidelines 1.0"></a>
                     </div>
