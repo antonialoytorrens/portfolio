@@ -13,7 +13,8 @@
         <link href="{% static 'css/muli-400-400i-800-800i.css' %}" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
-        <link href="{% static 'fontawesome-5.14.0/css/all.min.css' %}" rel="stylesheet" />
+        <link href="{% static 'fontawesome-5.14.0/css/all.min.css' %}" data-auto-add-css="false" rel="stylesheet" />
+        <link href="{% static 'fontawesome-5.14.0/css/svg-with-js.css' %}" rel="stylesheet" />
         <link href="{% static 'css/index.css' %}" rel="stylesheet" />
         <link href="{% static 'css/equal-height-columns.css' %}" rel="stylesheet" />
         <!-- Selectpicker -->
@@ -282,7 +283,7 @@
             </section>
             {% endcomment %}
         </div>
-        {% cookielaw_banner %}
+        {% comment %}{% cookielaw_banner %}{% endcomment %}
 
         <!-- Bootstrap 4.5.0 core JS-->
         <script src="{% static 'js/jquery.min.js' %}"></script>
