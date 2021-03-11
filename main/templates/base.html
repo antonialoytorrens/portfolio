@@ -48,7 +48,7 @@
                     <li class="nav-item">
                     <form id="formLang" action="{% url 'set_language' %}" method="post">
                         {% csrf_token %}
-                        <label for="lang" style="display:none;">{% trans "Elige idioma" %}</label>
+                        <label id="formLangLabel" class="d-none" for="lang">{% trans "Elige idioma" %}</label>
                         <select id="lang" name="language" class="selectpicker" data-width="fit" style="background: transparent;">
                             {% get_current_language as LANGUAGE_CODE %} {% get_available_languages as LANGUAGES %}
                             {% get_language_info_list for LANGUAGES as languages %}
