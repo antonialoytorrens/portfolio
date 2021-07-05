@@ -4,7 +4,7 @@ pytz==2019.3
 whitenoise==5.0.1
 Pillow==8.2.0
 pyautogui==0.9.50
-django-debug-toolbar==2.2
+django-debug-toolbar==2.2.1
 python-dotenv==0.13.0
 django-extensions==2.2.9
 django-jazzmin==2.2.7
