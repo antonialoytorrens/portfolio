@@ -4,7 +4,7 @@ from .models import Project
 # Register your models here.
 
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('title_ca', 'title_es', 'title_en', 'created', 'modified')
+    list_display = ('title_ca', 'title_es', 'title_en', 'created', 'modified', 'visible')
 
     exclude = ('title', 'subtitle', 'alt', 'longdesc', 'web_name')
 

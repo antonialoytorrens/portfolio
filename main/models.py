@@ -11,3 +11,4 @@ class Project(models.Model):
     web_name = models.CharField(max_length=500, blank=True, null=True)
     created = models.DateTimeField()
     modified = models.DateTimeField(auto_now=True)
+    visible = models.BooleanField(default=False)

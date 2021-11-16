@@ -8,6 +8,6 @@ class PortfolioList(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        projects = Project.objects.all()
+        projects = Project.objects.all().filter(visible=True)
         context["projects"] = projects
         return context
