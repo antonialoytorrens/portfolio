@@ -2,6 +2,10 @@
     margin-right: 0;
 }
 
+.navbar-dark .navbar-toggler-icon {
+    background-image: none;
+}
+
 .btn-link {
     color: #0537FF;
 }
