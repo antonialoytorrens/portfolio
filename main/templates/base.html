@@ -50,7 +50,7 @@
                     <form id="formLang" action="{% url 'set_language' %}" method="post">
                         {% csrf_token %}
                         <label id="formLangLabel" class="d-none" for="lang">{% trans "Elige idioma" %}</label>
-                        <select id="lang" name="language" class="selectpicker" data-width="fit" style="background: transparent;">
+                        <select id="lang" name="language" class="selectpicker" data-width="fit">
                             {% get_current_language as LANGUAGE_CODE %} {% get_available_languages as LANGUAGES %}
                             {% get_language_info_list for LANGUAGES as languages %}
                             {% for language in languages %}
@@ -223,7 +223,7 @@
                         <div class="col-xsl-6 col-xl-4 col-mmd-12">
                             {% thumbnail project.image "440x440" crop="center" as im %}
                             <div class="card mb-4 box-shadow w-100 h-100">
-                                <img class="card-img-top" longdesc="{{ project.longdesc }}" alt="{{ project.alt }}" src="{{ im.url }}" style="display: block;">
+                                <img class="card-img-top" longdesc="{{ project.longdesc }}" alt="{{ project.alt }}" src="{{ im.url }}">
                             {% endthumbnail %}
                                 <div class="card-body">
                                     <p class="lead font-weight-bold">{{ project.title }}</p>

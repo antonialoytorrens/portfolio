@@ -6,12 +6,20 @@
     color: #0537FF;
 }
 
+.card-img-top {
+    display: block;
+}
+
 #sideNav {
     background: #8A4228 !important;
 }
 
 .text-primary {
     color: #894429 !important;
+}
+
+#lang {
+    background: transparent;
 }
 
 
