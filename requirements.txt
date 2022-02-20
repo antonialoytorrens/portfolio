@@ -2,7 +2,7 @@ Django==3.1.13
 gunicorn==20.0.4
 pytz==2019.3
 whitenoise==5.0.1
-Pillow==8.3.2
+Pillow==9.0.0
 pyautogui==0.9.50
 django-debug-toolbar==2.2.1
 python-dotenv==0.13.0
