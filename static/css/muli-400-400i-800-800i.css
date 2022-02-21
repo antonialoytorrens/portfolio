@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'Muli';
+  font-style: italic;
+  font-weight: 400;
+  src: url(fonts/Muli-Italic-400.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Muli';
+  font-style: italic;
+  font-weight: 800;
+  src: url(fonts/Muli-Italic-800.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Muli';
+  font-style: normal;
+  font-weight: 400;
+  src: url(fonts/Muli-Normal-400.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Muli';
+  font-style: normal;
+  font-weight: 800;
+  src: url(fonts/Muli-Normal-800.ttf) format('truetype');
+}

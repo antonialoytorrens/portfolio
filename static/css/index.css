@@ -1,0 +1,103 @@
+.navbar-brand {
+    margin-right: 0;
+}
+
+.navbar-dark .navbar-toggler-icon {
+    background-image: none;
+}
+
+.btn-link {
+    color: #0537FF;
+}
+
+.card-img-top {
+    display: block;
+}
+
+#sideNav {
+    background: #8A4228 !important;
+}
+
+.text-primary {
+    color: #894429 !important;
+}
+
+#lang {
+    background: transparent;
+}
+
+
+/* Selectpicker */
+
+.dropdown-item.active,
+.dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #007bff;
+}
+
+.dropdown.bootstrap-select.fit-width button {
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    background: none;
+}
+
+.dropdown.bootstrap-select.fit-width button:focus {
+    border: none;
+}
+
+@media(max-width: 991px) {
+    .dropdown.bootstrap-select.fit-width button {
+        margin-left: -0.75rem;
+        margin-right: 0.75rem;
+    }
+}
+
+
+/****************/
+
+
+/* Cookielaw */
+
+.cookieInfo {
+    background: white;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1030;
+    width: 100vw;
+    border-top: 0.1rem solid black;
+}
+
+
+/************/
+
+.list-inline-item img {
+    width: 3rem;
+    height: 3rem;
+}
+
+.max-width-none {
+    max-width: none !important;
+}
+
+
+/* Projects */
+
+@media(max-width: 1300px) {
+    .col-xsl-6 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media(max-width: 650px) {
+    .col-mmd-12 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .display-sm-grid {
+        display: grid;
+    }
+}
