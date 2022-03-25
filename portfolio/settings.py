@@ -27,10 +27,11 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'd-(p@q&%tt2%2mu6$k=ve0j^&(!rdtz&!5z875acq#g9b=w!ws'
+# What I did have before is not the secret_key anyways, it was a dummy one
+SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = str(os.getenv('DEBUG'))
 
 
 ALLOWED_HOSTS = ["*"]
@@ -150,6 +151,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Secure cookies by default
+CSRF_COOKIE_SECURE = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/

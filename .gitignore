@@ -57,6 +57,9 @@ htmlcov/
 .staticfiles/
 .media/
 
+# Django-compressor caching
+static/CACHE/*
+
 # Sphinx documentation
 docs/_build/
 
@@ -80,7 +83,7 @@ dump.rdb
 
 # bittstop
 _docs_html/
-media/cache/
+media/cache/*
 provisioner/site.retry
 
 # Virtualenv
