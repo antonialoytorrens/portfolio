@@ -33,6 +33,10 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = str(os.getenv('DEBUG'))
 
+# Uncomment this if you want to check if the content is properly compressed
+# when running on localhost
+#COMPRESS_ENABLED = True 
+
 
 ALLOWED_HOSTS = ["*"]
 
@@ -53,6 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'compressor',
 ]
 
 INTERNAL_IPS = [
@@ -137,6 +142,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'compressor.finders.CompressorFinder',
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
