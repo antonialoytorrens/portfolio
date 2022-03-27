@@ -35,7 +35,7 @@ DEBUG = str(os.getenv('DEBUG'))
 
 # Uncomment this if you want to check if the content is properly compressed
 # when running on localhost
-#COMPRESS_ENABLED = True 
+#COMPRESS_ENABLED = True
 
 
 ALLOWED_HOSTS = ["*"]
@@ -91,6 +91,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
+	'APP_DIRS' : True,
         'OPTIONS': {
             'context_processors': [
                 "django.contrib.auth.context_processors.auth",
@@ -101,10 +102,6 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.tz",
                 "django.template.context_processors.request",
-            ],
-            "loaders": [
-                    "django.template.loaders.filesystem.Loader",
-                    "django.template.loaders.app_directories.Loader",
             ],
         },
     },
@@ -161,6 +158,8 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # Secure cookies by default
 CSRF_COOKIE_SECURE = True
