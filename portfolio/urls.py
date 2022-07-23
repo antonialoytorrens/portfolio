@@ -1,7 +1,7 @@
 """portfolio URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.1/topics/http/urls/
+    https://docs.djangoproject.com/en/4.0/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -15,21 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.conf import settings
-from django.views.generic import TemplateView
-from main import views
-from django.urls import include
-from django.conf.urls.static import static
-from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('i18n/', include('django.conf.urls.i18n')),
-    path("", views.PortfolioList.as_view(template_name='html/index.html'), name="index")
 ]
-
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns = [
-    path('__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns
