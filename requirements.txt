@@ -1,2 +1,5 @@
 Django~=4.0
-pip-upgrade~=1.4
+django-debug-toolbar~=3.5
+django-compressor~=4.0
+python-dotenv~=0.21
+pip-upgrader~=1.4

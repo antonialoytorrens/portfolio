@@ -14,7 +14,31 @@
 
 body {
     background: #1d1e1f;
-    color: #ffedde;
+    color: #ffedde
+}
+
+.title {
+    font-weight: bold
+}
+
+.font-bold {
+    font-weight: bold
+}
+
+.font-normal {
+    font-weight: normal
+}
+
+.text-center {
+    text-align: center
+}
+
+.date-experience {
+    /* WORKAROUND: HACK FOR NETSURF BROWSER */
+    margin-right: 20px;
+    /* END HACK */
+    /************/
+    margin-right: 2rem;
 }
 
 .wrapper {
@@ -25,15 +49,20 @@ body {
 }
 
 .wrapper .container {
-    /* FIXME: HACK FOR NETSURF #1. See also bottom of this file */
+    padding-top: 7.5rem;
+    padding-bottom: 7.5rem;
+    /***************/
+    /* FIXME: HACK FOR NETSURF BROWSER #1. See also bottom of this file */
     margin-bottom: 10px;
     /* END HACK #1 */
+    /***************/
     max-width: 80rem
 }
 
 .header {
-    background-color: #1d1e1f;
-    padding-top: 1rem
+    background-color: #2d2e2f;
+    padding-top: 1rem;
+    margin-bottom: 2.5rem
 }
 
 @media(min-width:40rem) {
@@ -130,13 +159,13 @@ body {
 }
 
 .hr-navigation {
-    border-top: 1px solid #4d4e4f;
+    border-top: 1px solid #5d5e5f;
     margin: 0;
     padding: 0;
 }
 
 .navigation {
-    background: #1d1e1f;
+    background: #2d2e2f;
     display: block;
     width: 100%;
 }
@@ -148,8 +177,8 @@ body {
 
 .navigation .navigation-list {
     list-style: none;
-    margin-bottom: 0;
-    margin-right: 5rem
+    margin-bottom: 0
+    /*margin-right: 5rem*/
 }
 
 @media(min-width:80rem) {
@@ -430,18 +459,6 @@ body {
     width: 1.3rem
 }
 
-.showcase-hero {
-    max-width: 100%;
-    padding-bottom: 7.5rem;
-    padding-top: 7.5rem;
-    width: 100%
-}
-
-.showcase-hero,
-.showcase-share {
-    text-align: center
-}
-
 .image--showcase {
     border: .1rem solid #f4f5f6
 }
@@ -479,59 +496,7 @@ body {
     margin: 0
 }
 
-.carbonads {
-    background-color: #f4f5f6;
-    border-radius: 4px;
-    color: #606c76;
-    line-height: 1.6;
-    margin: 0 auto;
-    margin-bottom: 2rem;
-    max-width: 33rem;
-    padding: 1.5rem
-}
-
-.carbonads,
-.carbonads span {
-    display: block;
-    overflow: hidden
-}
-
-.carbonads .carbon-poweredby,
-.carbonads .carbon-text {
-    color: #606c76;
-    display: block;
-    float: right;
-    font-size: 1.2rem;
-    max-width: 44%;
-    text-align: left;
-    width: 44%
-}
-
-@media(min-width:40rem) {
-    .carbonads .carbon-poweredby,
-    .carbonads .carbon-text {
-        max-width: 52%;
-        width: 52%
-    }
-}
-
-.carbonads .carbon-poweredby {
-    margin: 0;
-    margin-top: -2.5rem
-}
-
-.carbonads .carbon-img {
-    float: left;
-    margin-right: 1rem
-}
-
-#home .carbonads {
-    background-color: #fff;
-    margin-bottom: 0
-}
-
 .example {
-    margin-bottom: 4rem;
     margin-top: 4rem;
     position: relative
 }
@@ -613,6 +578,10 @@ body {
     margin-bottom: 0
 }
 
+.example .column {
+    margin-bottom: 2.5rem
+}
+
 
 /* MEDIA QUERIES FOR MOBILE */
 
@@ -628,7 +597,7 @@ body {
         position: fixed;
         z-index: 2
     }
-    /* FIXME: HACK FOR NETSURF #1 */
+    /* FIXME: HACK FOR NETSURF BROWSER #1 */
     .wrapper .container {
         margin-bottom: 0px
     }
