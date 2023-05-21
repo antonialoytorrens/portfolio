@@ -1,40 +1,35 @@
-{{ define "main" }}
+<!DOCTYPE html>
+<html lang="{{ .Lang }}">
+	
+	{{ partial "head.html" . }}
 
-<div id="page-404">
-  <div class="text">
-      {{ with .Site.Params.title404 }}
-          <h1>{{ . }}</h1>
-      {{ else }}
-          <h1>{{ i18n "404title" }}</h1>
-      {{ end }}
+	<body>
+		{{ partial "navbar" . }}
+		
+		<div class="layout-container">
 
-      {{ with .Site.Params.subtitle404 }}
-          <div>{{ . }}</div>
-      {{ else }}
-          <div>{{ i18n "404subtitle" }}</div>
-      {{ end }}
-    </div>
+			<section class="blog-container">
 
-  {{ with .Site.Params.readMore }}
-      <h2 class="read-more">{{ . }}</h2> 
-  {{ else }}
-      <h2 class="read-more">{{ i18n "readMore" }}</h2> 
-  {{ end }}
+				<h4 class="post-title">¯\_ (ツ)_/¯ Page not found ¯\_ (ツ)_/¯</h4>
+				
+				<article>
+					<div class="centered">
+						<img src="{{ .Site.Params.errorPage }}" alt="site 404 image">
+					</div>
+					<div>
+						<p class="caption">Gopher by<a href="https://github.com/ashleymcnamara/gophers/blob/master/This_is_Fine_Gopher.png">Ashley McNamara</a></p>
+					</div>
+					<div class="page-separator"></div>
+					<p>Congratulations! You've reached the secret page 404. Once you've finished admiring <b>Gopher This Is Fine</b> you can continue browsing.</p>
+				</article>
 
-  
+			</section>
+				
+			<div class="page-separator centered"><hr></div>
+			
+			{{ partial "footer.html" . }}
+			
+		</div>
+	</body>
+</html>
 
-
-    {{ $pages := .Site.RegularPages }}
-    {{ $paginator := .Paginate ($pages) }}
-    {{ range $paginator.Pages }}
-        {{ $title := .Title }}
-        {{ $date := dateFormat "Jan 2, 2006" .Date }}
-        <section class="item">
-          <div>
-            <h1 class="title"><a href='{{ .RelPermalink }}'>{{ $title }}</a></h1>   
-            <div class="date">{{ $date }}</div>
-          </div>
-        </section>
-    {{ end }}
-</div>
-{{ end }}
