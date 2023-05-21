@@ -1,0 +1,41 @@
+body {
+    background-color: #fff;
+}
+
+
+/*
+* Index
+*/
+
+section#section {
+    padding: 0;
+}
+
+
+/*
+* Experience
+*/
+
+hr.nmpt {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+#list-page h1 {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    font-weight: bold;
+}
+
+#list-page h2.title.exp a {
+    color: rgb(52, 150, 232);
+}
+
+#list-page .title.exp {
+    width: 65%;
+    font-weight: bold;
+}
+
+#list-page .date.exp {
+    width: 35%;
+}

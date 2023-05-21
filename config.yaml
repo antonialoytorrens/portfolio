@@ -1,0 +1,144 @@
+baseURL: https://antonialoytorrens.com
+languageCode: en
+title: Antoni Aloy Torrens
+
+# Default content language, support en (English) / zh (Chinese) / nl (Dutch) / fr (French) / es (Spanish) / da (Danish), default 'en'
+defaultContentLanguage: en
+
+hasCJKLanguage: true
+permalinks:
+  posts: /posts/:title/
+
+paginate: 3
+
+# Hugo configure languages
+languages:
+  en:
+    languageName: "English"
+    weight: 1
+    contentDir: "content/en"
+    menu:
+      main:
+      - identifier: "about"
+        name: "About"
+        url: "/about/"
+        weight: -110
+      - identifier: "blog"
+        name: "Blog"
+        url: "/blog/"
+        weight: -100
+  ca:
+    languageName: "Catalan"
+    weight: 2
+    contentDir: "content/ca"
+  es:
+    languageName: "Spanish"
+    weight: 3
+    contentDir: "content/es"
+    menu:
+      main:
+      - identifier: "about"
+        name: "About"
+        url: "/about/"
+        weight: -110
+      - identifier: "blog"
+        name: "Blog"
+        url: "/blog/"
+        weight: -100
+
+# Hugo Configure Markup
+# More info: https://gohugo.io/getting-started/configuration-markup#
+markup:
+  highlight:
+    guessSyntax: true
+    style: emacs
+  tableOfContents:
+    endLevel: 3
+    ordered: false
+    startLevel: 2
+  # needed to render raw HTML (e.g. <sub>, <sup>, <kbd>, <mark>)
+  goldmark:
+    renderer:
+      unsafe: true
+
+# Social links in footer, support github,twitter,stackoverflow,facebook
+social:
+  github: https://github.com/antonialoytorrens
+  # twitter: your-github-link
+  # stackoverflow: your-github-link
+  # facebook: your-facebook-link
+
+# Privacy
+instagram:
+  disable: false
+  simple: true
+
+twitter:
+  disable: false
+  enableDNT: true
+  simple: true
+
+vimeo:
+  disable: false
+  enableDNT: true
+  simple: true
+
+youtube:
+  disable: false
+  privacyEnhanced: true
+
+# Site parameters
+params:
+  # Site Author
+  author: Antoni Aloy Torrens
+  # Author biography
+  bio: Programmer and Web Developer
+  # Site Description, used in HTML meat
+  description: Blog and Portfolio of Antoni Aloy Torrens
+
+
+  ###########################################
+  # Optional Configuration
+  ###########################################
+
+  # To enable RSS, you could set `enableRSS: true`, default is `true`
+  enableRSS: true
+  # To enable comments, you may need to set `disqusShortname`
+  # enableComments: true
+  # To enable comments, you may need to set `googleAnalytics`
+  # enableGoogleAnalytics: true
+  # To enable table of content, you could set `showToc: true`, default is `false`
+  showToc: false
+  # To hidden powerBy message in the page footer, you could set: `showPowerBy: false`, default is `true`
+  showPowerBy: true
+  # To enable math typesetting , you could set `math: true`, default is `false`
+  math: false
+  # To hidden post summary in home page, you could set `hiddenPostSummaryInHomePage: true`, default is `false`
+  hiddenPostSummaryInHomePage: false
+  # Website copy write, default: '© Copyright 2023 ❤️ {params.author}'
+  copyright: '' 
+
+  # Extra links in navigation
+  #links:
+  #  - name: Blog
+  #    path: /blog
+
+  #  - name: Experience
+  #    path: /experience
+
+  #  - name: Education
+  #    path: /education
+
+  #  - name: Projects
+  #    path: /projects
+
+  # You can put your custom css and js to `static` directory, or use remote css and js files which start with `http://` or `https://`
+  customCSS:
+    - css/custom.css
+    ## e.g.
+    # - css/custom.css # local css in `static/css/custom.css`
+    # - https://example.com/custom.css # remote css
+  customJS:
+    ## e.g.
+    # - js/custom.js # local js in `static/js/custom.js`
+    # - https://example.com/custom.js # remote js
