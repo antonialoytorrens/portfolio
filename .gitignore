@@ -1,2 +1,15 @@
-public/
-.hugo_build.lock
+# Hugo default output directory
+/public
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# MacOS
+.DS_Store
+
+# exampleSite
+exampleSite/themes
+exampleSite/public

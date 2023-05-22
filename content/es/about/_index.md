@@ -1,11 +1,28 @@
 +++
 title = "About"
-description = "A little bit about me"
+description = "Hugo, the world's fastest framework for building websites"
+date = "2019-02-28"
+aliases = ["about-us", "about-hugo", "contact"]
+author = "Hugo Authors"
+enableComments = false
 +++
-Currently in the world of agile product development in Fintech. Experience in Tech Leadership, Software Development, Project Management, Strategic Planning and IT Coaching in different industries: Transportation/Logistics/Storage, Finance/Banking/Fintech and Education.
 
-I consider myself a seasoned Tech Leader and Software Engineer hungry for challenges and willing to learn new things every day. I'm an enthusiast of best practices as a way of success. You can find me as [@charly3pins](https://twitter.com/charly3pins) on Twitter.
+Sobre mí.
 
-I really like to learn new things almost everyday so I'm always reading books, listening podcasts or watching videos about tech. Also I want to put in practice all those learnings so I like creating PoC or side projects to try new things or investigate topics that I'm interested in. You can check my OSS projects in my [Github](https://github.com/charly3pins).
+Written in Go, Hugo is an open source static site generator available under the [Apache Licence 2.0.](https://github.com/gohugoio/hugo/blob/master/LICENSE) Hugo supports TOML, YAML and JSON data file types, Markdown and HTML content files and uses shortcodes to add rich content. Other notable features are taxonomies, multilingual mode, image processing, custom output formats, HTML/CSS/JS minification and support for Sass SCSS workflows.
 
-As a strong defender of the [KISS principle](https://en.wikipedia.org/wiki/KISS_principle), when I ran into [Go](https://golang.org/) some years ago... it was love at first sight! All that simplicity that I have been always defending, it was made reallity in a programming language. Since then, a long journey started that still don't finished. I'm still learning with the new versions and tools that are popping out almost every day. It has some limitations as it's a "new" programming language, but it's super exciting for me to live this growing and being lucky to actively participate, not just being an expectator interested on this technology.
+Hugo makes use of a variety of open source projects including:
+
+* https://github.com/yuin/goldmark
+* https://github.com/alecthomas/chroma
+* https://github.com/muesli/smartcrop
+* https://github.com/spf13/cobra
+* https://github.com/spf13/viper
+
+Hugo is ideal for blogs, corporate websites, creative portfolios, online magazines, single page applications or even a website with thousands of pages.
+
+Hugo is for people who want to hand code their own website without worrying about setting up complicated runtimes, dependencies and databases.
+
+Websites built with Hugo are extremely fast, secure and can be deployed anywhere including, AWS, GitHub Pages, Heroku, Netlify and any other hosting provider.
+
+Learn more and contribute on [GitHub](https://github.com/gohugoio).

@@ -1,78 +1,45 @@
-<!DOCTYPE html>
-<html lang="{{ .Lang }}" data-theme="light">
-	
-	{{ partial "head.html" . }}
+{{ define "main" }}
 
-	<body>
-		{{ partial "navbar" . }}
-		
-		<div class="layout-container">
+<section id="single">
+    <h1 class="title">{{ .Title }}</h1>
 
-			<section class="blog-container">
-				
-				<h4 class="post-title">{{ .Title }}</h4>
-				<h2 class="post-description">{{ .Description }}</h2>
+    <div class="tip">
+        <time datetime="{{ .PublishDate }}">{{ i18n "publishDateFull" . }}</time>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          {{ i18n "wordCount" . }}
+        </span>
+        <span class="split">
+          ·
+        </span>
+        <span>
+          {{ i18n "minuteRead" . }}
+        </span>
+    </div>
 
-				<div class="post-metadata">
-					<div class="post-tags">
-						{{range .Params.tags}}
-						<a class="tag" href="{{ "tags/" | absURL }}{{ . | urlize }}/">#{{ . }}</a>
-						{{end}}
-					</div>
-					<span class="post-date">
-						{{ .Date.Format "02/01/2006" }} · {{ T "readingTime" .ReadingTime }}
-					</span>
-				</div>
+    
+    {{ if or .Site.Params.showToc .Params.showToc }}
+        {{ partial "toc.html" . }}
+    {{ end }}
 
-				{{ partial "social_share.html" . }}
 
-				<article>
-					{{ with .Params.image }}
-					<div class="centered">
-						<img src="{{ . | absURL }}" alt="cover image">
-					</div>
-					{{ end }}
-					{{ if .Params.caption }}
-					<div>
-						<p class="caption">{{ T "imageBy" }}<a href="{{.Params.caption}}">{{.Params.captionAuthor}}</a></p>
-					</div>
-					{{ end }}
-					<div class="page-separator"></div>
-					{{ .Content | safeHTML }}
-				</article>
+    <div class="content">
+      {{ .Content }}
+    </div>
 
-				{{ $related := .Site.RegularPages.Related . | first 3 }}
-				{{ with $related }}
-				<div class="page-separator"><hr></div>
-				{{ range . }}
-				<section class="post-preview-container">
-					<a href="{{ .Permalink }}">
-						<div class="post-preview-title-container">
-							<h3 class="post-preview-title">{{ .Title }}</h3>
-						</div>
-						<div class="post-preview-subtext">{{ .Description }}</div>
-						<div>
-							<span class="post-preview-metadata">
-								{{ .Date.Format "02/01/2006" }} · {{ T "readingTime" .ReadingTime }}
-							</span>
-							{{range .Params.tags}}
-							<a class="tag" href="{{ "tags/" | absURL }}{{ . | urlize }}/">#{{ . }}</a>
-							{{end}}
-						</div>
-					</a>
-				</section>					
-				{{ end }}
-				{{ end }}
-				
-				{{ template "_internal/disqus.html" . }}
-			
-			</section>
-			
-			<div class="page-separator centered"><hr></div>
-			
-			{{ partial "footer.html" . }}
-		
-		</div>
+    {{ with .Params.tags }}
+        <div class="tags">
+            {{ range . }}
+                <a href="{{ "tags/" | absURL }}{{ . | urlize }}">{{ . }}</a>
+            {{ end }}
+        </div>
+    {{ end}}
+    
+    {{ partial "comment.html" . }}
 
-	</body>
-</html>
+</section>
+
+{{ end }}
+
