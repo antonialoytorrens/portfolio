@@ -1,0 +1,51 @@
+home:
+  other: Inici
+
+archive:
+  other: Arxiu
+
+tags:
+  other: Etiquetes
+
+about:
+  other: Sobre mi
+
+subscribe:
+  other: Subscriu-te
+
+404title:
+  other: 404 - No s'ha trobat la pàgina
+
+404subtitle:
+  other: La pàgina que cerques no existeix.
+
+readMore:
+  other: Llegir més
+
+minuteRead:
+  one: "Lectura de {{ .ReadingTime }} minut"
+  other: "Lectura de {{ .ReadingTime }} minuts"
+
+publishDate:
+  other: '{{ .PublishDate.Format "01/01/2006" }}'
+
+publishDateFull:
+  other: '{{ .PublishDate.Format "01/01/2006" }}'
+
+wordCount:
+  one: "{{ .WordCount }} paraula"
+  other: "{{ .WordCount }} paraules"
+
+postsNewer:
+  other: Entrades posteriors
+
+postsOlder:
+  other: Entrades anteriors
+
+poweredBy:
+  other: >-
+    Generat amb <a href='http://www.gohugo.io/'>Hugo</a> Tema de <a
+    href='https://github.com/nodejh/hugo-theme-mini'>nodejh</a>
+
+publishDateShort:
+  other: '{{ .PublishDate.Format "01/02" }}'

@@ -8,9 +8,21 @@
         <hr/>
     </section>
 </div>
+{{ .Site.Sections }}
+{{/* Recursive partial to iterate through sections and subsections */}}
+{{ range $section := .Site.Sections }}
+    <h2>{{ $section.Title }}</h2>
+    {{ range $subsection := $section.Sections }}
+        {{ $lastFolder := path.Base (path.Dir $subsection.Path) }}
+            <h3>{{ $lastFolder }}</h3>
+            {{ $pages := where .Site.RegularPages "Section" $lastFolder }}
+    {{ end }}
+{{ end }}
+
+{{ .Section }}
 
 <div id="list-page">
-    {{ $pages := .Site.RegularPages }} {{ $paginator := .Paginate ($pages) }} {{ range $paginator.Pages }} {{ $title := .Title }} {{ $summary := .Summary }}
+    {{ $pages := where .Site.RegularPages "Section" "posts" }} {{ $paginator := .Paginate ($pages) }} {{ range $paginator.Pages }} {{ $title := .Title }} {{ $summary := .Summary }}
     <section class="item">
         <div>
             <h1 class="title"><a href='{{ .RelPermalink }}'>{{ $title }}</a></h1>

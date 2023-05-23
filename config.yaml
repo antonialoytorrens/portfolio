@@ -18,52 +18,62 @@ languages:
     weight: 1
     menu:
       main:
-      - name: "Home"
-        url: "/"
-        weight: -150
-      - name: "Blog"
-        url: "/blog/"
-        weight: -140
-      - name: "Code"
-        url: "/code/"
-        weight: -130
-      - name: "About"
-        url: "/about/"
-        weight: -110
+        - name: "About"
+          url: "/en/about/"
+          weight: -140
+        - name: "Blog"
+          url: "/en/blog/"
+          weight: -130
+        - name: "Education"
+          url: "/en/education/"
+          weight: -120
+        - name: "Experience"
+          url: "/en/experience/"
+          weight: -110
+        - name: "Projects"
+          url: "/en/projects/"
+          weight: -100
   es:
     languageName: "Spanish"
     weight: 2
     menu:
       main:
-      - name: "Inicio"
-        url: "/"
-        weight: -150
-      - name: "Blog"
-        url: "/blog/"
-        weight: -140
-      - name: "Código"
-        url: "/code/"
-        weight: -130
-      - name: "Quién"
-        url: "/about/"
-        weight: -110
+        - name: "Sobre mí"
+          url: "/es/about/"
+          weight: -140
+        - name: "Blog"
+          url: "/es/blog/"
+          weight: -130
+        - name: "Educación"
+          url: "/es/education/"
+          weight: -120
+        - name: "Experiencia"
+          url: "/es/experience/"
+          weight: -110
+        - name: "Proyectos"
+          url: "/es/projects/"
+          weight: -100
   ca:
     languageName: "Catalan"
     weight: 3
     menu:
       main:
-      - name: "Inici"
-        url: "/"
-        weight: -150
-      - name: "Bloc"
-        url: "/blog/"
-        weight: -140
-      - name: "Codi"
-        url: "/code/"
-        weight: -130
-      - name: "Qui"
-        url: "/about/"
-        weight: -110
+        - name: "Sobre mi"
+          url: "/ca/about/"
+          weight: -140
+        - name: "Blog"
+          url: "/ca/blog/"
+          weight: -130
+        - name: "Educació"
+          url: "/ca/education/"
+          weight: -120
+        - name: "Experiència"
+          url: "/ca/experience/"
+          weight: -110
+        - name: "Projectes"
+          url: "/ca/projects/"
+          weight: -100
+
 
 # Hugo Configure Markup
 # More info: https://gohugo.io/getting-started/configuration-markup#
@@ -138,6 +148,7 @@ params:
   copyright: '' 
 
   # Extra links in navigation
+  # Retrievable with {{ range $element := .Site.Params.Links }}<a href="{{ $element.path | absLangURL }}">{{ $element.name }}</a>{{ end }}
   #links:
   #  - name: Blog
   #    path: /blog
