@@ -1,6 +1,7 @@
 /*
 * Common features shared with both stylings
 */
+
 html[theme='dark-mode'] {
     filter: invert(1) hue-rotate(180deg);
 }
@@ -8,6 +9,17 @@ html[theme='dark-mode'] {
 .navigation {
     text-align: center;
 }
+
+* {
+    font-family: "Inter var", "Open Sans", "Noto Sans", "Roboto", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    line-height: 1.4;
+    background-color: #FFFFF0;
+}
+
+code {
+    font-family: "Fira Code VF", monospace;
+}
+
 
 /*
 * Compatibility style.
@@ -46,7 +58,8 @@ a.click();
 */
 
 * {
-    font-size: 16px; /* De-facto standard for all browsers */
+    font-size: 16px;
+    /* De-facto standard for all browsers */
 }
 
 h1 {
@@ -58,16 +71,20 @@ h2 {
 }
 
 h3 {
-    font-size: 18px; /* 18.72px */
+    font-size: 18px;
+    /* 18.72px */
 }
 
 h4 {
-    font-size: 12px; /* 13.28px */
+    font-size: 12px;
+    /* 13.28px */
 }
 
 h5 {
-    font-size: 10px; /* 10.72px */
+    font-size: 10px;
+    /* 10.72px */
 }
+
 
 /*
 * Modern style.
