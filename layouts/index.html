@@ -4,22 +4,10 @@
     <h1>About Me</h1>
     <hr class="nmpt" />
     <section id="section">
-        {{ with .Site.GetPage "section" (printf "/%s/about" .Site.Language.Lang) }} {{ .Content }} {{ end }} {{ partial "comment.html" . }}
+        {{ with .Site.GetPage "section" "about" }} {{ .Content }} {{ end }} {{ partial "comment.html" . }}
         <hr/>
     </section>
 </div>
-{{ .Site.Sections }}
-{{/* Recursive partial to iterate through sections and subsections */}}
-{{ range $section := .Site.Sections }}
-    <h2>{{ $section.Title }}</h2>
-    {{ range $subsection := $section.Sections }}
-        {{ $lastFolder := path.Base (path.Dir $subsection.Path) }}
-            <h3>{{ $lastFolder }}</h3>
-            {{ $pages := where .Site.RegularPages "Section" $lastFolder }}
-    {{ end }}
-{{ end }}
-
-{{ .Section }}
 
 <div id="list-page">
     {{ $pages := where .Site.RegularPages "Section" "posts" }} {{ $paginator := .Paginate ($pages) }} {{ range $paginator.Pages }} {{ $title := .Title }} {{ $summary := .Summary }}
