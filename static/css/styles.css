@@ -1,0 +1,105 @@
+/*
+* Common features shared with both stylings
+*/
+html[theme='dark-mode'] {
+    filter: invert(1) hue-rotate(180deg);
+}
+
+.navigation {
+    text-align: center;
+}
+
+/*
+* Compatibility style.
+* This is the first style it will be applied.
+* Useful for old browsers that cannot read newer styles.
+* This stylesheets aims to be as close as the overriden style.
+*
+* Converted with rem-to-px: https://nekocalc.com/es/px-a-rem-conversor
+* px base is 16px. Commented values on the right are theoretical values.
+*
+* Values are picked from "Computed Styles of Chromium 113.0.5672.126,
+* going into https://nodejh.com/hugo-theme-mini/posts/markdown-syntax-guide/
+* and pasting the following JS code in the console:
+```
+var cssText = "";
+Array.from(document.querySelectorAll("*")).forEach((node) => {
+    var computedStyle = window.getComputedStyle(node);
+    var selector = node.tagName.toLowerCase();
+    if (node.id) selector += '#' + node.id;
+    if (node.className && typeof node.className === 'string') selector += '.' + node.className.split(' ').join('.');
+    cssText += selector + " {\n";
+    for (var i = 0; i < computedStyle.length; i++) {
+        var prop = computedStyle[i];
+        var value = computedStyle.getPropertyValue(prop);
+        cssText += "    " + prop + ": " + value + ";\n";
+    }
+    cssText += "}\n\n";
+});
+
+const a = document.createElement("a");
+const file = new Blob([cssText], {type: 'text/css'});
+a.href = URL.createObjectURL(file);
+a.download = 'computed-styles.css';
+a.click();
+```
+*/
+
+* {
+    font-size: 16px; /* De-facto standard for all browsers */
+}
+
+h1 {
+    font-size: 32px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+h3 {
+    font-size: 18px; /* 18.72px */
+}
+
+h4 {
+    font-size: 12px; /* 13.28px */
+}
+
+h5 {
+    font-size: 10px; /* 10.72px */
+}
+
+/*
+* Modern style.
+* This is the second style it will be applied.
+* Useful for newer browsers that can read most CSS features.
+* It is not state-of-the-art though. Old browsers may also be able to read this.
+*/
+
+* {
+    font-size: 1rem;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+h3 {
+    font-size: 1.17rem;
+}
+
+h4 {
+    font-size: 0.83rem;
+}
+
+h5 {
+    font-size: 0.67rem;
+}
+
+.navigation a {
+    text-decoration: none;
+}
