@@ -14,6 +14,7 @@ paginate: 3
 # Hugo configure languages
 languages:
   en:
+    contentDir: "content/en"
     languageName: "English"
     weight: 1
     menu:
@@ -34,6 +35,7 @@ languages:
           url: "/en/projects/"
           weight: -100
   es:
+    contentDir: "content/es"
     languageName: "Spanish"
     weight: 2
     menu:
@@ -54,6 +56,7 @@ languages:
           url: "/es/projects/"
           weight: -100
   ca:
+    contentDir: "content/ca"
     languageName: "Catalan"
     weight: 3
     menu:
@@ -117,6 +120,7 @@ youtube:
   privacyEnhanced: true
 
 # Site parameters
+# Retrievable with (.Site.Params.paramName), where paramName is any variable inside params from below.
 params:
   # Site Author
   author: Antoni Aloy Torrens
@@ -146,21 +150,6 @@ params:
   hiddenPostSummaryInHomePage: false
   # Website copy write, default: '© Copyright 2023 ❤️ {params.author}'
   copyright: '' 
-
-  # Extra links in navigation
-  # Retrievable with {{ range $element := .Site.Params.Links }}<a href="{{ $element.path | absLangURL }}">{{ $element.name }}</a>{{ end }}
-  #links:
-  #  - name: Blog
-  #    path: /blog
-
-  #  - name: Experience
-  #    path: /experience
-
-  #  - name: Education
-  #    path: /education
-
-  #  - name: Projects
-  #    path: /projects
 
   # You can put your custom css and js to `static` directory, or use remote css and js files which start with `http://` or `https://`
   customCSS:
