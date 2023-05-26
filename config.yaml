@@ -19,9 +19,6 @@ languages:
     weight: 1
     menu:
       main:
-        - name: "About"
-          url: "/en/about/"
-          weight: -140
         - name: "Blog"
           url: "/en/blog/"
           weight: -130
@@ -40,9 +37,6 @@ languages:
     weight: 2
     menu:
       main:
-        - name: "Sobre mí"
-          url: "/es/about/"
-          weight: -140
         - name: "Blog"
           url: "/es/blog/"
           weight: -130
@@ -61,9 +55,6 @@ languages:
     weight: 3
     menu:
       main:
-        - name: "Sobre mi"
-          url: "/ca/about/"
-          weight: -140
         - name: "Blog"
           url: "/ca/blog/"
           weight: -130

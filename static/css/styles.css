@@ -1,24 +1,120 @@
 /*
 * Common features shared with both stylings
+* Tip: Do not combine tags, e.g.: html, body {} to preserve max compatibility (old IE browsers).
+* Tip: Do not use dashes or underscore for classes to preserve max compatibility (old IE browsers).
 */
+
+
+/* Fonts by default */
+
+body {
+    font-family: "Inter var", "Open Sans", "Noto Sans", "Roboto", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+    line-height: 1.4;
+}
+
+
+/* End fonts by default */
 
 html[theme='dark-mode'] {
     filter: invert(1) hue-rotate(180deg);
+}
+
+html {
+    background-color: #F0F0F0;
+}
+
+body {
+    background-color: #F0F0F0;
+}
+
+time {
+    line-height: 1.4;
+}
+
+.profile {
+    text-align: center;
 }
 
 .navigation {
     text-align: center;
 }
 
-* {
-    font-family: "Inter var", "Open Sans", "Noto Sans", "Roboto", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    line-height: 1.4;
-    background-color: #FFFFF0;
-}
-
 code {
     font-family: "Fira Code VF", monospace;
 }
+
+.nopadding {
+    padding: 0;
+}
+
+.nomargin {
+    margin: 0;
+}
+
+.nomarginbottom {
+    margin-bottom: 0;
+}
+
+.dinitial {
+    display: initial;
+}
+
+.textright {
+    text-align: right;
+}
+
+.mwidth {
+    width: 100%;
+}
+
+.mhwidth {
+    width: 50%;
+}
+
+.nwrap {
+    white-space: nowrap;
+}
+
+
+/* LINKS */
+
+a {
+    text-decoration: none;
+    color: #0000EE;
+}
+
+a:link {
+    color: #0000EE;
+}
+
+a:visited {
+    color: #0000EE;
+}
+
+a:hover {
+    color: #3C3CE3;
+}
+
+
+/* END LINKS */
+
+
+/* FOOTER */
+
+#social {
+    text-align: center;
+}
+
+.copyright {
+    text-align: center;
+}
+
+.powerby {
+    text-align: center;
+}
+
+
+/* END FOOTER */
 
 
 /*
@@ -57,16 +153,29 @@ a.click();
 ```
 */
 
-* {
+
+/* Fonts by default */
+
+body {
     font-size: 16px;
-    /* De-facto standard for all browsers */
 }
+
+
+/* End fonts by default */
 
 h1 {
     font-size: 32px;
 }
 
+.h1 {
+    font-size: 32px;
+}
+
 h2 {
+    font-size: 24px;
+}
+
+.h2 {
     font-size: 24px;
 }
 
@@ -85,6 +194,18 @@ h5 {
     /* 10.72px */
 }
 
+.mt2 {
+    margin-top: 16px;
+}
+
+.pd2 {
+    padding: 16px;
+}
+
+.navigation {
+    margin-bottom: 32px;
+}
+
 
 /*
 * Modern style.
@@ -93,19 +214,28 @@ h5 {
 * It is not state-of-the-art though. Old browsers may also be able to read this.
 */
 
-* {
+
+/* Fonts by default */
+
+body {
     font-size: 1rem;
 }
 
-h1 {
+
+/* End fonts by default */
+
+h1,
+.h1 {
     font-size: 2rem;
 }
 
-h2 {
+h2,
+.h2 {
     font-size: 1.5rem;
 }
 
-h3 {
+h3,
+.h3 {
     font-size: 1.17rem;
 }
 
@@ -117,6 +247,39 @@ h5 {
     font-size: 0.67rem;
 }
 
-.navigation a {
-    text-decoration: none;
+body {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+@media(max-width: 900px) {
+    body {
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+    }
+    html {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .navigation td {
+        display: block;
+        width: 100%;
+        text-align: left;
+    }
+}
+
+.mt2 {
+    margin-top: 1rem;
+}
+
+.pd2 {
+    padding: 1rem;
+}
+
+.navigation {
+    margin-bottom: 2rem;
 }

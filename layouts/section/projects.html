@@ -1,13 +1,12 @@
-{{ define "main" }} {{ partial "profile.html" . }}
-
+{{ define "main" }}
 <div id="list-page">
-    <h1>Projects</h1>
+    <h3 class="h1 title dinitial">Projects</h3>
     <hr class="nmpt" /> {{ range ( where .Site.RegularPages "Type" "projects" ) }}
     <section class="item">
         <div>
-            <h1 class="title exp">
+            <h3 class="title exp">
                 {{ .Params.projTitle }}
-            </h1>
+            </h3>
             <div class="date exp">
                 <time datetime="{{ .Params.projDate }}">20182019{{ i18n "expDate" . }}</time>
             </div>

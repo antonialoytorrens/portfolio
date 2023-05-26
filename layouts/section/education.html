@@ -1,12 +1,12 @@
-{{ define "main" }} {{ partial "profile.html" . }}
+{{ define "main" }}
 <div id="list-page">
-    <h1>Education</h1>
+    <h3 class="h1 title dinitial">Education</h3>
     <hr class="nmpt" /> {{ range ( sort (where .Site.RegularPages "Type" "education" ) "Params.eduStartDate" "desc" ) }}
     <section class="item">
         <div>
-            <h2 class="title exp">
+            <h3 class="title exp">
                 <a href='{{ .Params.institutionUrl }}'>{{ .Params.institution }}</a>
-            </h2>
+            </h3>
             <div class="date exp">
                 <time datetime="{{ .Params.eduStartDate }}">{{ (time .Params.eduStartDate).Format "Jan, 2006" }}</time>
                 <span>-</span> {{ if .Params.eduEndDate }}

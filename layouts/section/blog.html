@@ -1,10 +1,10 @@
-{{ define "main" }} {{ partial "profile.html" . }} {{ $filterYear := .Params.Get "year" }}
+{{ define "main" }} {{ $filterYear := .Params.Get "year" }}
 <div id="list-page">
-    <h1>Blog</h1>
+    <h3 class="h1 title dinitial">Blog</h3>
     <hr class="nmpt" /> {{ $pages := .Site.RegularPages }} {{ $paginator := .Paginate ($pages) }} {{ range $paginator.Pages }} {{ $title := .Title }} {{ $summary := .Summary }}
     <section class="item">
         <div>
-            <h1 class="title"><a href='{{ .RelPermalink }}'>{{ $title }}</a></h1>
+            <h4 class="h2 title"><a href='{{ .RelPermalink }}'>{{ $title }}</a></h4>
             <div class="date">
                 <time datetime="{{ .PublishDate }}">{{ i18n "publishDate" . }}</time>
             </div>
