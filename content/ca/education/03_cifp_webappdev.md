@@ -1,10 +1,30 @@
 +++
-institution = "CIFP Pau Casesnoves"
+institution = "Centre Integrat de Formació Professional Pau Casesnoves"
 institutionUrl = "https://paucasesnovescifp.cat"
-subtitle = "Certificate of Higher Education"
+subtitle = "Certificat de Formació Professional"
+subtitle2 = "Especialista en Desenvolupament d'Aplicacions Web"
 eduStartDate = "2018-09-01"
 eduEndDate = "2020-06-01"
 +++
-Web Applications Development
+**Programació**
+* Introducció a la programació i a la programació orientada a objectes (Java).
+* Visió general bàsica de les implementacions de serveis web en Java, servlets i Spring Boot.
 
-Average: 7.5/10
+**Bases de dades**
+* Introducció a la gestió de bases de dades (MySQL i MongoDB).
+* Visió general bàsica de les operacions CRUD, principis de bases de dades i el *framework* de PHP Slim Framework.
+
+**Disseny web**
+* Introducció al disseny web (HTML5, CSS3, JS)
+* Visió general bàsica dels marcs de treball JQuery i Bootstrap4.
+
+**Administració i sistemes Linux**
+* Introducció i comprensió bàsica de servidors i sistemes Linux.
+
+**Màrqueting**
+* Comprensió bàsica de com funciona el màrqueting, arquitectura i models de marca, consells i tècniques de publicitat.
+
+**Projecte Final de Grau**
+* Veure [Pamboliada](https://pamboliada.cat), un clon de Google Maps que cerca restaurants que serveixen [pa amb oli](https://ca.wikipedia.org/wiki/Pa_amb_oli) en el seu menú.
+
+Pots veure l'arxiu [aquí](https://github.com/antonialoytorrens-DAW2018-2020) i el codi font del projecte final de grau [aquí](https://github.com/antonialoytorrens/pa-amb-oli).
