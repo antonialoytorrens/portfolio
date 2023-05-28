@@ -15,6 +15,9 @@
             </div>
             {{ if .Params.subtitle }}
             <h3 class="title exp">{{ .Params.subtitle }}</h3>
+            {{ end }} 
+            {{ if .Params.subtitle2 }}
+            <h3 class="title exp">{{ .Params.subtitle2 }}</h3>
             {{ end }} {{ .Content }}
         </div>
         <hr />
