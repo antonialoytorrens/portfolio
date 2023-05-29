@@ -1,6 +1,9 @@
 # Hugo default output directory
 /public
 
+# Hugo default content directory
+content/**/*.md
+
 # Windows
 Thumbs.db
 ehthumbs.db

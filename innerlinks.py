@@ -3,6 +3,7 @@
 import re
 import os
 import glob
+import shutil
 
 # Set the script path to the current working directory
 script_dir = os.path.dirname(os.path.realpath(__file__))
@@ -57,13 +58,24 @@ innerlinks["JS"] = innerlinks["JavaScript"] # JavaScript abbr.
 innerlinks["Sibelius"] = innerlinks["Sibelius7"] # Generic program
 innerlinks["Musescore3"] = innerlinks["Musescore"] # Versioned program
 
-# If some link is rendered by error, add a !nolink next to the word.
+# * Note: if some link is rendered by error, add a !nolink next to the word and run the script again.
 # If "linked word" !nolink is read, remove !nolink and the associated link
 remove_nolinks_regex = re.compile(r'\[([^\]]+)\]\([^\)]+\)\s?!nolink')
+link_pattern = re.compile(r'\[[^\]]*\]\([^\)]+\)')  # Pattern for existing markdown links
+nolink_pattern = re.compile(r'\[([^\]]+)\]\([^\)]+\)\s?!nolink')  # Pattern for !nolink
 def apply_links(content, innerlinks):
-    for key, value in innerlinks.items():
-        content = content.replace(key, f'[{key}]({value})')
-    return content
+    chunks = link_pattern.split(content)  # Split content by existing markdown links
+    link_parts = link_pattern.findall(content)  # Get the existing markdown links
+
+    # Apply inner links only to the parts of content outside existing links
+    for i in range(len(chunks)):
+        for key, value in innerlinks.items():
+            chunks[i] = re.sub(r'\b' + re.escape(key) + r'\b', f'[{key}]({value})', chunks[i])
+    
+    # Interleave the chunks and link_parts to get the final content
+    final_content = ''.join(val for pair in zip(chunks, link_parts + ['']) for val in pair)
+
+    return final_content
 
 def remove_nolinks(content):
     # The regex pattern finds markdown links followed by !nolink and replaces it with just the linked word
@@ -71,20 +83,38 @@ def remove_nolinks(content):
     return content
 
 def apply_links_to_files(root_dir, innerlinks):
-    for filename in glob.iglob(root_dir + '**/*.md', recursive=True):
-        with open(filename, 'r') as file:
-            content = file.read()
-        
-        # Apply the links
-        linked_content = apply_links(content, innerlinks)
+    for filename in glob.iglob(root_dir + '/content/**/*.md', recursive=True):
+        # Do not modify files starting with underscore
+        if os.path.basename(filename).startswith('_'):
+            continue
 
-        # Remove undesired links
-        final_content = remove_nolinks(linked_content)
+        with open(filename, 'r') as file:
+            lines = file.readlines()
+
+        in_var_declaration = False
+        for i, line in enumerate(lines):
+            # Detect if we are inside a variable declaration block
+            if line.strip() == '+++':
+                in_var_declaration = not in_var_declaration
+                continue
+
+            # Detect if we are inside a code declaration block
+            if line.strip() == '```':
+                in_var_declaration = not in_var_declaration
+                continue
+
+        # If we are not in a variable declaration block, apply links
+            if not in_var_declaration:
+                lines[i] = apply_links(line, innerlinks)
+
+        # Join the lines back together and remove undesired links
+        content = "".join(lines)
+        final_content = remove_nolinks(content)
         
         # Write back to the file
         with open(filename, 'w') as file:
             file.write(final_content)
 
 # Usage
-root_dir = "public/"
+root_dir = script_dir
 apply_links_to_files(root_dir, innerlinks)
