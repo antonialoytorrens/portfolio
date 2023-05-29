@@ -14,7 +14,7 @@ paginate: 3
 # Hugo configure languages
 languages:
   en:
-    contentDir: "content/en"
+    contentDir: "content_raw/en"
     languageName: "English"
     weight: 1
     menu:
@@ -32,7 +32,7 @@ languages:
           url: "/en/projects/"
           weight: -100
   es:
-    contentDir: "content/es"
+    contentDir: "content_raw/es"
     languageName: "Spanish"
     weight: 2
     menu:
@@ -50,7 +50,7 @@ languages:
           url: "/es/projects/"
           weight: -100
   ca:
-    contentDir: "content/ca"
+    contentDir: "content_raw/ca"
     languageName: "Catalan"
     weight: 3
     menu:

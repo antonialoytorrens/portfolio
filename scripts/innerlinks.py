@@ -7,8 +7,8 @@ import os
 import glob
 import shutil
 
-# Set the script path to the current working directory
-script_dir = os.path.dirname(os.path.realpath(__file__))
+# Set the script path to the parent of the current working directory
+script_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 os.chdir(script_dir)
 
 innerlinks = {
@@ -117,20 +117,21 @@ def apply_links_to_files(root_dir, innerlinks):
         with open(filename, 'w') as file:
             file.write(final_content)
 
-# Usage
-src_dir = f"{script_dir}/content_raw"
-root_dir = f"{script_dir}/content"
+if __name__ == "__main__":
+    # Usage
+    src_dir = f"{script_dir}/content_raw"
+    root_dir = f"{script_dir}/content"
 
-# Remove content folder if exists, but avoid deleting by mistake
-if os.path.exists(root_dir) and os.path.isdir(root_dir):
-    confirm = input(f"The content folder exists. Are you sure you want to permanently delete the directory at {root_dir}? (y/N): ")
-    if confirm.lower() == 'y':
-        shutil.rmtree(root_dir)
-        print(f"Directory at {root_dir} has been deleted.")
-    else:
-        print("Operation cancelled.")
+    # Remove content folder if exists, but avoid deleting by mistake
+    if os.path.exists(root_dir) and os.path.isdir(root_dir):
+        confirm = input(f"The content folder exists. Are you sure you want to permanently delete the directory at {root_dir}? (y/N): ")
+        if confirm.lower() == 'y':
+            shutil.rmtree(root_dir)
+            print(f"Directory at {root_dir} has been deleted.")
+        else:
+            print("Operation cancelled.")
 
-# Preserve original content as backup before applying links
-shutil.copytree(src_dir, root_dir)
+    # Preserve original content as backup before applying links
+    shutil.copytree(src_dir, root_dir)
 
-apply_links_to_files(root_dir, innerlinks)
+    apply_links_to_files(root_dir, innerlinks)
