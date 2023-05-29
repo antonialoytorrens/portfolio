@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # This is a list of common technologies and concepts (that have no translation) that I want to link automatically if some coincidence is met.
 # For each and any markdown file.
 import re
@@ -83,7 +85,7 @@ def remove_nolinks(content):
     return content
 
 def apply_links_to_files(root_dir, innerlinks):
-    for filename in glob.iglob(root_dir + '/content/**/*.md', recursive=True):
+    for filename in glob.iglob(root_dir + '/**/*.md', recursive=True):
         # Do not modify files starting with underscore
         if os.path.basename(filename).startswith('_'):
             continue
@@ -116,5 +118,19 @@ def apply_links_to_files(root_dir, innerlinks):
             file.write(final_content)
 
 # Usage
-root_dir = script_dir
+src_dir = f"{script_dir}/content_raw"
+root_dir = f"{script_dir}/content"
+
+# Remove content folder if exists, but avoid deleting by mistake
+if os.path.exists(root_dir) and os.path.isdir(root_dir):
+    confirm = input(f"The content folder exists. Are you sure you want to permanently delete the directory at {root_dir}? (y/N): ")
+    if confirm.lower() == 'y':
+        shutil.rmtree(root_dir)
+        print(f"Directory at {root_dir} has been deleted.")
+    else:
+        print("Operation cancelled.")
+
+# Preserve original content as backup before applying links
+shutil.copytree(src_dir, root_dir)
+
 apply_links_to_files(root_dir, innerlinks)
