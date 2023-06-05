@@ -22,15 +22,31 @@
 		</tbody>
     </table>
 	*/}}
+	{{/*
+	<div>
+		{{ if not .IsHome }}
+			<a class="nwrap h2 pd2" href="{{ "/" | absLangURL }}"><b>Antoni Aloy Torrens</b></a>
+		{{ end }}
+	</div>
+	<div class="mt2">
+		{{ range .Site.Menus.main }}
+			<a class="h3 pd2" href="{{ .URL | absLangURL }}">{{ .Name }}</a>
+		{{ end }}
+
+		{{ if .Site.Params.enableRSS }}
+		<a class="h3 pd2" class="button" href="{{ .Site.RSSLink }}">{{ with .Site.Params.subscribe }}{{ . }}{{ else }}{{ i18n "subscribe" }}{{ end }}</a>
+		{{ end }}
+	</div>
+	*/}}
 	{{ if not .IsHome }}
 		<a class="nwrap h2 pd2" href="{{ "/" | absLangURL }}"><b>Antoni Aloy Torrens</b></a>
 	{{ end }}
-
+	
 	{{ range .Site.Menus.main }}
 		<a class="h3 pd2" href="{{ .URL | absLangURL }}">{{ .Name }}</a>
 	{{ end }}
 
 	{{ if .Site.Params.enableRSS }}
-	  <a class="h3 pd2" class="button" href="{{ .Site.RSSLink }}">{{ with .Site.Params.subscribe }}{{ . }}{{ else }}{{ i18n "subscribe" }}{{ end }}</a>
+	<a class="h3 pd2" class="button" href="{{ .Site.RSSLink }}">{{ with .Site.Params.subscribe }}{{ . }}{{ else }}{{ i18n "subscribe" }}{{ end }}</a>
 	{{ end }}
 </nav>
