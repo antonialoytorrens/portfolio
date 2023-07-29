@@ -19,7 +19,7 @@ With `hugo serve`, you will only see the content in `content_raw` folder, withou
 
 `python3 innerlinks.py`
 
-`hugo`
+`HUGO_ENV="production" hugo`
 
 Look for the `public` folder and see if the inner links are generated.
 
