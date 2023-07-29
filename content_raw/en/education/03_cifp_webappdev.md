@@ -1,10 +1,9 @@
 +++
-institution = "Centre Integrat de Formació Professional Pau Casesnoves"
-institutionUrl = "https://paucasesnovescifp.cat"
-subtitle = "Certificate of Professional Education"
-subtitle2 = "Web Application Development specialist"
-eduStartDate = "2018-09-01"
-eduEndDate = "2020-06-01"
+title = "Professional Education in Web Development"
+institution = "CIFP Pau Casesnoves"
+curl = "https://paucasesnovescifp.cat"
+startDate = "2018-09-01"
+endDate = "2020-06-01"
 +++
 **Programming**
 * Introduction to programming and object-oriented programming (Java).

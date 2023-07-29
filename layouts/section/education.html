@@ -1,17 +1,26 @@
 {{ define "main" }}
 <div id="list-page">
-    <h3 class="h1 title dinitial">Education</h3>
-    <hr class="nmpt" /> {{ range ( sort (where .Site.RegularPages "Type" "education" ) "Params.eduStartDate" "desc" ) }}
-    <section class="item">
-        <div>
-            <h3 class="title exp">
-                <a href='{{ .Params.institutionUrl }}'>{{ .Params.institution }}</a>
-            </h3>
+    <h1 class="title dinitial">Education</h1>
+    <hr class="nmpt" /> 
+    {{ $educationPages := ( sort (where .Site.RegularPages "Type" "education" ) ".Params.startDate" "desc" ) }}
+    {{ range $index, $page := $educationPages }}
+    {{ $isFirst := eq $index 0 }}
+    {{ $isLast := eq $index (sub (len $educationPages) 1) }}
+    <section class="item{{ if $isFirst }} mb4{{ else if $isLast }} mt4{{ else }} mt4 mb4{{ end }}">
+        <article>
+            <h2 class="title exp">
+                {{ if .Params.linktitle }}
+                    <a href='{{ .Params.linktitle }}'>{{ .Params.title }}</a>
+                {{ else }}
+                    {{ .Params.title }}
+                {{ end }}
+            </h2>
             <div class="date exp">
-                <time datetime="{{ .Params.eduStartDate }}">{{ (time .Params.eduStartDate).Format "Jan, 2006" }}</time>
-                <span>-</span> {{ if .Params.eduEndDate }}
-                <time datetime="{{ .Params.eduEndDate }}">{{ (time .Params.eduEndDate).Format "Jan, 2006" }}</time> {{ else }}
-                <span>{{ i18n "present" . }}</span> {{ end }}
+                <time datetime="{{ .Params.startDate }}">{{ (time .Params.startDate).Format "Jan 2006" }}</time>
+                <span>-</span> {{ if .Params.endDate }}
+                <time datetime="{{ .Params.endDate }}">{{ (time .Params.endDate).Format "Jan 2006" }}</time> {{ else }}
+                <span>{{ i18n "present" . }}</span>{{ end }}
+                {{ if .Params.institution }}<span>,&nbsp;<a href='{{ .Params.curl }}'>{{ .Params.institution }}</a></span>{{ end }}
             </div>
             {{ if .Params.subtitle }}
             <h3 class="title exp">{{ .Params.subtitle }}</h3>
@@ -19,8 +28,7 @@
             {{ if .Params.subtitle2 }}
             <h3 class="title exp">{{ .Params.subtitle2 }}</h3>
             {{ end }} {{ .Content }}
-        </div>
-        <hr />
+        </article>
     </section>
     {{ end }}
 </div>

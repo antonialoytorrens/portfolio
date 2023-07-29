@@ -1,10 +1,9 @@
 +++
-institution = "Centre Integrat de Formació Professional Pau Casesnoves"
-institutionUrl = "https://paucasesnovescifp.cat"
-subtitle = "Certificat de Formació Professional"
-subtitle2 = "Especialista en Desenvolupament d'Aplicacions Web"
-eduStartDate = "2018-09-01"
-eduEndDate = "2020-06-01"
+title = "FP Superior en Desenvolupament d'Aplicacions Web"
+institution = "CIFP Pau Casesnoves"
+curl = "https://paucasesnovescifp.cat"
+startDate = "2018-09-01"
+endDate = "2020-06-01"
 +++
 **Programació**
 * Introducció a la programació i a la programació orientada a objectes (Java).

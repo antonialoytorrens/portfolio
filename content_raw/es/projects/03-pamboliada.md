@@ -1,7 +1,7 @@
 +++
-projTitle = "PostmarketOS"
-projUrlFooter = "https://github.com/antonialoytorrens/pa-amb-oli"
-projDate = 2020-08-12
+title = "PostmarketOS"
+curl = "https://github.com/antonialoytorrens/pa-amb-oli"
+date = 2020-08-12
 projMod = 2021-11-16
 +++
 

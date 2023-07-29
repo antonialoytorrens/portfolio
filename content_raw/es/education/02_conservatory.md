@@ -1,10 +1,10 @@
 +++
-institution = "Conservatori de Música Antoni Torrandell"
-institutionUrl = "https://emmat.incaciutat.com/"
+title = "Conservatori de Música Antoni Torrandell"
+curl = "https://emmat.incaciutat.com/"
 subtitle = "Grado Medio"
 subtitle2 = "Graduado en Piano, como intérprete"
-eduStartDate = "2012-09-01"
-eduEndDate = "2022-06-01"
+startDate = "2012-09-01"
+endDate = "2022-06-01"
 +++
 * Comprensión del lenguaje musical y cómo funciona.
 * Entendimiento básico de cómo funciona la armonía en la época Barroca.

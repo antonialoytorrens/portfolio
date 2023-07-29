@@ -1,10 +1,9 @@
 +++
-institution = "Conservatori de Música Antoni Torrandell"
-institutionUrl = "https://emmat.incaciutat.com/"
-subtitle = "Middle Grade"
-subtitle2 = "Graduated in Piano, as a performer"
-eduStartDate = "2012-09-01"
-eduEndDate = "2022-06-01"
+title = "Professional Grade in Piano"
+institution = "EMMAT"
+curl = "https://emmat.incaciutat.com/"
+startDate = "2012-09-01"
+endDate = "2022-06-01"
 +++
 * Understanding of Musical language and how it works.
 * Basic understanding of how harmony works in the Baroque era.

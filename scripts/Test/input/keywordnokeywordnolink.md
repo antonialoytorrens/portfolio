@@ -1,0 +1,1 @@
+[JavaScript](https://wikipedia.org/wiki/JavaScript) hello !nolink.

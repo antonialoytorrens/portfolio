@@ -1,10 +1,3 @@
-/* Apply styling if dark-mode is preferred */
-
-html[theme='dark-mode'] {
-    filter: invert(1) hue-rotate(180deg);
-}
-
-
 /*
 * Common features shared with both stylings
 * Tip: Do not combine tags, e.g.: html, body {} to preserve max compatibility (old IE browsers).
@@ -17,18 +10,54 @@ html[theme='dark-mode'] {
 body {
     font-family: "Inter var", "Open Sans", "Noto Sans", "Roboto", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
     line-height: 1.4;
+    color: #333;
+}
+
+.navigation {
+    font-family: "Inter var", "Open Sans", "Noto Sans", "Roboto", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+h1 {
+    font-family: "Inter var", "Open Sans", "Noto Sans", "Roboto", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+h2 {
+    font-family: "Inter var", "Open Sans", "Noto Sans", "Roboto", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+h3 {
+    font-family: "Inter var", "Open Sans", "Noto Sans", "Roboto", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+h4 {
+    font-family: "Inter var", "Open Sans", "Noto Sans", "Roboto", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+h5 {
+    font-family: "Inter var", "Open Sans", "Noto Sans", "Roboto", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+h6 {
+    font-family: "Inter var", "Open Sans", "Noto Sans", "Roboto", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+strong {
+    font-family: "Inter var", "Open Sans", "Noto Sans", "Roboto", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 }
 
 
 /* End fonts by default */
 
+html[theme='dark-mode'] {
+    filter: invert(1) hue-rotate(180deg);
+}
+
 html {
-    background-color: #FFFFFF;
-    padding-top: 16px;
+    background-color: #F0F0F0;
 }
 
 body {
-    background-color: #FFFFFF;
+    background-color: #F0F0F0;
 }
 
 time {
@@ -40,10 +69,6 @@ time {
 }
 
 .navigation {
-    text-align: center;
-}
-
-.textcenter {
     text-align: center;
 }
 
@@ -139,68 +164,46 @@ a:hover {
 /* Fonts by default */
 
 body {
-    font-size: 16px;
+    font-size: 22px;
+}
+
+h1 {
+    font-size: 38px;
+}
+
+.h1 {
+    font-size: 38px;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+.h2 {
+    font-size: 30px;
+}
+
+h3 {
+    font-size: 24px;
+}
+
+h4 {
+    font-size: 23px;
+}
+
+h5 {
+    font-size: 22px;
 }
 
 
 /* End fonts by default */
 
-h1 {
-    font-size: 32px;
-}
-
-.h1 {
-    font-size: 32px;
-}
-
-h2 {
-    font-size: 24px;
-}
-
-.h2 {
-    font-size: 24px;
-}
-
-h3 {
-    font-size: 18px;
-    /* 18.72px */
-}
-
-h4 {
-    font-size: 12px;
-    /* 13.28px */
-}
-
-h5 {
-    font-size: 10px;
-    /* 10.72px */
-}
-
 .mt2 {
     margin-top: 16px;
 }
 
-.mb2 {
-    margin-bottom: 16px;
-}
-
-.mt4 {
-    margin-top: 32px;
-}
-
-.mb4 {
-    margin-bottom: 32px;
-}
-
 .pd2 {
     padding: 16px;
-}
-
-
-/* LINKS */
-
-.linklogo {
-    margin: 16px;
 }
 
 
@@ -215,6 +218,16 @@ h5 {
 /* END NAVIGATION */
 
 
+/* FOOTER */
+
+footer {
+    margin-bottom: 16px;
+}
+
+
+/* END FOOTER */
+
+
 /*
 * Modern style.
 * This is the second style it will be applied.
@@ -222,42 +235,38 @@ h5 {
 * It is not state-of-the-art though. Old browsers may also be able to read this.
 */
 
-html {
-    padding-top: 1rem;
-}
-
 
 /* Fonts by default */
 
 body {
-    font-size: 1rem;
+    font-size: 1.375rem;
 }
-
-
-/* End fonts by default */
 
 h1,
 .h1 {
-    font-size: 2rem;
+    font-size: 2.375rem;
 }
 
 h2,
 .h2 {
-    font-size: 1.5rem;
+    font-size: 1.875rem;
 }
 
 h3,
 .h3 {
-    font-size: 1.17rem;
+    font-size: 1.545rem;
 }
 
 h4 {
-    font-size: 0.83rem;
+    font-size: 1.405rem;
 }
 
 h5 {
-    font-size: 0.67rem;
+    font-size: 1.045rem;
 }
+
+
+/* End fonts by default */
 
 body {
     margin-left: auto;
@@ -265,14 +274,13 @@ body {
     width: 50%;
 }
 
-@media(max-width: 1300px) {
+@media(max-width: 900px) {
     body {
         margin-left: 0;
         margin-right: 0;
         width: 100%;
     }
     html {
-        padding: 16px;
         padding: 1rem;
     }
 }
@@ -281,27 +289,8 @@ body {
     margin-top: 1rem;
 }
 
-.mb2 {
-    margin-bottom: 1rem;
-}
-
-.mt4 {
-    margin-top: 2rem;
-}
-
-.mb4 {
-    margin-bottom: 2rem;
-}
-
 .pd2 {
     padding: 1rem;
-}
-
-
-/* LINKS */
-
-.linklogo {
-    margin: 1rem;
 }
 
 
@@ -313,7 +302,7 @@ body {
 }
 
 .navigation hr {
-    margin-top: 1rem;
+    border-color: rgb(255, 255, 255, 0.25);
 }
 
 @media (max-width: 600px) {

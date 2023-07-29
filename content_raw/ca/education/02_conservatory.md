@@ -1,10 +1,9 @@
 +++
-institution = "Conservatori de Música Antoni Torrandell"
-institutionUrl = "https://emmat.incaciutat.com/"
-subtitle = "Grau Mitjà"
-subtitle2 = "Graduat en Piano, com a intèrpret"
-eduStartDate = "2012-09-01"
-eduEndDate = "2022-06-01"
+title = "Grau Professional en Piano"
+institution = "EMMAT"
+curl = "https://emmat.incaciutat.com/"
+startDate = "2012-09-01"
+endDate = "2022-06-01"
 +++
 * Comprensió del llenguatge musical i com funciona.
 * Enteniment bàsic de com funciona l'harmonia en l'època Barroca.

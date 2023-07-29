@@ -1,6 +1,6 @@
 +++
+title = "Degree in Computer Science"
 institution = "Universitat Oberta de Catalunya"
-institutionUrl = "https://uoc.edu"
-subtitle = "Degree in Computer Engineering"
-eduStartDate = "2020-07-01"
+curl = "https://uoc.edu"
+startDate = "2020-07-01"
 +++

@@ -1,18 +1,24 @@
 {{ define "main" }} {{ $filterYear := .Params.Get "year" }}
 <div id="list-page">
-    <h3 class="h1 title dinitial">Blog</h3>
-    <hr class="nmpt" /> {{ $pages := .Site.RegularPages }} {{ $paginator := .Paginate ($pages) }} {{ range $paginator.Pages }} {{ $title := .Title }} {{ $summary := .Summary }}
+    <h1 class="title">Blog
+        <br>
+        <span class="subtitle"></span>
+      </h1>
+      <ul class="tags">
+        
+    </ul>
+    {{ $pages := (where .Site.RegularPages "Type" "blog") }} {{ $paginator := .Paginate ($pages) }} {{ range $paginator.Pages }} {{ $title := .Title }} {{ $summary := .Summary }}
     <section class="item">
         <div>
-            <h4 class="h2 title"><a href='{{ .RelPermalink }}'>{{ $title }}</a></h4>
+            <h3 style="margin-bottom: 0px;"><a href='{{ .RelPermalink }}'>{{ $title }}</a></h3>
             <div class="date">
                 <time datetime="{{ .PublishDate }}">{{ i18n "publishDate" . }}</time>
             </div>
         </div>
 
         {{ if ne .Site.Params.hiddenPostSummaryInHomePage true }}
-        <div class="summary">{{ $summary | plainify | htmlUnescape }}</div>
-        <div class="readmore"><a href='{{ .RelPermalink }}'>{{ i18n "readMore" . }} »</a></div>
+        <p class=>{{ $summary | plainify | htmlUnescape }}</p>
+        <p class="textright"><a href='{{ .RelPermalink }}'>{{ i18n "readMore" . }} »</a></p>
         {{ end }}
 
         <hr/>
@@ -89,7 +95,7 @@
                       </a> {{ with .Params.tags }}
                 <div class="tags">
                     {{ range . }}
-                    <a href="{{ " tags/ " | absURL }}{{ . | urlize }}">{{ . }}</a> {{ end }}
+                    <a href="{{ "tags/" | absURL }}{{ . | urlize }}">{{ . }}</a> {{ end }}
                 </div>
                 {{ end}}
             </div>

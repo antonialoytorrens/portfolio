@@ -1,7 +1,7 @@
 +++
-projTitle = "PostmarketOS"
-projUrlFooter = "https://postmarketos.org"
-projDate = 2020-08-12
+title = "PostmarketOS"
+curl = "https://postmarketos.org"
+date = 2020-08-12
 projMod = 2021-11-16
 +++
 

@@ -1,7 +1,6 @@
 +++
-institution = "Conservatori de Música Antoni Torrandell"
-institutionUrl = "https://emmat.incaciutat.com/"
-subtitle = "Middle Grade"
-eduStartDate = "2022-10-01"
+title = "Professonal Grade in Organum"
+institution = "EMMAT"
+curl = "https://emmat.incaciutat.com/"
+startDate = "2022-10-01"
 +++
-Organum

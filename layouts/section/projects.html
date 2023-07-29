@@ -5,15 +5,17 @@
     <section class="item">
         <div>
             <h3 class="title exp">
-                {{ .Params.projTitle }}
+                {{ if .Params.curl }}
+                    <a href="{{ .Params.curl }}">{{ .Params.title }}</a>
+                {{ else }}
+                    {{ .Params.title }}
+                {{ end }}
             </h3>
             <div class="date exp">
-                <time datetime="{{ .Params.projDate }}">20182019{{ i18n "expDate" . }}</time>
+                <time datetime="{{ .Params.date }}">{{ (time .Params.date).Format "Jan, 2006" }}</time>
             </div>
-            {{ .Content }} {{ if .Params.projFooter }}
-            <p><a href="{{ .Params.projUrlFooter }}">{{ .Params.projFooter }}</a></p>
-            {{ else }}
-            <p><a href="{{ .Params.projUrlFooter }}">{{ .Params.projUrlFooter }}</a></p>
+            {{ .Content }} {{ if .Params.curl }}
+            <p><a href="{{ .Params.curl }}">{{ .Params.curl }}</a></p>
             {{ end }}
         </div>
         <hr />

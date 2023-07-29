@@ -29,6 +29,9 @@ publishDate:
 publishDateFull:
   other: '{{ .PublishDate.Format "01/01/2006" }}'
 
+present:
+  other: Present
+
 wordCount:
   one: "{{ .WordCount }} paraula"
   other: "{{ .WordCount }} paraules"

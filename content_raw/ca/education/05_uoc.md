@@ -1,6 +1,6 @@
 +++
+title = "Grau d'Enginyeria Informàtica"
 institution = "Universitat Oberta de Catalunya"
-institutionUrl = "https://uoc.edu"
-subtitle = "Grau d'Enginyeria Informàtica"
-eduStartDate = "2020-07-01"
+curl = "https://uoc.edu"
+startDate = "2020-07-01"
 +++

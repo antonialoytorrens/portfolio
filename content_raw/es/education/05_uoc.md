@@ -1,6 +1,6 @@
 +++
-institution = "Universitat Oberta de Catalunya"
-institutionUrl = "https://uoc.edu"
+title = "Universitat Oberta de Catalunya"
+curl = "https://uoc.edu"
 subtitle = "Grado de Ingeniería Informática"
-eduStartDate = "2020-07-01"
+startDate = "2020-07-01"
 +++

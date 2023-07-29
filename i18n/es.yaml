@@ -33,6 +33,9 @@ wordCount:
   one: "{{ .WordCount }} palabra"
   other: "{{ .WordCount }} palabras"
 
+present:
+  other: Presente
+
 postsNewer:
   other: Entradas posteriores
 
