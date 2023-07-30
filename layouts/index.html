@@ -1,6 +1,9 @@
-{{ define "main" }} {{ partial "profile.html" . }}
+{{ define "main" }} 
+<div class="index" style="height: 80vh; display: flex; align-items: center; justify-content: center;">
+{{ partial "profile.html" . }}
+{{/*
 <div id="list-page">
-    {{/* One page content only: {{ with .Site.GetPage "section" "about" }} {{ .Content }} {{ end }} For more than one page: {{ $aboutPages := where .Site.RegularPages "Type" "about" }} {{ range $aboutPages }} {{ .Content }} {{ end }} */}}
+    <!-- One page content only: {{ with .Site.GetPage "section" "about" }} {{ .Content }} {{ end }} For more than one page: {{ $aboutPages := where .Site.RegularPages "Type" "about" }} {{ range $aboutPages }} {{ .Content }} {{ end }} -->
     <h3 class="h1 nomarginbottom">About Me</h3>
     <hr class="nmpt" />
     <section id="section">
@@ -45,7 +48,6 @@
         {{ end }}
     </div>
     {{ end }}
-
     <section id="tags">
         <!-- .Data is not accessible inside section folder. I have to include taxonomies in config file. Then, I can retrieve it. -->
         <span class="tag">
@@ -55,7 +57,7 @@
     </section>
 </div>
 <section id="archive">
-    {{ range $key, $value := .Site.RegularPages.GroupBy "Section" }} {{ if eq .Key "posts" }} {{/* Do something with $value.Pages */}}
+    {{ range $key, $value := .Site.RegularPages.GroupBy "Section" }} {{ if eq .Key "posts" }} <!-- Do something with $value.Pages -->
     <div class="group">
         <h3 class="key">
             Posts
@@ -83,7 +85,7 @@
 </section>
 
 <section id="archive">
-    {{ range $key, $value := .Site.RegularPages.GroupByDate "2006" }} {{/* Date 0001: invalid date (may come from another section other than posts), invalid key */}} {{ if ne .Key "0001" }}
+    {{ range $key, $value := .Site.RegularPages.GroupByDate "2006" }} <!-- Date 0001: invalid date (may come from another section other than posts), invalid key --> {{ if ne .Key "0001" }}
     <div class="group">
         <h3 class="key">
             {{ .Key }} ({{ len .Pages }})
@@ -110,5 +112,6 @@
 
     {{ end }}{{ end }}
 </section>
-
+*/}}
+</div>
 {{ end }}

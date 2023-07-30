@@ -3,11 +3,11 @@ languageCode: en
 title: Antoni Aloy Torrens
 
 # Default content language, support en (English) / zh (Chinese) / nl (Dutch) / fr (French) / es (Spanish) / da (Danish), default 'en'
-defaultContentLanguage: en
-
+defaultContentLanguage: 
+defaultContentLanguageInSubdir: true
 hasCJKLanguage: true
 permalinks:
-  posts: /posts/:title/
+  posts: /blog/:year/:month/:slug/
 
 paginate: 3
 
@@ -15,8 +15,17 @@ paginate: 3
 languages:
   en:
     contentDir: "content_raw/en"
+    languageCode: "en-US"
+    languageDirection: "ltr"
     languageName: "English"
-    weight: 1
+    #permalinks:
+    #  page:
+    #    blog: "/blog/:year/:month/:slug/" # Only blog has sections in specific for each of the markdown file
+    #  section:
+    #    blog: "/blog/"
+    #    education: "/education/"
+    #    experience: "/experience/"
+    #    projects: "/projects/"
     menu:
       main:
         - name: "Blog"
@@ -31,10 +40,20 @@ languages:
         - name: "Projects"
           url: "/en/projects/"
           weight: -100
+    weight: 1
   es:
     contentDir: "content_raw/es"
-    languageName: "Spanish"
-    weight: 2
+    languageCode: "es-ES"
+    languageDirection: "ltr"
+    languageName: "Español"
+    #permalinks:
+    #  page:
+    #    blog: "/blog/:year/:month/:slug/" # Only blog has sections in specific for each of the markdown file
+    #  section:
+    #    blog: "/blog/"
+    #    education: "/education/"
+    #    experience: "/experience/"
+    #    projects: "/projects/"
     menu:
       main:
         - name: "Blog"
@@ -49,10 +68,20 @@ languages:
         - name: "Proyectos"
           url: "/es/projects/"
           weight: -100
+    weight: 2
   ca:
     contentDir: "content_raw/ca"
-    languageName: "Catalan"
-    weight: 3
+    languageCode: "es-CA"
+    languageDirection: "ltr"
+    languageName: "Català"
+    #permalinks:
+    #  page:
+    #    blog: "/blog/:year/:month/:slug/" # Only blog has sections in specific for each of the markdown file
+    #  section:
+    #    blog: "/blog/"
+    #    education: "/education/"
+    #    experience: "/experience/"
+    #    projects: "/projects/"
     menu:
       main:
         - name: "Blog"
@@ -67,6 +96,7 @@ languages:
         - name: "Projectes"
           url: "/ca/projects/"
           weight: -100
+    weight: 3
 
 
 # Hugo Configure Markup
@@ -144,7 +174,6 @@ params:
 
   # You can put your custom css and js to `static` directory, or use remote css and js files which start with `http://` or `https://`
   customCSS:
-    - css/custom.css
     ## e.g.
     # - css/custom.css # local css in `static/css/custom.css`
     # - https://example.com/custom.css # remote css

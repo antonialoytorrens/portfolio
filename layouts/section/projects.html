@@ -1,6 +1,7 @@
 {{ define "main" }}
 <div id="list-page">
-    <h3 class="h1 title dinitial">Projects</h3>
+    <!-- TODO: Something like this: https://codepen.io/AllThingsSmitty/pen/MyqmdM -->
+    <h3 class="h1 title dinitial">Projects</h3> 
     <hr class="nmpt" /> {{ range ( where .Site.RegularPages "Type" "projects" ) }}
     <section class="item">
         <div>
