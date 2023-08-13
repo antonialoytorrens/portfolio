@@ -1,16 +1,18 @@
 {{ define "main" }}
 <div id="list-page">
-    <h1 class="title dinitial">Education</h1>
-    <hr class="nmpt" /> 
-    {{ $educationPages := ( sort (where .Site.RegularPages "Type" "education" ) ".Params.startDate" "desc" ) }}
-    {{ range $index, $page := $educationPages }}
-    {{ $isFirst := eq $index 0 }}
-    {{ $isLast := eq $index (sub (len $educationPages) 1) }}
-    <section class="item{{ if $isFirst }} mb4{{ else if $isLast }} mt4{{ else }} mt4 mb4{{ end }}">
-        <article>
+    <div class="maintitle">
+        <h1 class="maintitle dinitial">Education</h1>
+    </div>
+    <hr class="dotted" /> 
+    <section>
+        {{ $educationPages := ( sort (where .Site.RegularPages "Type" "education" ) ".Params.startDate" "desc" ) }}
+        {{ range $index, $page := $educationPages }}
+        {{ $isFirst := eq $index 0 }}
+        {{ $isLast := eq $index (sub (len $educationPages) 1) }}
+        <article class="item{{ if $isFirst }} mb4{{ else if $isLast }} mt4{{ else }} mt4 mb4{{ end }}">
             <h2 class="title exp">
                 {{ if .Params.linktitle }}
-                    <a href='{{ .Params.linktitle }}'>{{ .Params.title }}</a>
+                    <a class="title" href='{{ .Params.linktitle }}'>{{ .Params.title }}</a>
                 {{ else }}
                     {{ .Params.title }}
                 {{ end }}
@@ -23,13 +25,12 @@
                 {{ if .Params.institution }}<span>,&nbsp;<a href='{{ .Params.curl }}'>{{ .Params.institution }}</a></span>{{ end }}
             </div>
             {{ if .Params.subtitle }}
-            <h3 class="title exp">{{ .Params.subtitle }}</h3>
+                <h3 class="title exp">{{ .Params.subtitle }}</h3>
             {{ end }} 
             {{ if .Params.subtitle2 }}
-            <h3 class="title exp">{{ .Params.subtitle2 }}</h3>
+                <h3 class="title exp">{{ .Params.subtitle2 }}</h3>
             {{ end }} {{ .Content }}
         </article>
-    </section>
     {{ end }}
 </div>
 {{ end }}

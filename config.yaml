@@ -3,7 +3,7 @@ languageCode: en
 title: Antoni Aloy Torrens
 
 # Default content language, support en (English) / zh (Chinese) / nl (Dutch) / fr (French) / es (Spanish) / da (Danish), default 'en'
-defaultContentLanguage: 
+defaultContentLanguage: en
 defaultContentLanguageInSubdir: true
 hasCJKLanguage: true
 permalinks:

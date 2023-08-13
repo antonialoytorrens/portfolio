@@ -1,7 +1,8 @@
 +++
 title = "Jardines Alegres S.L."
 curl = "https://jardinesalegres.com"
-date = 2020-08-16
+img = "/images/projects/jardinesalegres.jpg"
+imgalt = "Jardines Alegres Home Page"
 +++
 
 Design and development of a web page for the company Jardines Alegres S.L.

@@ -1,24 +1,27 @@
 {{ define "main" }}
 <div id="list-page">
-    <h3 class="h1 title dinitial">Experience</h3>
-    <hr class="nmpt" /> {{ range ( sort (where .Site.RegularPages "Type" "experience" ) "Params.expStartDate" "desc" ) }}
-    <section class="item">
-        <div>
-            <h3 class="title exp">
-                {{ if eq .Params.companyUrlInAbbr true }}
-                <a href='{{ .Params.companyUrl }}'>{{ .Params.companyAbbr }}</a> {{ end }}
-            </h3>
-            <div class="date exp">
-                <time datetime="{{ .Params.expStartDate }}">{{ (time .Params.expStartDate).Format "Jan, 2006" }}</time>
-                <span>-</span> {{ if .Params.expEndDate }}
-                <time datetime="{{ .Params.expEndDate }}">{{ (time .Params.expEndDate).Format "Jan, 2006" }}</time> {{ else }}
-                <span>{{ i18n "present" . }}</span> {{ end }}
+    <div class="maintitle">
+        <h1 class="maintitle dinitial">Experience</h1>
+    </div>
+    <hr /> 
+    <section>
+        {{ range ( sort (where .Site.RegularPages "Type" "experience" ) "Params.expStartDate" "desc" ) }}
+        <article class="item">
+            <div>
+                <h3 class="title exp">
+                    <a class="title" href='{{ .Params.companyUrl }}'>{{ .Params.company }}</a>
+                </h3>
+                <div class="date exp">
+                    <time datetime="{{ .Params.expStartDate }}">{{ (time .Params.expStartDate).Format "Jan, 2006" }}</time>
+                    <span>-</span> {{ if .Params.expEndDate }}
+                    <time datetime="{{ .Params.expEndDate }}">{{ (time .Params.expEndDate).Format "Jan, 2006" }}</time>{{ else }}
+                    <span>{{ i18n "present" . }}</span>{{ end }}
+                    <span>&nbsp;&middot;&nbsp;<a href='{{ .Params.companyUrl }}'>Website</a></span>
+                </div>
+                {{ .Content }}
             </div>
-            <h3 class="title exp">{{ .Params.company }}</h3>
-            {{ .Content }}
-        </div>
-        <hr />
+        </article>
+        {{ end }}
     </section>
-    {{ end }}
 </div>
 {{ end }}
