@@ -1,15 +1,22 @@
+#!/usr/bin/env python3
+
 import re
 import os
 import glob
 import shutil
 import pytest
+from sys import path
+
+# Add the parent directory to sys.path
+path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from innerlinks import apply_links, apply_links_to_files, remove_nolinks
 
 # * BEGIN SETUP
 # This is the test suite done for the innerlinks.py tool to ensure reliability.
 
 # Set the script path to the parent of the current working directory
-script_dir = f"{os.path.dirname(os.path.realpath(__file__))}/Test"
+script_dir = f"{os.path.dirname(os.path.realpath(__file__))}"
 os.chdir(script_dir)
 
 src_dir = f"{script_dir}/original"

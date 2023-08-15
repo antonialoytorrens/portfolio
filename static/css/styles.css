@@ -479,6 +479,10 @@ main {
     margin-top: -1rem;
 }
 
+.circular {
+    border-radius: 50%;
+}
+
 @media (max-width: 1700px) {
     .col {
         flex: 0 0 50%;
@@ -510,6 +514,53 @@ main {
         max-width: 100%;
     }
 }
+
+/* This would be without body resizing */
+/*
+.col {
+    flex: 0 0 100%;
+    max-width: 20%;
+    padding-bottom: 16px;
+    text-align: center;
+}
+
+.responsive-img {
+    max-width: 100%;
+    margin: auto;
+    height: auto;
+    display: block;
+
+    margin-top: -1rem;
+}
+
+@media (max-width: 1990px) {
+    .col {
+        flex: 0 0 100%;
+        max-width: 25%;
+    }
+}
+
+@media (max-width: 1530px) {
+    .col {
+        flex: 0 0 100%;
+        max-width: 33.33333%;
+    }
+}
+
+@media (max-width: 1075px) {
+    .col {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 790px) {
+    .col {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+*/
 
 /* END PROJECTS */
 

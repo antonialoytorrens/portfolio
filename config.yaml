@@ -116,7 +116,10 @@ markup:
 
 # Social links in footer, support github,twitter,stackoverflow,facebook
 social:
+  linkedin: https://www.linkedin.com/in/antoni-aloy-torrens-7283481b2/
   github: https://github.com/antonialoytorrens
+  #gitlab: https://gitlab.com/antonialoytorrens
+  #xda: https://forum.xda-developers.com/member.php?u=10788301
   # twitter: your-github-link
   # stackoverflow: your-github-link
   # facebook: your-facebook-link

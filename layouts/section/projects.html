@@ -9,7 +9,7 @@
             {{/* TODO: order by project types: web, linux, etc. */}}
             <div class="row">
             {{ $pages := where .Site.RegularPages "Type" "projects" }}
-            {{ range $index, $page := sort $pages "Params.order" "asc" }}
+            {{ range $index, $page := sort $pages ".File.BaseFileName" "asc" }}
                 <div class="col">
                     <div style="border: 1px solid #DFDFDF; height: 100%; margin: 0.5rem;">
                         {{ if .Params.img }}
