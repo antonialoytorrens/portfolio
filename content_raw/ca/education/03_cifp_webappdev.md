@@ -1,5 +1,5 @@
 +++
-title = "FP Superior en Desenvolupament d'Aplicacions Web"
+title = "Tècnic Superior en Desenvolupament d'Aplicacions Web"
 institution = "CIFP Pau Casesnoves"
 curl = "https://paucasesnovescifp.cat"
 startDate = "2018-09-01"

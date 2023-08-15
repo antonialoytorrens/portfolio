@@ -98,16 +98,18 @@ h1 {
 .maintitle {
     /* Container */
     padding-top: 1rem;
-    padding-bottom: 1rem;
 
     /* Font */
-    font-size: 4.25rem;
-    letter-spacing: -0.281rem;
+    /*font-size: 4.25rem;*/
+    font-size: 3.5rem;
+    /*letter-spacing: -0.281rem;*/
+    letter-spacing: -0.1rem;
     font-weight: 400;
 }
 
 .title {
-    font-size: 2.281rem;
+    /*font-size: 2.281rem;*/
+    font-size: 1.5rem;
     font-weight: normal;
     margin: 0;
     line-height: 1.4;
@@ -131,7 +133,7 @@ h1 {
 }
 
 section {
-    padding-top: 44px;
+    padding-top: 36px;
     padding-bottom: 36px;
 }
 
@@ -286,6 +288,14 @@ h5 {
     margin-bottom: 32px;
 }
 
+.pr1 {
+    padding-right: 16px;
+}
+
+.pl1 {
+    padding-left: 16px;
+}
+
 .pd2 {
     padding: 16px;
 }
@@ -295,6 +305,7 @@ h5 {
 
 .linklogo {
     margin: 16px;
+    font-size: 18px;
 }
 
 
@@ -330,7 +341,6 @@ footer {
 body {
     font-size: 1rem;
 }
-
 
 /* End fonts by default */
 
@@ -389,6 +399,14 @@ main {
     margin-bottom: 2rem;
 }
 
+.pr1 {
+    padding-right: 1rem;
+}
+
+.pl1 {
+    padding-left: 1rem;
+}
+
 .pd2 {
     padding: 1rem;
 }
@@ -398,6 +416,7 @@ main {
 
 .linklogo {
     margin: 1rem;
+    font-size: 1.125rem;
 }
 
 
@@ -432,8 +451,8 @@ main {
     max-width: 100%;
     margin-right: auto;
     margin-left: auto;
-    padding-right: 15px;
-    padding-left: 15px;
+    /*padding-right: 15px;
+    padding-left: 15px;*/
 }
 
 .row {
@@ -442,10 +461,11 @@ main {
 }
 
 .col {
-    flex: 1 0 0%;
+    flex: 0 0 100%;
     max-width: 33.33333%;
-    padding-right: 15px;
-    padding-left: 15px;
+    /*padding-left: 16px;
+    padding-right: 16px;*/
+    padding-bottom: 16px;
     text-align: center;
 }
 
@@ -454,7 +474,35 @@ main {
     margin: auto;
     height: auto;
     display: block;
-}  
+
+    /* FIXME */
+    margin-top: -1rem;
+}
+
+@media (max-width: 1700px) {
+    .col {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+/* Because of body resize, everything has to be scaled again */
+
+@media (max-width: 1300px) {
+    .col {
+        flex: 0 0 100%;
+        max-width: 33.33333%;
+    }
+}
+
+@media (max-width: 900px) {
+    .col {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+/* End of body resize */
 
 @media (max-width: 790px) {
     .col {

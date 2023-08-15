@@ -6,42 +6,40 @@
     <hr class="dotted" />
     <section class="project">
         <div class="container">
+            {{/* TODO: order by project types: web, linux, etc. */}}
+            <div class="row">
             {{ $pages := where .Site.RegularPages "Type" "projects" }}
-            {{ range $index, $page := $pages }}
-                {{ if eq (mod $index 3) 0 }}
-                    <div class="row">
-                {{ end }}
+            {{ range $index, $page := sort $pages "Params.order" "asc" }}
                 <div class="col">
-                    <h3 class="title exp">
-                        {{ if .Params.curl }}
-                            <a class="title" href="{{ .Params.curl }}">{{ .Params.title }}</a>
-                        {{ else }}
-                            {{ .Params.title }}
-                        {{ end }}
-                    </h3>
-                    {{ if .Params.img }}
-                        <p>
-                            {{ if .Params.imglink }}
-                                <a href="{{ .Params.imglink }}"><img class="responsive-img" src="{{ .Params.img | relURL }}" alt="{{ .Params.imgalt }}" loading="lazy"/></a>
-                            {{ else }}
-                                {{ if .Params.curl }}
-                                    <a href="{{ .Params.curl }}"><img class="responsive-img" src="{{ .Params.img | relURL }}" alt="{{ .Params.imgalt }}" loading="lazy"/></a>
+                    <div style="border: 1px solid #DFDFDF; height: 100%; margin: 0.5rem;">
+                        {{ if .Params.img }}
+                            <p>
+                                {{ if .Params.imglink }}
+                                    <a href="{{ .Params.imglink }}"><img class="responsive-img" src="{{ .Params.img | relURL }}" alt="{{ .Params.imgalt }}" loading="lazy"/></a>
                                 {{ else }}
-                                    <img class="responsive-img" src="{{ .Params.img | relURL }}" alt="{{ .Params.imgalt }}" loading="lazy"/>
+                                    {{ if .Params.curl }}
+                                        <a href="{{ .Params.curl }}"><img class="responsive-img" src="{{ .Params.img | relURL }}" alt="{{ .Params.imgalt }}" loading="lazy"/></a>
+                                    {{ else }}
+                                        <img class="responsive-img" src="{{ .Params.img | relURL }}" alt="{{ .Params.imgalt }}" loading="lazy"/>
+                                    {{ end }}
                                 {{ end }}
-                            {{ end }}
-                        </p>
-                    {{ end }}
-                    {{ .Content }} 
-                    {{ if .Params.curl }}<p><a href="{{ .Params.curl }}">{{ .Params.curl }}</a></p>{{ end }}
-                </div>
-                {{ if eq (mod (add $index 1) 3) 0 }}
+                            </p>
+                        {{ end }}
+                        <div class="content" style="padding: 0.5rem;">
+                            <h3 class="title exp">
+                                {{ if .Params.curl }}
+                                    <a class="title" href="{{ .Params.curl }}">{{ .Params.title }}</a>
+                                {{ else }}
+                                    {{ .Params.title }}
+                                {{ end }}
+                            </h3>
+                            {{ .Content }} 
+                            {{ if .Params.curl }}<p><a href="{{ .Params.curl }}">{{ if .Params.curltitle }}{{ .Params.curltitle }}{{ else }}{{ .Params.curl }}{{ end }}</a></p>{{ end }}
+                        </div>
                     </div>
-                {{ end }}
-            {{ end }}
-            {{ if ne (mod (len $pages) 3) 0 }}
                 </div>
             {{ end }}
+            </div>
         </div>
     </section>
 {{ end }}

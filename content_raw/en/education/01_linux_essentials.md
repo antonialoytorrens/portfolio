@@ -1,6 +1,7 @@
 +++
 title = "Linux Essentials Certification"
-linktitle = "https://lpi.org/v/LPI000456258/gjlxpst22w"
+cert = "Certificate"
+linkcert = "https://lpi.org/v/LPI000456258/gjlxpst22w"
 startDate = "2019-07-01"
 endDate = "2020-06-01"
 +++

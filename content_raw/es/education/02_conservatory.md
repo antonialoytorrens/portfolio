@@ -1,8 +1,7 @@
 +++
-title = "Conservatori de Música Antoni Torrandell"
+title = "Grado Profesional en Piano"
+institution = "EMMAT"
 curl = "https://emmat.incaciutat.com/"
-subtitle = "Grado Medio"
-subtitle2 = "Graduado en Piano, como intérprete"
 startDate = "2012-09-01"
 endDate = "2022-06-01"
 +++

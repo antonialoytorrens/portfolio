@@ -1,8 +1,7 @@
 +++
-title = "Centre Integrat de Formació Professional Pau Casesnoves"
+title = "Técnico Superior en Desarrollo de Aplicaciones Web"
+institution = "CIFP Pau Casesnoves"
 curl = "https://paucasesnovescifp.cat"
-subtitle = "Certificado de Formación Profesional"
-subtitle2 = "Especialista en Desarrollo de Aplicaciones Web"
 startDate = "2018-09-01"
 endDate = "2020-06-01"
 +++

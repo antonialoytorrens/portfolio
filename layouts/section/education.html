@@ -22,7 +22,8 @@
                 <span>-</span> {{ if .Params.endDate }}
                 <time datetime="{{ .Params.endDate }}">{{ (time .Params.endDate).Format "Jan 2006" }}</time> {{ else }}
                 <span>{{ i18n "present" . }}</span>{{ end }}
-                {{ if .Params.institution }}<span>,&nbsp;<a href='{{ .Params.curl }}'>{{ .Params.institution }}</a></span>{{ end }}
+                {{ if .Params.institution }}<span>&middot;&nbsp;<a href='{{ .Params.curl }}'>{{ .Params.institution }}</a></span>{{ end }}
+                {{ if .Params.cert }}<span>&middot;&nbsp;<a href='{{ .Params.linkcert }}'><b>{{ .Params.cert }}</b></a></span>{{ end }}
             </div>
             {{ if .Params.subtitle }}
                 <h3 class="title exp">{{ .Params.subtitle }}</h3>

@@ -1,7 +1,6 @@
 +++
-title = "Conservatori de Música Antoni Torrandell"
+title = "Grado Profesional en Órgano"
+institution = "EMMAT"
 curl = "https://emmat.incaciutat.com/"
-subtitle = "Middle Grade"
 startDate = "2022-10-01"
 +++
-Organum
