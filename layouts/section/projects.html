@@ -10,7 +10,7 @@
             <div class="row">
             {{ $pages := where .Site.RegularPages "Type" "projects" }}
             {{ range $index, $page := sort $pages ".File.BaseFileName" "asc" }}
-                <div class="col">
+                <div class="col" style="margin-left: auto; margin-right: auto;">
                     <div style="border: 1px solid #DFDFDF; height: 100%; margin: 0.5rem;">
                         {{ if .Params.img }}
                             <p>
@@ -42,4 +42,5 @@
             </div>
         </div>
     </section>
+</div>
 {{ end }}
