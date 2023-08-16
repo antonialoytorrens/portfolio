@@ -1,6 +1,7 @@
 +++
 title = "Juan Luis Escrivá"
 curl = "http://www.juanluisescriva.com/"
+curltitle = "Website"
 img = "/images/projects/juanluisescriva.jpg"
 imgalt = "Juan Luis Escrivá Home Page"
 +++

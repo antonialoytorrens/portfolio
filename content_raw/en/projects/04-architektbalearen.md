@@ -1,6 +1,7 @@
 +++
 title = "Alwin Klotz - Architekt Balearen"
 curl = "https://www.architektbalearen.com/"
+curltitle = "Website"
 img = "/images/projects/architektbalearen.jpg"
 imgalt = "Alwin Klotz, Architect Balearen Home Page"
 +++
