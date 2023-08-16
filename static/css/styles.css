@@ -377,9 +377,7 @@ main {
     main {
         margin-left: 30px;
         margin-right: 30px;
-        
-        /* FIXME */
-        width: 100%;
+        width: auto;
     }
 }
 
