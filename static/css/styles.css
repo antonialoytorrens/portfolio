@@ -35,10 +35,12 @@ body {
 /* End fonts by default */
 
 html {
+    background: #FFFFFF;
     background-color: #FFFFFF;
 }
 
 body {
+    background: #FFFFFF;
     background-color: #FFFFFF;
     margin: 0px;
     color: #3E3E3E;
