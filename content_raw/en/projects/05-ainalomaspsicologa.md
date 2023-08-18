@@ -6,4 +6,4 @@ img = "/images/projects/ainalomaspsicologa.jpg"
 imgalt = "Aina Lomas, Psychologist Home Page"
 +++
 
-Design and development of a web page for the company of the architect Alwin Klotz.
+Design and development of a web page for the psychologist Aina Lomas.
