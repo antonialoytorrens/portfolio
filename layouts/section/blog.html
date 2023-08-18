@@ -1,108 +1,88 @@
-{{ define "main" }} {{ $filterYear := .Params.Get "year" }}
+{{ define "main" }}
+{{ $filterYear := .Params.Get "year" }}
 <div id="list-page">
     <h1 class="title">Blog
         <br>
         <span class="subtitle"></span>
-      </h1>
-      <ul class="tags">
-        
-    </ul>
-    {{ $pages := (where .Site.RegularPages "Type" "blog") }} {{ $paginator := .Paginate ($pages) }} {{ range $paginator.Pages }} {{ $title := .Title }} {{ $summary := .Summary }}
+    </h1>
+    <ul class="tags"></ul>
+    
+    {{ $pages := (where .Site.RegularPages "Type" "blog") }}
+    {{ $paginator := .Paginate ($pages) }}
+    {{ range $paginator.Pages }}
     <section class="item">
         <div>
-            <h3 style="margin-bottom: 0px;"><a href='{{ .RelPermalink }}'>{{ $title }}</a></h3>
+            <h3 style="margin-bottom: 0px;"><a href='{{ .RelPermalink }}'>{{ .Title }}</a></h3>
             <div class="date">
-                <time datetime="{{ .PublishDate }}">{{ i18n "publishDate" . }}</time>
+                <time datetime="{{ .PublishDate.Format "2006-01-02" }}">{{ .PublishDate.Format "January 2, 2006" }}</time>
             </div>
         </div>
-
+        
         {{ if ne .Site.Params.hiddenPostSummaryInHomePage true }}
-        <p class=>{{ $summary | plainify | htmlUnescape }}</p>
+        <p>{{ .Summary | plainify | htmlUnescape }}</p>
         <p class="textright"><a href='{{ .RelPermalink }}'>{{ i18n "readMore" . }} »</a></p>
         {{ end }}
-
+        
         <hr/>
     </section>
-    {{ end }} {{ if or ($paginator.HasPrev) ($paginator.HasNext) }}
+    {{ end }}
+    
+    {{ if or ($paginator.HasPrev) ($paginator.HasNext) }}
     <div class="pagination">
         {{ if $paginator.HasPrev }}
         <span class="prev">
-                  <a href="{{.Paginator.Prev.URL}}">
-                      <span class="arrow">←</span> {{ with .Site.Params.newerPosts }}{{ . }}{{ else }}{{ i18n "postsNewer" }}{{ end }}
-        </a>
+            <a href="{{ $paginator.Prev.URL }}">
+                <span class="arrow">←</span> {{ with .Site.Params.newerPosts }}{{ . }}{{ else }}{{ i18n "postsNewer" }}{{ end }}
+            </a>
         </span>
-        {{ end }} {{ if $paginator.HasNext }}
+        {{ end }}
+        
+        {{ if $paginator.HasNext }}
         <span class="next">
-                  <a href="{{.Paginator.Next.URL}}">
-                      {{ with .Site.Params.olderPosts }}{{ . }}{{ else }}{{ i18n "postsOlder" }}{{ end }} <span class="arrow">→</span>
-        </a>
+            <a href="{{ $paginator.Next.URL }}">
+                {{ with .Site.Params.olderPosts }}{{ . }}{{ else }}{{ i18n "postsOlder" }}{{ end }} <span class="arrow">→</span>
+            </a>
         </span>
         {{ end }}
     </div>
     {{ end }}
 
     <section id="tags">
-        <!-- .Data is not accessible inside section folder. I have to include taxonomies in config file. Then, I can retrieve it. -->
         <span class="tag">
             {{ range $tag, $pages := .Site.Taxonomies.tags }}
-            <a href="tags/{{ $tag | urlize }}">{{ $tag | upper }}<span>({{ $pages.Count }})</span></a> {{ end }}
+            <a href="{{ "tags" | relURL }}/{{ $tag | urlize }}">{{ $tag | upper }}<span>({{ $pages.Count }})</span></a>
+            {{ end }}
         </span>
     </section>
 </div>
-<section id="archive">
-    {{ range $key, $value := .Site.RegularPages.GroupBy "Section" }} {{ if eq .Key "posts" }} {{/* Do something with $value.Pages */}}
-    <div class="group">
-        <h3 class="key">
-            Posts
-        </h3>
-
-        {{ range .Pages }}
-        <div class="value">
-            <div class="date">
-                <time datetime="{{ .PublishDate }}">{{ i18n "publishDateShort" . }}</time>
-            </div>
-            <div class="title">
-                <a href="{{ .Permalink }}">
-                          {{ .Title }}
-                      </a> {{ with .Params.tags }}
-                <div class="tags">
-                    {{ range . }}
-                    <a href="{{ " tags/ " | absURL }}{{ . | urlize }}">{{ . }}</a> {{ end }}
-                </div>
-                {{ end}}
-            </div>
-        </div>
-        {{ end }}
-    </div>
-    {{ end }} {{ end }}
-</section>
 
 <section id="archive">
-    {{ range $key, $value := .Site.RegularPages.GroupByDate "2006" }} {{/* Date 0001: invalid date (may come from another section other than posts), invalid key */}} {{ if ne .Key "0001" }}
+    {{ range $key, $value := .Site.RegularPages.GroupByDate "2006" }}
     <div class="group">
         <h3 class="key">
             {{ .Key }} ({{ len .Pages }})
         </h3>
 
         {{ range .Pages }}
+        {{ if eq .Type "blog" }}
         <div class="value">
             <div class="date">
-                <time datetime="{{ .PublishDate }}">{{ i18n "publishDateShort" . }}</time>
+                <time datetime="{{ .PublishDate.Format "2006-01-02" }}">{{ .PublishDate.Format "January 2, 2006" }}</time>
             </div>
             <div class="title">
-                <a href="{{ .Permalink }}">
-                          {{ .Title }}
-                      </a> {{ with .Params.tags }}
+                <a href="{{ .Permalink }}">{{ .Title }}</a>
+                {{ with .Params.tags }}
                 <div class="tags">
                     {{ range . }}
-                    <a href="{{ "tags/" | absURL }}{{ . | urlize }}">{{ . }}</a> {{ end }}
+                    <a href="{{ "tags/" | absURL }}{{ . | urlize }}">{{ . }}</a>
+                    {{ end }}
                 </div>
-                {{ end}}
+                {{ end }}
             </div>
         </div>
         {{ end }}
+        {{ end }}
     </div>
-
-    {{ end }}{{ end }}
+    {{ end }}
 </section>
 {{ end }}

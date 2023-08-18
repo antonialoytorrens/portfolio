@@ -6,10 +6,23 @@ title: Antoni Aloy Torrens
 defaultContentLanguage: en
 defaultContentLanguageInSubdir: true
 hasCJKLanguage: true
-permalinks:
-  posts: /blog/:year/:month/:slug/
+#permalinks:
+#  posts: /blog/:year/:month/:slug/
 
 paginate: 3
+
+# See https://stackoverflow.com/a/59760977
+frontmatter:
+  date: 
+    - publishDate
+    - :filename
+    - date
+    - :fileModTime
+  publishDate: 
+    - publishDate
+    - :filename
+    - date
+    - :fileModTime
 
 # Hugo configure languages
 languages:
@@ -18,14 +31,6 @@ languages:
     languageCode: "en-US"
     languageDirection: "ltr"
     languageName: "English"
-    #permalinks:
-    #  page:
-    #    blog: "/blog/:year/:month/:slug/" # Only blog has sections in specific for each of the markdown file
-    #  section:
-    #    blog: "/blog/"
-    #    education: "/education/"
-    #    experience: "/experience/"
-    #    projects: "/projects/"
     menu:
       main:
         - name: "Blog"
@@ -46,14 +51,6 @@ languages:
     languageCode: "es-ES"
     languageDirection: "ltr"
     languageName: "Español"
-    #permalinks:
-    #  page:
-    #    blog: "/blog/:year/:month/:slug/" # Only blog has sections in specific for each of the markdown file
-    #  section:
-    #    blog: "/blog/"
-    #    education: "/education/"
-    #    experience: "/experience/"
-    #    projects: "/projects/"
     menu:
       main:
         - name: "Blog"
@@ -74,14 +71,6 @@ languages:
     languageCode: "es-CA"
     languageDirection: "ltr"
     languageName: "Català"
-    #permalinks:
-    #  page:
-    #    blog: "/blog/:year/:month/:slug/" # Only blog has sections in specific for each of the markdown file
-    #  section:
-    #    blog: "/blog/"
-    #    education: "/education/"
-    #    experience: "/experience/"
-    #    projects: "/projects/"
     menu:
       main:
         - name: "Blog"
