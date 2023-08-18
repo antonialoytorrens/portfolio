@@ -16,7 +16,7 @@
                     <span>-</span> {{ if .Params.expEndDate }}
                     <time datetime="{{ .Params.expEndDate }}">{{ (time .Params.expEndDate).Format "Jan, 2006" }}</time>{{ else }}
                     <span>{{ i18n "present" . }}</span>{{ end }}
-                    <span>&nbsp;&middot;&nbsp;<a href='{{ .Params.companyUrl }}'>Website</a></span>
+                    <span>&middot;&nbsp;<a href='{{ .Params.companyUrl }}'>Website</a></span>
                 </div>
                 {{ .Content }}
             </div>
