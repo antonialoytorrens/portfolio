@@ -562,6 +562,53 @@ main {
 }
 */
 
+/* Hamburger menu */
+/* Default CSS - Hiding the checkbox */
+.menu-toggle {
+    display: none;
+}
+
+/* Hide hamburger menu for larger screens */
+.hamburger-menu {
+    display: none;
+}
+
+/* Flex layout for easier styling */
+@media (max-width: 768px) {
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+/* Language selection styling */
+.language-selection {
+    text-align: center;
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 768px) {
+    /* Show hamburger menu */
+    .hamburger-menu {
+        display: block;
+    }
+
+    /* Hide nav-links by default */
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Show nav-links when menuToggle is checked */
+    .menu-toggle:checked + .hamburger-menu + .nav-links {
+        display: flex;
+    }
+}
+
+
 /* END PROJECTS */
 
 
