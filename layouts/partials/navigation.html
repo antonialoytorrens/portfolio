@@ -1,12 +1,18 @@
 <nav class="navigation textcenter">
-	{{ if not .IsHome }}
-		<a class="linklogo" href="{{ "/" | absLangURL }}"><b>Antoni Aloy Torrens</b></a>
-	{{ end }}
+	<div class="navtoggle">
+		{{ if not .IsHome }}
+			<a class="navhidebig linklogo" href="{{ "/" | absLangURL }}"><b>Antoni Aloy Torrens</b></a>
+		{{ end }}
 
-	<input type="checkbox" id="menuToggle" class="menu-toggle">
-    <label for="menuToggle" class="hamburger-menu">☰</label>
-		
-	<div class="nav-links">		
+		<input type="checkbox" id="menuToggle" class="menu-toggle">
+		<label for="menuToggle" class="hamburger-menu">☰</label>
+	</div>
+
+	<div class="navlinks">
+		{{ if not .IsHome }}
+			<a class="navhide linklogo" href="{{ "/" | absLangURL }}"><b>Antoni Aloy Torrens</b></a>
+		{{ end }}
+
 		{{ range .Site.Menus.main }}
 			<a class="linklogo" href="{{ .URL | absLangURL }}">{{ .Name }}</a>
 		{{ end }}

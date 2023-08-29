@@ -564,6 +564,14 @@ main {
 
 /* Hamburger menu */
 /* Default CSS - Hiding the checkbox */
+.navhide {
+    display: initial;
+}
+
+.navhidebig {
+    display: none;
+}
+
 .menu-toggle {
     display: none;
 }
@@ -595,7 +603,15 @@ main {
     }
 
     /* Hide nav-links by default */
-    .nav-links {
+    .navhide {
+        display: none;
+    }
+
+    .navhidebig {
+        display: initial;
+    }
+
+    .navlinks {
         display: none;
         flex-direction: column;
         width: 100%;
@@ -603,7 +619,7 @@ main {
     }
 
     /* Show nav-links when menuToggle is checked */
-    .menu-toggle:checked + .hamburger-menu + .nav-links {
+    .menu-toggle:checked + .hamburger-menu + .navlinks {
         display: flex;
     }
 }
