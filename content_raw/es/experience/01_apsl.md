@@ -7,4 +7,5 @@ expendDate = "2019-07-01"
 companyUrlInAbbr = true
 companyUrlInCompany = false
 +++
+
 * Desarrollo de tests de aceptación con [Python](https://python.org) y la tecnología de [Robot Framework](https://robotframework.org/).

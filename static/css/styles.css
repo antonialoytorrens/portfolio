@@ -564,66 +564,76 @@ main {
 
 /* Hamburger menu */
 /* Default CSS - Hiding the checkbox */
-.navhide {
+/*
+.hidesm {
     display: initial;
 }
 
-.navhidebig {
+.hidebig {
     display: none;
 }
 
 .menu-toggle {
     display: none;
 }
-
+*/
 /* Hide hamburger menu for larger screens */
+/*
 .hamburger-menu {
     display: none;
 }
-
-/* Flex layout for easier styling */
+*/
+/* Language selection styling */
+/*
+.language-selection {
+    text-align: center;
+}
+*/
+/* Media Query for smaller screens */
+/*
 @media (max-width: 768px) {
     nav {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
-}
 
-/* Language selection styling */
-.language-selection {
-    text-align: center;
-}
-
-/* Media Query for smaller screens */
-@media (max-width: 768px) {
-    /* Show hamburger menu */
-    .hamburger-menu {
-        display: block;
+    main {
+        margin-left: 16px;
+        margin-right: 16px;
+        margin-left: 1rem;
+        margin-right: 1rem;
     }
+
+    /* Show hamburger menu */
+    /*.hamburger-menu {
+        display: block;
+    }*/
 
     /* Hide nav-links by default */
-    .navhide {
-        display: none;
+    /*.hidebig {
+        display: initial;
     }
 
-    .navhidebig {
-        display: initial;
+    .hidesm {
+        display: none;
     }
 
     .navlinks {
         display: none;
-        flex-direction: column;
         width: 100%;
         text-align: center;
-    }
+    }*/
 
     /* Show nav-links when menuToggle is checked */
-    .menu-toggle:checked + .hamburger-menu + .navlinks {
+	/*.menu-toggle:checked ~ .navlinks {
         display: flex;
-    }
+        flex-direction: column;
+        align-items: center;
+    }*/
+/*
 }
-
+*/
 
 /* END PROJECTS */
 

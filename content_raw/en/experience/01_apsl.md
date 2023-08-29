@@ -8,4 +8,4 @@ companyUrlInAbbr = true
 companyUrlInCompany = false
 +++
 
-Development of acceptance tests with the technology of [Robot Framework](https://robotframework.org/).
+* Development of acceptance tests with [Python](https://python.org) and [Robot Framework](https://robotframework.org) technology.
