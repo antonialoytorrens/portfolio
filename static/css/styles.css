@@ -43,7 +43,7 @@ body {
     background: #FFFFFF;
     background-color: #FFFFFF;
     margin: 0px;
-    color: #3E3E3E;
+    color: #666666;
 }
 
 code {
@@ -65,21 +65,24 @@ h1 {
     border: 1px dashed black;
 }
 
+.twhite {
+    color: #FFFFFF;
+}
+
 .linklogo {
-    color: #1A1A1A;
-    font-weight: bold;
+    color: #FFFFFF;
 }
 
 .linklogo:link {
-    color: #1A1A1A;
+    color: #FFFFFF;
 }
 
 .linklogo:visited {
-    color: #1A1A1A;
+    color: #FFFFFF;
 }
 
 .linklogo:hover {
-    color: #727272;
+    color: #FFFFFF;
 }
 
 .profile {
@@ -87,20 +90,22 @@ h1 {
 }
 
 .navigation {
-    text-align: center;
-    background: #F5F4F3;
-    border-top: 6px solid #D93B00;
-    border-bottom: 1px solid #EAE8E8;
+    background: #D93B00;
 }
 
 .textcenter {
     text-align: center;
 }
 
-.maintitle {
-    /* Container */
-    padding-top: 1rem;
+/* menu title container */
+.mtitlec {
+    /* Background */
+    background: #D93B00;
+    /* Border */
+    border-bottom: 1px solid #595959;
+}
 
+.mtitle {
     /* Font */
     /*font-size: 4.25rem;*/
     font-size: 3.5rem;
@@ -115,18 +120,7 @@ h1 {
     font-weight: normal;
     margin: 0;
     line-height: 1.4;
-}
-
-.title:link {
-    color: #272727;
-}
-
-.title:hover {
-    color: #272727;
-}
-
-.title:visited {
-    color: #272727;
+    color: #003070;
 }
 
 .date {
@@ -171,6 +165,10 @@ article.item {
     width: 50%;
 }
 
+.mxauto {
+    margin: auto;
+}
+
 .nwrap {
     white-space: nowrap;
 }
@@ -180,19 +178,19 @@ article.item {
 
 a {
     text-decoration: none;
-    color: #0000EE;
+    color: #005ED9;
 }
 
 a:link {
-    color: #0000EE;
+    color: #005ED9;
 }
 
 a:visited {
-    color: #0000EE;
+    color: #005ED9;
 }
 
 a:hover {
-    color: #3C3CE3;
+    color: blue;
 }
 
 
@@ -306,7 +304,6 @@ h5 {
 /* LINKS */
 
 .linklogo {
-    margin: 16px;
     font-size: 18px;
 }
 
@@ -369,7 +366,7 @@ h5 {
     font-size: 0.67rem;
 }
 
-main {
+#list-page {
     margin-left: auto;
     margin-right: auto;
     width: 50%;
@@ -415,7 +412,6 @@ main {
 /* LINKS */
 
 .linklogo {
-    margin: 1rem;
     font-size: 1.125rem;
 }
 

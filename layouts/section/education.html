@@ -1,9 +1,10 @@
 {{ define "main" }}
-<div id="list-page">
-    <div class="maintitle">
-        <h1 class="maintitle dinitial">Education</h1>
+<div class="mtitlec">
+    <div class="mhwidth mxauto">
+        <h1 class="mtitle twhite dinitial">Education</h1>
     </div>
-    <hr class="dotted" /> 
+</div>
+<div id="list-page">
     <section>
         {{ $educationPages := ( sort (where .Site.RegularPages "Type" "education" ) ".Params.startDate" "desc" ) }}
         {{ range $index, $page := $educationPages }}
