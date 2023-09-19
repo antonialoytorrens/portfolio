@@ -60,11 +60,6 @@ h1 {
     font-weight: bold;
 }
 
-.dotted {
-    border: 1px dashed #EAE8E8;
-    border: 1px dashed black;
-}
-
 .twhite {
     color: #FFFFFF;
 }
@@ -202,8 +197,8 @@ a:hover {
 footer {
     text-align: center;
     background: #F5F4F3;
-    border-bottom: 6px solid #D93B00;
-    border-top: 1px solid #EAE8E8;
+    border-top: 1px solid #595959;
+    /*border-top: 1px solid #EAE8E8;*/
 }
 
 #social {
@@ -367,8 +362,9 @@ h5 {
 }
 
 #list-page {
-    margin-left: auto;
-    margin-right: auto;
+    /*margin-left: auto;
+    margin-right: auto;*/
+    margin-left: 25%;
     width: 50%;
 }
 
@@ -479,40 +475,6 @@ h5 {
     border-radius: 50%;
 }
 
-@media (max-width: 1700px) {
-    .col {
-        flex: 0 0 50%;
-        max-width: 50%;
-    }
-}
-
-/* Because of body resize, everything has to be scaled again */
-
-@media (max-width: 1300px) {
-    .col {
-        flex: 0 0 100%;
-        max-width: 33.33333%;
-    }
-}
-
-@media (max-width: 900px) {
-    .col {
-        flex: 0 0 50%;
-        max-width: 50%;
-    }
-}
-
-/* End of body resize */
-
-@media (max-width: 790px) {
-    .col {
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
-}
-
-/* This would be without body resizing */
-/*
 .col {
     flex: 0 0 100%;
     max-width: 20%;
@@ -529,7 +491,7 @@ h5 {
     margin-top: -1rem;
 }
 
-@media (max-width: 1990px) {
+@media (max-width: 2490px) {
     .col {
         flex: 0 0 100%;
         max-width: 25%;
@@ -556,7 +518,6 @@ h5 {
         max-width: 100%;
     }
 }
-*/
 
 /* Hamburger menu */
 /* Default CSS - Hiding the checkbox */

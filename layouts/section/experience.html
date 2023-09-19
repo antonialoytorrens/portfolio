@@ -1,16 +1,15 @@
 {{ define "main" }}
-<div id="list-page">
-    <div class="maintitle">
-        <h1 class="maintitle dinitial">Experience</h1>
+<div class="mtitlec">
+    <div class="mhwidth mxauto">
+        <h1 class="mtitle twhite dinitial">Experience</h1>
     </div>
-    <hr /> 
+</div>
+<div id="list-page">
     <section>
         {{ range ( sort (where .Site.RegularPages "Type" "experience" ) "Params.expStartDate" "desc" ) }}
         <article class="item">
             <div>
-                <h3 class="title exp">
-                    <a class="title" href='{{ .Params.companyUrl }}'>{{ .Params.company }}</a>
-                </h3>
+                <h3 class="title exp">{{ .Params.company }}</h3>
                 <div class="date exp">
                     <time datetime="{{ .Params.expStartDate }}">{{ (time .Params.expStartDate).Format "Jan, 2006" }}</time>
                     <span>-</span> {{ if .Params.expEndDate }}
