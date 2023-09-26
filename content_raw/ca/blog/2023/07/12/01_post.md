@@ -7,7 +7,7 @@ tags = [
     "shortcodes",
     "privacy",
 ]
-draft = true
+draft = false
 +++
 
 ## t1

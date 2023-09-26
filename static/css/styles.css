@@ -60,6 +60,25 @@ h1 {
     font-weight: bold;
 }
 
+li {
+    list-style-type: circle;
+}
+
+code {
+    background-color: rgba(0, 0, 0, 0.06);
+    padding: 0 2px;
+    border-radius: 2px 2px;
+    line-height: inherit;
+    word-wrap: break-word;
+    text-indent: 0;
+}
+
+pre {
+    background-color:#f8f8f8;
+    tab-size: 4;
+    overflow-x: auto;
+}
+
 .twhite {
     color: #FFFFFF;
 }

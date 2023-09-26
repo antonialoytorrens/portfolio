@@ -1,16 +1,18 @@
 {{ define "main" }}
 {{ $filterYear := .Params.Get "year" }}
+<div class="mtitlec">
+    <div class="mhwidth mxauto">
+        <h1 class="mtitle twhite dinitial">Blog</h1>
+    </div>
+</div>
 <div id="list-page">
-    <h1 class="title">Blog
-        <br>
-        <span class="subtitle"></span>
-    </h1>
     <ul class="tags"></ul>
     
     {{ $pages := (where .Site.RegularPages "Type" "blog") }}
+    {{/* $pages := .Site.RegularPages */}}
     {{ $paginator := .Paginate ($pages) }}
     {{ range $paginator.Pages }}
-    <section class="item">
+    <section class="item" style="border-bottom: 1px solid #DFDFDF; padding-bottom: 0px; margin-bottom: 36px;">
         <div>
             <h3 style="margin-bottom: 0px;"><a href='{{ .RelPermalink }}'>{{ .Title }}</a></h3>
             <div class="date">
@@ -22,8 +24,6 @@
         <p>{{ .Summary | plainify | htmlUnescape }}</p>
         <p class="textright"><a href='{{ .RelPermalink }}'>{{ i18n "readMore" . }} »</a></p>
         {{ end }}
-        
-        <hr/>
     </section>
     {{ end }}
     
@@ -46,7 +46,7 @@
         {{ end }}
     </div>
     {{ end }}
-
+    {{/*
     <section id="tags">
         <span class="tag">
             {{ range $tag, $pages := .Site.Taxonomies.tags }}
@@ -54,8 +54,9 @@
             {{ end }}
         </span>
     </section>
+    */}}
 </div>
-
+{{/*
 <section id="archive">
     {{ range $key, $value := .Site.RegularPages.GroupByDate "2006" }}
     <div class="group">
@@ -85,4 +86,5 @@
     </div>
     {{ end }}
 </section>
+*/}}
 {{ end }}
