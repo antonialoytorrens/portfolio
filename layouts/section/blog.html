@@ -8,7 +8,7 @@
 <div id="list-page">
     <ul class="tags"></ul>
     
-    {{ $pages := (where .Site.RegularPages "Type" "blog") }}
+    {{ $pages := (where .Pages "Section" "blog") }}
     {{/* $pages := .Site.RegularPages */}}
     {{ $paginator := .Paginate ($pages) }}
     {{ range $paginator.Pages }}

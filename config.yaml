@@ -6,8 +6,8 @@ title: Antoni Aloy Torrens
 defaultContentLanguage: en
 defaultContentLanguageInSubdir: true
 hasCJKLanguage: true
-#permalinks:
-#  posts: /blog/:year/:month/:slug/
+permalinks:
+  posts: /blog/:year/:month/:slug/
 
 paginate: 3
 

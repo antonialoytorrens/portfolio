@@ -124,6 +124,7 @@ pre {
     /*font-size: 4.25rem;*/
     font-size: 3.5rem;
     /*letter-spacing: -0.281rem;*/
+    margin: 0;
     letter-spacing: -0.1rem;
     font-weight: 400;
 }
@@ -326,7 +327,6 @@ h5 {
 
 .navigation {
     padding-top: 16px;
-    padding-bottom: 16px;
 }
 
 
@@ -387,6 +387,7 @@ h5 {
     width: 50%;
 }
 
+/*
 @media(max-width: 1300px) {
     main {
         margin-left: 30px;
@@ -394,6 +395,7 @@ h5 {
         width: auto;
     }
 }
+*/
 
 .mt2 {
     margin-top: 1rem;
@@ -435,7 +437,6 @@ h5 {
 
 .navigation {
     padding-top: 1rem;
-    padding-bottom: 1rem;
 }
 
 @media (max-width: 600px) {
@@ -466,20 +467,6 @@ h5 {
     padding-left: 15px;*/
 }
 
-.row {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.col {
-    flex: 0 0 100%;
-    max-width: 33.33333%;
-    /*padding-left: 16px;
-    padding-right: 16px;*/
-    padding-bottom: 16px;
-    text-align: center;
-}
-
 .responsive-img {
     max-width: 100%;
     margin: auto;
@@ -494,13 +481,6 @@ h5 {
     border-radius: 50%;
 }
 
-.col {
-    flex: 0 0 100%;
-    max-width: 20%;
-    padding-bottom: 16px;
-    text-align: center;
-}
-
 .responsive-img {
     max-width: 100%;
     margin: auto;
@@ -510,31 +490,45 @@ h5 {
     margin-top: -1rem;
 }
 
-@media (max-width: 2490px) {
+@supports (display: flex) {
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
     .col {
         flex: 0 0 100%;
-        max-width: 25%;
+        max-width: 20%;
+        padding-bottom: 16px;
+        text-align: center;
     }
-}
 
-@media (max-width: 1530px) {
-    .col {
-        flex: 0 0 100%;
-        max-width: 33.33333%;
+    @media (max-width: 3100px) {
+        .col {
+            flex: 0 0 100%;
+            max-width: 25%;
+        }
     }
-}
 
-@media (max-width: 1075px) {
-    .col {
-        flex: 0 0 50%;
-        max-width: 50%;
+    @media (max-width: 1530px) {
+        .col {
+            flex: 0 0 100%;
+            max-width: 33.33333%;
+        }
     }
-}
 
-@media (max-width: 790px) {
-    .col {
-        flex: 0 0 100%;
-        max-width: 100%;
+    @media (max-width: 1075px) {
+        .col {
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+    }
+
+    @media (max-width: 790px) {
+        .col {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
     }
 }
 
