@@ -1,7 +1,13 @@
 {{ define "main" }}
-
-<section id="single">
-    <h1 class="title">{{ .Title }}</h1>
+{{/*<div class="mtitlec">
+  <div class="mhwidth mxauto">
+      <h1 class="mtitle twhite dinitial">{{ .Title }}</h1>
+  </div>
+</div>*/}}
+{{ partial "blogtitle" . }}
+<div id="list-page">
+  <section>
+    <h1 class="title exp">{{ .Title }}</h1>
 
     <div class="tip">
         <time datetime="{{ .PublishDate }}">{{ i18n "publishDateFull" . }}</time>
@@ -38,8 +44,8 @@
     {{ end}}
     
     {{ partial "comment.html" . }}
-
-</section>
+  </section>
+</div>
 
 {{ end }}
 
