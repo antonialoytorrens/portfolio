@@ -1,7 +1,7 @@
 {{ define "main" }}
 {{ $filterYear := .Params.Get "year" }}
 <div class="mtitlec">
-    <div class="mhwidth mxauto">
+    <div class="mxauto pb2">
         <h1 class="mtitle twhite dinitial">Blog</h1>
     </div>
 </div>
@@ -14,14 +14,17 @@
     {{ range $paginator.Pages }}
     <section class="item" style="border-bottom: 1px solid #DFDFDF; padding-bottom: 0px; margin-bottom: 36px;">
         <div>
-            <h3 style="margin-bottom: 0px;"><a href='{{ .RelPermalink }}'>{{ .Title }}</a></h3>
+            <h2 class="title exp"><a class="linkblog" href='{{ .RelPermalink }}'>{{ .Title }}</a></h3>
             <div class="date">
                 <time datetime="{{ .PublishDate.Format "2006-01-02" }}">{{ .PublishDate.Format "January 2, 2006" }}</time>
             </div>
         </div>
         
         {{ if ne .Site.Params.hiddenPostSummaryInHomePage true }}
-        <p>{{ .Summary | plainify | htmlUnescape }}</p>
+        {{/*<p>{{ .Summary | plainify | htmlUnescape }}</p>*/}}
+        {{ if .Params.Subtitle }}
+            <p>{{ .Params.Subtitle }}</p>
+        {{ end }}
         <p class="textright"><a href='{{ .RelPermalink }}'>{{ i18n "readMore" . }} »</a></p>
         {{ end }}
     </section>

@@ -19,16 +19,22 @@ html[theme='dark-mode'] {
 * Tip: Do not use dashes or underscore for classes to preserve max compatibility (old IE browsers).
 */
 
+/* In Firefox, https://stackoverflow.com/q/70556531 */
+/*
+html {
+    width: 100%;
+}
+*/
 
 /* Fonts by default */
 
 body {
     font-family: "Inter var", "Open Sans", "Noto Sans", "Roboto", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif, serif;
-    line-height: 1.4;
+    /*line-height: 1.4;*/
 
     font-style: normal;
     font-weight: normal;
-    line-height: 2;
+    /*line-height: 2;*/
 }
 
 
@@ -99,6 +105,18 @@ pre {
     color: #FFFFFF;
 }
 
+.linkblog:hover {
+    color: #003070;
+}
+
+.linkblog:link {
+    color: #003070;
+}
+
+.linkblog:visited {
+    color: #003070;
+}
+
 .profile {
     text-align: center;
 }
@@ -117,6 +135,11 @@ pre {
     background: #D93B00;
     /* Border */
     border-bottom: 1px solid #595959;
+    /* Paddings */
+    padding-top: 0.5rem;
+    padding-top: 8px;
+    padding-left: 25%;
+    padding-right: 25%;
 }
 
 .mtitle {
@@ -172,12 +195,12 @@ article.item {
     text-align: right;
 }
 
-.mwidth {
-    width: 100%;
-}
-
 .mhwidth {
     width: 50%;
+}
+
+.mwidth {
+    width: 100%;
 }
 
 .mxauto {
@@ -291,6 +314,10 @@ h5 {
     margin-top: 16px;
 }
 
+.pb2 {
+    padding-bottom: 16px;
+}
+
 .mb2 {
     margin-bottom: 16px;
 }
@@ -381,21 +408,20 @@ h5 {
 }
 
 #list-page {
-    /*margin-left: auto;
-    margin-right: auto;*/
-    margin-left: 25%;
-    width: 50%;
+    padding-left: 25%;
+    padding-right: 25%;
 }
 
-/*
-@media(max-width: 1300px) {
-    main {
-        margin-left: 30px;
-        margin-right: 30px;
-        width: auto;
+@media(max-width: 1100px) {
+    #list-page {
+        padding-left: 10%;
+        padding-right: 10%;
+    }
+    .mtitlec {
+        padding-left: 10%;
+        padding-right: 10%;
     }
 }
-*/
 
 .mt2 {
     margin-top: 1rem;
@@ -553,12 +579,6 @@ h5 {
         .menubar {
             text-align: center;
         }
-        .language-selection {
-            text-align: right;
-        }
-    }
-
-    @media (max-width: 500px) {
         .language-selection {
             text-align: center;
         }

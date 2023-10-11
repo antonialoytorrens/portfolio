@@ -1,8 +1,0 @@
-{{/* List all the sections available of the webpage (.Site), along with all page content */}}
-{{ range .Site.Sections }}
-    <h2>{{ .Title }}</h2>
-    {{ range .Pages }}
-        <h3>{{ .Title }}</h3>
-        <div>{{ .Content }}</div>
-    {{ end }}
-{{ end }}
