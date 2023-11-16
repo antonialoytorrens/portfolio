@@ -239,8 +239,9 @@ a:hover {
 
 footer {
     text-align: center;
-    background: #F5F4F3;
-    border-top: 1px solid #595959;
+    /*background: #F5F4F3;*/
+    /*border-top: 1px solid #E9ECEF;*/
+    /*border-top: 1px solid #595959;*/
     /*border-top: 1px solid #EAE8E8;*/
 }
 

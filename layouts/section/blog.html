@@ -1,10 +1,6 @@
 {{ define "main" }}
 {{ $filterYear := .Params.Get "year" }}
-<div class="mtitlec">
-    <div class="mxauto pb2">
-        <h1 class="mtitle twhite dinitial">Blog</h1>
-    </div>
-</div>
+{{ partial "blogtitle" . }}
 <div id="list-page">
     <ul class="tags"></ul>
     

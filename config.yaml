@@ -45,6 +45,9 @@ languages:
         - name: "Projects"
           url: "/en/projects/"
           weight: -100
+        - name: "RSS Blog"
+          url: "/en/blog/index.xml"
+          weight: -90
     weight: 1
   es:
     contentDir: "content_raw/es"
@@ -65,6 +68,9 @@ languages:
         - name: "Proyectos"
           url: "/es/projects/"
           weight: -100
+        - name: "RSS Blog"
+          url: "/es/blog/index.xml"
+          weight: -90
     weight: 2
   ca:
     contentDir: "content_raw/ca"
@@ -85,6 +91,9 @@ languages:
         - name: "Projectes"
           url: "/ca/projects/"
           weight: -100
+        - name: "RSS Blog"
+          url: "/ca/blog/index.xml"
+          weight: -90
     weight: 3
 
 
