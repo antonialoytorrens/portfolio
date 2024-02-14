@@ -62,7 +62,6 @@ time {
 
 h1 {
     color: #D93B00;
-    font-family: "Tinos, serif";
     font-weight: bold;
 }
 
@@ -83,6 +82,14 @@ pre {
     background-color:#f8f8f8;
     tab-size: 4;
     overflow-x: auto;
+}
+
+.anchor, .anchor:link, .anchor:focus, .anchor:visited {
+    color: #666666;
+}
+
+.anchortxt {
+    display: none;
 }
 
 .twhite {
@@ -308,6 +315,38 @@ h4 {
 h5 {
     font-size: 10px;
     /* 10.72px */
+}
+
+/* If above size fonts are changed, this below will need to be adjusted too: */
+/* Put zoom at 500% and begin testing */
+h1.hblog:hover .anchortxt {
+    margin-left: -45.55px;
+    display: inline;
+}
+
+h2.hblog:hover .anchortxt {
+    margin-left: -34.20px;
+    display: inline;
+}
+
+h3.hblog:hover .anchortxt {
+    margin-left: -26.75px;
+    display: inline;
+}
+
+h4.hblog:hover .anchortxt {
+    margin-left: -18.95px;
+    display: inline;
+}
+
+h5.hblog:hover .anchortxt {
+    margin-left: -15.25px;
+    display: inline;
+}
+
+h6.hblog:hover .anchortxt {
+    margin-left: -15.25px;
+    display: inline;
 }
 
 /* End fonts by default */
