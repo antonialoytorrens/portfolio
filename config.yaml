@@ -30,7 +30,7 @@ languages:
     contentDir: "content_raw/en"
     languageCode: "en-US"
     languageDirection: "ltr"
-    languageName: "English"
+    languageName: "EN"
     menu:
       main:
         - name: "Blog"
@@ -45,7 +45,7 @@ languages:
         - name: "Projects"
           url: "/en/projects/"
           weight: -100
-        - name: "RSS Blog"
+        - name: "RSS"
           url: "/en/blog/index.xml"
           weight: -90
     weight: 1
@@ -53,7 +53,7 @@ languages:
     contentDir: "content_raw/es"
     languageCode: "es-ES"
     languageDirection: "ltr"
-    languageName: "Español"
+    languageName: "ES"
     menu:
       main:
         - name: "Blog"
@@ -68,7 +68,7 @@ languages:
         - name: "Proyectos"
           url: "/es/projects/"
           weight: -100
-        - name: "RSS Blog"
+        - name: "RSS"
           url: "/es/blog/index.xml"
           weight: -90
     weight: 2
@@ -76,7 +76,7 @@ languages:
     contentDir: "content_raw/ca"
     languageCode: "es-CA"
     languageDirection: "ltr"
-    languageName: "Català"
+    languageName: "CA"
     menu:
       main:
         - name: "Blog"
@@ -91,7 +91,7 @@ languages:
         - name: "Projectes"
           url: "/ca/projects/"
           weight: -100
-        - name: "RSS Blog"
+        - name: "RSS"
           url: "/ca/blog/index.xml"
           weight: -90
     weight: 3
@@ -146,8 +146,6 @@ youtube:
 params:
   # Site Author
   author: Antoni Aloy Torrens
-  # Author biography
-  bio: Programmer and Web Developer
   # Site Description, used in HTML meat
   description: Blog and Portfolio of Antoni Aloy Torrens
 

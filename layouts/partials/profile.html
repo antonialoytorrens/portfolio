@@ -7,10 +7,10 @@
         <img class="avatar" alt="avatar" src="{{ "/images/avatar.png" | relURL }}" />
     {{ end }}
 
-    <h1>{{ .Site.Title }}</h1>
-    
-    {{ with .Site.Params.Bio }}
-      <h2>{{ . | markdownify }}</h2>
-    {{ end }}
-    <p>Test</p>
+    <h2>{{ .Site.Title }}</h2>
+    <h3>{{ i18n "bio" }}</h3>
 </header>
+<section class="profiledesc">
+  <p>{{ i18n "profileDesc" }}</p>
+  <p>{{ i18n "profileDescMusic" }}</p>
+</section>

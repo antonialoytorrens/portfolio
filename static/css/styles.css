@@ -127,6 +127,15 @@ pre {
 .profile {
     text-align: center;
     padding: 5rem;
+    padding-bottom: 0px;
+}
+
+.profiledesc {
+    margin-left: auto;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    max-width: 480px;
 }
 
 .navigation {

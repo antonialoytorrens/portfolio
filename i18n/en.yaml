@@ -1,3 +1,6 @@
+bio:
+  other: Programmer, Web Developer and Pianist
+
 archive:
   other: Archive
 
@@ -6,6 +9,18 @@ tags:
 
 about:
   other: About
+
+blog:
+  other: Blog
+
+education:
+  other: Education
+
+experience:
+  other: Experience
+
+projects:
+  other: Projects
 
 subscribe:
   other: Subscribe
@@ -18,6 +33,12 @@ subscribe:
 
 readMore:
   other: Read more
+
+profileDesc:
+  other: I am a programmer and web developer with experience in various technological projects.
+
+profileDescMusic:
+  other: Additionally, I have extensive musical training as a pianist and organist, which allows me to apply discipline and precision in solving complex problems.
 
 minuteRead:
   other: "{{ .ReadingTime }} minute read"

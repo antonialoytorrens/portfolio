@@ -1,3 +1,6 @@
+bio:
+  other: Programador, Desenvolupador Web i Pianista
+
 archive:
   other: Arxiu
 
@@ -6,6 +9,18 @@ tags:
 
 about:
   other: Sobre mi
+
+blog:
+  other: Blog
+
+education:
+  other: Educació
+
+experience:
+  other: Experiència
+
+projects:
+  other: Projectes
 
 subscribe:
   other: Subscriu-te
@@ -18,6 +33,12 @@ subscribe:
 
 readMore:
   other: Llegir més
+
+profileDesc:
+  other: Soc programador i desenvolupador web amb experiència en projectes tecnològics diversos.
+
+profileDescMusic:
+  other: A més, tinc àmplia formació musical com a pianista i organista, cosa que em permet aplicar disciplina i precisió en la resolució de problemes complexos.
 
 minuteRead:
   one: "Lectura de {{ .ReadingTime }} minut"

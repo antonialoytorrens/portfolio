@@ -23,8 +23,8 @@
 				{{ range $index, $lang := $sortedLanguages }}
 					{{ $currentPath := $.Page.RelPermalink }}
 					{{ $translatedPath := strings.Replace $currentPath (printf "/%s/" $.Lang) (printf "/%s/" $lang.Lang) 1 }}
-					<a href="{{ $translatedPath }}" class="{{ if eq $.Lang $lang.Lang }}active-lang{{ end }}">{{ $lang.LanguageName }}</a>
-					{{ if not (eq $index (sub (len $sortedLanguages) 1)) }}<span>&vert;</span>{{ end }}
+					<a href="{{ $translatedPath }}" class="linklogo {{ if eq $.Lang $lang.Lang }}active-lang{{ end }}">{{ $lang.LanguageName }}</a>
+					{{ if not (eq $index (sub (len $sortedLanguages) 1)) }}<span class="twhite">|</span>{{ end }}
 				{{ end }}
 			</div>
 		</div>
