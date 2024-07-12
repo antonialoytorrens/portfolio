@@ -96,6 +96,10 @@ pre {
     color: #FFFFFF;
 }
 
+.activelink {
+    font-weight: bold;
+}
+
 .linklogo {
     color: #FFFFFF;
 }

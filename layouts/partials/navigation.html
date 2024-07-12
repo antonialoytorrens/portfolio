@@ -6,9 +6,13 @@
 			{{ end }}
 
 			{{ $len := len .Site.Menus.main }}
+			{{ $currentPath := $.Page.RelPermalink }}
 			{{ range $index, $element := .Site.Menus.main }}
-				<a class="linklogo" href="{{ $element.URL | absLangURL }}">{{ $element.Name }}</a>{{ if ne (add $index 1) $len }}<span class="twhite">&nbsp;|&nbsp;</span>{{ end }}
+				{{ $isActive := or (eq $element.URL $currentPath) (in $currentPath $element.URL) }}
+				<a class="linklogo {{ if $isActive }}activelink{{ end }}" href="{{ $element.URL | absLangURL }}">{{ $element.Name }}</a>
+				{{ if ne (add $index 1) $len }}<span class="twhite">&nbsp;|&nbsp;</span>{{ end }}
 			{{ end }}
+
 
 			{{/*
 			{{ if .Site.Params.enableRSS }}
@@ -23,7 +27,7 @@
 				{{ range $index, $lang := $sortedLanguages }}
 					{{ $currentPath := $.Page.RelPermalink }}
 					{{ $translatedPath := strings.Replace $currentPath (printf "/%s/" $.Lang) (printf "/%s/" $lang.Lang) 1 }}
-					<a href="{{ $translatedPath }}" class="linklogo {{ if eq $.Lang $lang.Lang }}active-lang{{ end }}">{{ $lang.LanguageName }}</a>
+					<a href="{{ $translatedPath }}" class="linklogo {{ if eq $.Lang $lang.Lang }}activelink{{ end }}">{{ $lang.LanguageName }}</a>
 					{{ if not (eq $index (sub (len $sortedLanguages) 1)) }}<span class="twhite">|</span>{{ end }}
 				{{ end }}
 			</div>
