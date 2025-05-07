@@ -1,0 +1,122 @@
+html {
+    background: #FFFFFF;
+    overflow-y: scroll;
+    /* ensures scrollbar in IE */
+}
+
+body {
+    font-family: "Inter var", "Noto Sans", "Open Sans", "Roboto", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    /* legacy */
+    line-height: 1.4;
+    color: #666666;
+    background: #FFFFFF;
+}
+
+@media all {
+    body {
+        font-size: 1rem;
+    }
+
+    /* modern */
+}
+
+/* -------- FONTS -------- */
+h1 {
+    font-size: 3.5rem;
+    color: #FFFFFF;
+}
+
+time {
+    line-height: 1.4;
+}
+
+/* Inline code blocks that may appear in {{ CONTENT }} */
+code {
+    font-family: "Fira Code VF", monospace;
+    background: rgba(0, 0, 0, .06);
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+pre {
+    background: #f8f8f8;
+    overflow-x: auto;
+    tab-size: 4;
+}
+
+/* -------- CONTENT LINKS -------- */
+a {
+    color: #005ED9;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #005ED9;
+}
+
+a:hover {
+    color: #0000EE;
+}
+
+/* Navigation‑specific classes */
+.navlink, .navlink:hover, .navlink:active, .navlink:visited {
+    color: #FFFFFF;
+}
+
+.navlink:hover {
+    text-decoration: underline;
+}
+
+.active {
+    font-weight: bold;
+}
+
+/* -------- LAYOUT -------- */
+header {
+    /* On small screens, padding works best */
+    padding: 1rem;
+    background-color: #D93B00;
+    border-bottom: 1px solid #595959;
+}
+
+header nav, header h1 {
+    max-width: 75rem;
+    margin: auto;
+}
+
+header nav p {
+    font-size: 1.125rem;
+    text-align: right;
+}
+
+main {
+    margin: 1rem;
+}
+
+ul {
+    margin-left: 1.5rem;
+    list-style: circle;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem 0;
+}
+
+.cw {
+    color: #FFFFFF;
+}
+
+/* -------- DARK-MODE BROWSER SCHEME -------- */
+/*
+@media (prefers-color-scheme: dark) {
+    html {
+        filter: invert(1) hue-rotate(180deg);
+    }
+}
+
+html[theme="dark-mode"] {
+    filter: invert(1) hue-rotate(180deg);
+}
+*/

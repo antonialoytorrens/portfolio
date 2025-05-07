@@ -1,0 +1,14 @@
+MAIN_PAGE: Educació
+PAGE_SLUG: educacio
+---------------------------------
+<section class="timeline">
+  <article>
+    <h3>2022 — Màster en Intel·ligència Artificial</h3>
+    <p>Universitat Politècnica de Catalunya (UPC).</p>
+  </article>
+
+  <article>
+    <h3>2018 — Grau en Enginyeria Informàtica</h3>
+    <p>Universitat de les Illes Balears (UIB).</p>
+  </article>
+</section>

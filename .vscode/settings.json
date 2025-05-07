@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "*.txt": "markdown",
+        "*.tmpl": "django-html"
+    }
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="{{ LANG }}">
+
+<head>
+    <meta charset="utf-8">
+    <title>{{ TITLE }} | {{ SITE_TITLE }}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="{{ DESCRIPTION }}">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="generator" content="blogc {{ BLOGC_VERSION }}">
+    <link rel="stylesheet" href="{{ BASE_URL }}/assets/css/reset.css">
+    <link rel="stylesheet" href="{{ BASE_URL }}/assets/css/styles.css">
+</head>
+
+<body>
+  <header>
+      <nav>
+          <!-- Navigation links -->
+          <p>
+            {% block entry %}
+              <a class="navlink {% if MAKE_TYPE == "post" %} active{% endif %}" href="{{ BASE_URL }}/{{ LANG }}/{{ BLOG_SLUG }}">{{ BLOG_TITLE }}</a>
+              <span class="cw">&nbsp;|&nbsp;</span>
+              <a class="navlink {% if PAGE_SLUG == EDUCATION_SLUG %} active{% endif %}" href="{{ BASE_URL }}/{{ LANG }}/{{ EDUCATION_SLUG }}">{{ EDUCATION_TITLE }}</a>
+              <span class="cw">&nbsp;|&nbsp;</span>
+              <a class="navlink {% if PAGE_SLUG == EXPERIENCE_SLUG %} active{% endif %}" href="{{ BASE_URL }}/{{ LANG }}/{{ EXPERIENCE_SLUG }}">{{ EXPERIENCE_TITLE }}</a>
+              <span class="cw">&nbsp;|&nbsp;</span>
+              <a class="navlink {% if PAGE_SLUG == PROJECTS_SLUG %} active{% endif %}" href="{{ BASE_URL }}/{{ LANG }}/{{ PROJECTS_SLUG }}">{{ PROJECTS_TITLE }}</a>
+            {% endblock %}
+          </p>
+          <!-- Language selection -->
+          <p>
+              <a class="navlink" href="{{ BASE_URL }}/ca/{{ CURRENT_URL }}" class="{% if LANG == "ca" %} active{% endif %}">CA</a>
+              <span class="cw">|</span>
+              <a class="navlink" href="{{ BASE_URL }}/es/{{ CURRENT_URL }}" class="{% if LANG == "es" %} active{% endif %}">ES</a>
+              <span class="cw">|</span>
+              <a class="navlink" href="{{ BASE_URL }}/en/{{ CURRENT_URL }}" class="{% if LANG == "en" %} active{% endif %}">EN</a>
+          </p>
+      </nav>
+      <!-- If MAIN_PAGE is set, we are on one of the main pages. Else, we are on the blog -->
+      {% block entry %}
+          <h1>{% ifdef MAIN_PAGE %}{{ MAIN_PAGE }}{% else %}{% if MAKE_TYPE == "post" %}{{ BLOG_TITLE }}{% else %}{{ TITLE }}{% endif %}{% endif %}</h1>
+      {% endblock %}
+  </header>
+
+  <main>
+          <!-- Single page / post -->
+          {% block entry %}
+            <article>
+              <h1>{{ TITLE }}</h1>
+              <time datetime="{{ DATE }}">{{ DATE_FORMATTED }}</time>
+              {{ CONTENT }}
+            </article>
+          {% endblock %}
+        
+          <!-- List of posts (index, tags, etc.) -->
+          {% block listing_once %}<ul>{% endblock %}
+          {% block listing %}
+              <li>
+                <a href="{{ URL }}">{{ TITLE }}</a>
+                <small>{{ DATE_FORMATTED }}</small>
+              </li>
+          {% endblock %}
+          {% block listing_once %}</ul>{% endblock %}
+          {% block listing_empty %}
+              <p>No posts yet.</p>
+          {% endblock %}
+
+  </main>
+
+  <footer>
+      &copy; &middot; Built with blogc
+  </footer>
+</body>
+
+</html>

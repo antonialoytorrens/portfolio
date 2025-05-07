@@ -1,0 +1,36 @@
+[global]
+AUTHOR_NAME = @AUTHOR_NAME@
+AUTHOR_EMAIL = redacted@example.com
+SITE_TITLE = @SITE_TITLE@
+SITE_TAGLINE = A blog compiler.
+BASE_DOMAIN = @BASE_DOMAIN@
+LANG = ca
+
+BLOG_SLUG = blog
+EDUCATION_SLUG = educacio
+EXPERIENCE_SLUG = experiencia
+PROJECTS_SLUG = projectes
+BLOG_TITLE = Blog
+EDUCATION_TITLE = Educació
+EXPERIENCE_TITLE = Experiència
+PROJECTS_TITLE = Projectes
+
+[settings]
+locale = ca_ES.utf8
+content_dir = .
+template_dir = ../../templates
+post_prefix = blog
+pagination_prefix = blog/page
+index_prefix = blog
+posts_per_page = 4
+posts_sort = 1
+
+[pages]
+index
+educacio
+
+[copy]
+assets/bootstrap.bundle.min.js
+assets/bootstrap.min.css
+assets/jquery.slim.min.js
+assets/custom.css

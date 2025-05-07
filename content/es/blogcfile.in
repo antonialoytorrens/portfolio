@@ -1,0 +1,86 @@
+[global]
+AUTHOR_NAME = @AUTHOR_NAME@
+AUTHOR_EMAIL = k
+SITE_TITLE = @SITE_TITLE@
+SITE_TAGLINE = A blog compiler.
+BASE_DOMAIN = @BASE_DOMAIN@
+
+BLOG_SLUG = blog
+EDUCATION_SLUG = educacio
+EXPERIENCE_SLUG = experiencia
+PROJECTS_SLUG = projectes
+BLOG_TITLE = blog
+EDUCATION_SLUG = educacio
+
+[settings]
+locale = es_ES.utf8
+content_dir = ca
+posts_per_page = 4
+posts_sort = 1
+
+[posts]
+hello-world
+blogc-0.1
+blogc-0.2.1
+blogc-0.3
+blogc-0.4
+blogc-0.5
+blogc-0.5.1
+blogc-0.6
+blogc-0.6.1
+blogc-0.7
+blogc-0.7.1
+blogc-0.7.2
+blogc-0.7.3
+blogc-0.7.4
+blogc-0.7.5
+blogc-0.7.6
+blogc-0.8.0
+blogc-0.8.1
+blogc-0.9.0
+blogc-0.10.0
+blogc-0.10.1
+blogc-0.10.2
+blogc-0.11.0
+blogc-0.11.1
+blogc-0.12.0
+blogc-0.13.0
+blogc-0.13.1
+blogc-0.13.2
+blogc-0.13.3
+blogc-0.13.4
+blogc-0.13.5
+blogc-0.13.6
+blogc-0.13.7
+blogc-0.13.8
+blogc-0.13.9
+blogc-0.13.10
+blogc-0.14.0
+blogc-0.14.1
+blogc-0.15.0
+blogc-0.15.1
+blogc-0.16.0
+blogc-0.16.1
+blogc-0.17.0
+blogc-0.18.0
+blogc-0.19.0
+blogc-0.20.0
+blogc-0.20.1
+
+[pages]
+index
+
+[copy]
+assets/bootstrap.bundle.min.js
+assets/bootstrap.min.css
+assets/jquery.slim.min.js
+assets/custom.css
+man/blogc.1.html
+man/blogcfile.5.html
+man/blogc-git-receiver.1.html
+man/blogc-make.1.html
+man/blogc-runserver.1.html
+man/blogc-source.7.html
+man/blogc-template.7.html
+man/blogc-toctree.7.html
+man/blogc-pagination.7.html
