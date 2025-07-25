@@ -1,0 +1,3 @@
+* In the main page, list the last N posts.
+* Of course, in translations.mk, I only need the URL of the last N posts.
+* Blog tags (?)

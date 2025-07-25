@@ -17,7 +17,7 @@
       <nav>
           <!-- Navigation links -->
           <p>
-            {% block entry %}
+              <li><a href="/{{ LANG }}/educacio/" {% if MENU == "educacio" %}class="active"{% endif %}>Educació</a></li>
               <a class="navlink {% if MAKE_TYPE == "post" %} active{% endif %}" href="{{ BASE_URL }}/{{ LANG }}/{{ BLOG_SLUG }}">{{ BLOG_TITLE }}</a>
               <span class="cw">&nbsp;|&nbsp;</span>
               <a class="navlink {% if PAGE_SLUG == EDUCATION_SLUG %} active{% endif %}" href="{{ BASE_URL }}/{{ LANG }}/{{ EDUCATION_SLUG }}">{{ EDUCATION_TITLE }}</a>
@@ -25,15 +25,14 @@
               <a class="navlink {% if PAGE_SLUG == EXPERIENCE_SLUG %} active{% endif %}" href="{{ BASE_URL }}/{{ LANG }}/{{ EXPERIENCE_SLUG }}">{{ EXPERIENCE_TITLE }}</a>
               <span class="cw">&nbsp;|&nbsp;</span>
               <a class="navlink {% if PAGE_SLUG == PROJECTS_SLUG %} active{% endif %}" href="{{ BASE_URL }}/{{ LANG }}/{{ PROJECTS_SLUG }}">{{ PROJECTS_TITLE }}</a>
-            {% endblock %}
           </p>
           <!-- Language selection -->
           <p>
-              <a class="navlink" href="{{ BASE_URL }}/ca/{{ CURRENT_URL }}" class="{% if LANG == "ca" %} active{% endif %}">CA</a>
+              <a class="navlink" href="{{ BASE_URL }}{{ CURRENT_URL_CA }}" class="{% if LANG == "ca" %} active{% endif %}">CA</a>
               <span class="cw">|</span>
-              <a class="navlink" href="{{ BASE_URL }}/es/{{ CURRENT_URL }}" class="{% if LANG == "es" %} active{% endif %}">ES</a>
+              <a class="navlink" href="{{ BASE_URL }}{{ CURRENT_URL_ES }}" class="{% if LANG == "es" %} active{% endif %}">ES</a>
               <span class="cw">|</span>
-              <a class="navlink" href="{{ BASE_URL }}/en/{{ CURRENT_URL }}" class="{% if LANG == "en" %} active{% endif %}">EN</a>
+              <a class="navlink" href="{{ BASE_URL }}{{ CURRENT_URL_EN }}" class="{% if LANG == "en" %} active{% endif %}">EN</a>
           </p>
       </nav>
       <!-- If MAIN_PAGE is set, we are on one of the main pages. Else, we are on the blog -->

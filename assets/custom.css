@@ -1,0 +1,12 @@
+body {
+    padding-top: 90px;
+}
+
+h3 {
+    font-size: 1.7rem;
+    margin-bottom: 0.7rem;
+}
+
+.jumbotron {
+    text-align: center;
+}

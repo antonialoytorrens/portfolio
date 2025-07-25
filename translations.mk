@@ -1,0 +1,69 @@
+# translations.mk - Translation mappings for multilingual site
+
+# Define all supported languages
+ALL_LANGS = ca en es
+
+# Consolidated translation mappings: key,ca,es,en
+I18N_MAPPINGS = \
+	education,educacio,educacion,education \
+	about,sobre-mi,acerca-de-mi,about-me \
+	contact,contacte,contacto,contact \
+	services,serveis,servicios,services \
+	portfolio,portfoli,portafolio,portfolio \
+	blog,blog,blog,blog \
+	index,index,index,index \
+	$(NULL)
+
+# Define comma for use in functions
+comma = ,
+
+# Extract all page keys from I18N_MAPPINGS
+PAGE_KEYS = $(foreach mapping,$(I18N_MAPPINGS),$(word 1,$(subst $(comma), ,$(mapping))))
+
+# Language position mapping (1-based indexing for comma-separated values)
+ca_pos = 2
+en_pos = 4
+es_pos = 3
+
+# Helper function to get nth word from comma-separated list
+# Usage: $(call get_word_csv,education$(comma)educacio$(comma)educacion$(comma)education,2)
+get_word_csv = $(word $2,$(subst $(comma), ,$1))
+
+# Function to find mapping line by key
+# Usage: $(call find_mapping,education)
+define find_mapping
+$(strip $(foreach mapping,$(I18N_MAPPINGS),$(if $(filter $1,$(word 1,$(subst $(comma), ,$(mapping)))),$(mapping))))
+endef
+
+# Function to get page name for specific language
+# Usage: $(call get_page_name,education,ca)
+define get_page_name
+$(call get_word_csv,$(call find_mapping,$1),$($2_pos))
+endef
+
+# Function to find page key by name and language
+# Usage: $(call find_page_key,educacio,ca)
+define find_page_key
+$(strip $(foreach mapping,$(I18N_MAPPINGS),\
+$(if $(filter $1,$(call get_word_csv,$(mapping),$($2_pos))),\
+$(word 1,$(subst $(comma), ,$(mapping))))))
+endef
+
+# Function to generate all menu variables for a specific language
+# It defines MENU_KEY = lang/slug for each page key:
+# MENU_EDUCATION = ca/educacio; MENU_ABOUT = ca/sobre-mi; MENU_CONTACT = ca/contacte
+# Usage: $(eval $(call generate_menu_vars,ca))
+define generate_menu_vars
+$(foreach key,$(PAGE_KEYS),\
+MENU_$(shell echo $(key) | tr a-z A-Z) = $1/$(call get_page_name,$(key),$1)
+)
+endef
+
+# Function to generate ALL translation variables for a page build
+# Usage: $(call get_page_translations,educacio,ca)
+define get_page_translations
+$(strip $(if $(call find_page_key,$1,$2),\
+    $(foreach lang,$(ALL_LANGS),-D CURRENT_URL_$(shell echo $(lang) | tr a-z A-Z)=/$(lang)/$(call get_page_name,$(call find_page_key,$1,$2),$(lang))) \
+    $(foreach key,$(PAGE_KEYS),-D MENU_$(shell echo $(key) | tr a-z A-Z)=/$2/$(call get_page_name,$(key),$2)) \
+))
+endef
