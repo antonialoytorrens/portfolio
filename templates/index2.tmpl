@@ -13,7 +13,7 @@
             Idioma: "{{ LANG }}"
         </h3>
         <ul>
-            {% ifdef CURRENT_URL_CA %}<li><a href="{{ CURRENT_URL_CA }}" {% if LANG == "ca" %}class="current"{% endif %}>Català</a></li>{% endif %}
+            {% ifdef CURRENT_URL_CA %}<li><a href="{{ CURRENT_URL_CA }}" {% if LANG == ca %}class="current"{% endif %}>Català</a></li>{% endif %}
             {% ifdef CURRENT_URL_EN %}<li><a href="{{ CURRENT_URL_EN }}" {% if LANG == "en" %}class="current"{% endif %}>English</a></li>{% endif %}
             {% ifdef CURRENT_URL_ES %}<li><a href="{{ CURRENT_URL_ES }}" {% if LANG == "es" %}class="current"{% endif %}>Español</a></li>{% endif %}
             {% ifdef CURRENT_URL_FR %}<li><a href="{{ CURRENT_URL_FR }}" {% if LANG == "fr" %}class="current"{% endif %}>Français</a></li>{% endif %}

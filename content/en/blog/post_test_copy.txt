@@ -2,8 +2,6 @@ TITLE: Desenvolupament Web Modern amb HTML5 i CSS3
 DATE: 2024-01-15 10:30:00
 TAGS: desenvolupament web css html javascript
 DESCRIPTION: Una guia completa sobre les millors pràctiques en desenvolupament web modern utilitzant HTML5, CSS3 i JavaScript.
-POST_SLUG_ES: desarrollo-web-moderno-con-html5-css3
-POST_SLUG_EN: modern-webdev-with-html5-and-css3
 -------------------------
 # Desenvolupament Web Modern
 

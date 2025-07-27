@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="{{ LANG }}">
+
+<head>
+    <meta charset="utf-8">
+    <title>
+        {% if LANG == "ca" %}Etiqueta: {{ CURRENT_TAG }} | {{ SITE_TITLE }}{% endif %}
+        {% if LANG == "es" %}Etiqueta: {{ CURRENT_TAG }} | {{ SITE_TITLE }}{% endif %}
+        {% if LANG == "en" %}Tag: {{ CURRENT_TAG }} | {{ SITE_TITLE }}{% endif %}
+    </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="Posts tagged with {{ CURRENT_TAG }}">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="generator" content="blogc {{ BLOGC_VERSION }}">
+    <link rel="stylesheet" href="{{ BASE_URL }}/assets/css/reset.css">
+    <link rel="stylesheet" href="{{ BASE_URL }}/assets/css/styles.css">
+</head>
+
+<body>
+  <header>
+      <nav>
+          <!-- Navigation links -->
+          <p>
+              <a class="navlink active" href="{{ BASE_URL }}/{{ LANG }}/blog/">Blog</a>
+              <span class="cw">&nbsp;|&nbsp;</span>
+              <a class="navlink" href="{{ BASE_URL }}/{{ LANG }}/{{ EDUCATION_SLUG }}">{{ EDUCATION_TITLE }}</a>
+              <span class="cw">&nbsp;|&nbsp;</span>
+              <a class="navlink" href="{{ BASE_URL }}/{{ LANG }}/{{ EXPERIENCE_SLUG }}">{{ EXPERIENCE_TITLE }}</a>
+              <span class="cw">&nbsp;|&nbsp;</span>
+              <a class="navlink" href="{{ BASE_URL }}/{{ LANG }}/{{ PROJECTS_SLUG }}">{{ PROJECTS_TITLE }}</a>
+          </p>
+          <!-- Language selection -->
+          <p>
+              <a class="navlink" href="{{ BASE_URL }}{{ CURRENT_URL_CA }}" class="{% if LANG == "ca" %} active{% endif %}">CA</a>
+              <span class="cw">|</span>
+              <a class="navlink" href="{{ BASE_URL }}{{ CURRENT_URL_ES }}" class="{% if LANG == "es" %} active{% endif %}">ES</a>
+              <span class="cw">|</span>
+              <a class="navlink" href="{{ BASE_URL }}{{ CURRENT_URL_EN }}" class="{% if LANG == "en" %} active{% endif %}">EN</a>
+          </p>
+      </nav>
+      <h1>
+          {% if LANG == "ca" %}Etiqueta: {{ CURRENT_TAG }}{% endif %}
+          {% if LANG == "es" %}Etiqueta: {{ CURRENT_TAG }}{% endif %}
+          {% if LANG == "en" %}Tag: {{ CURRENT_TAG }}{% endif %}
+      </h1>
+  </header>
+
+  <main>
+      <div class="tag-info">
+          <p>
+              {% if LANG == "ca" %}Entrades etiquetades amb "{{ CURRENT_TAG }}":{% endif %}
+              {% if LANG == "es" %}Entradas etiquetadas con "{{ CURRENT_TAG }}":{% endif %}
+              {% if LANG == "en" %}Posts tagged with "{{ CURRENT_TAG }}":{% endif %}
+          </p>
+          <a href="{{ BASE_URL }}/{{ LANG }}/blog/" class="back-link">
+              {% if LANG == "ca" %}← Veure totes les entrades{% endif %}
+              {% if LANG == "es" %}← Ver todas las entradas{% endif %}
+              {% if LANG == "en" %}← View all posts{% endif %}
+          </a>
+      </div>
+
+      <section class="posts-list">
+          {% block listing_once %}<ul>{% endblock %}
+          {% block listing %}
+              <li class="post-item">
+                  <article>
+                      <header>
+                          <h2><a href="{{ BASE_URL }}/{{ LANG }}/blog/post/{{ FILENAME }}.html">{{ TITLE }}</a></h2>
+                          <time datetime="{{ DATE }}">{{ DATE_FORMATTED }}</time>
+                          {% ifdef TAGS %}
+                          <div class="post-tags">
+                              {% if LANG == "ca" %}Etiquetes:{% endif %}
+                              {% if LANG == "es" %}Etiquetas:{% endif %}
+                              {% if LANG == "en" %}Tags:{% endif %}
+                              {% foreach TAGS %}
+                              <a href="{{ BASE_URL }}/{{ LANG }}/tag/{{ FOREACH_ITEM }}.html" class="tag {% if FOREACH_ITEM == CURRENT_TAG %}current-tag{% endif %}">{{ FOREACH_ITEM }}</a>
+                              {% endforeach %}
+                          </div>
+                          {% endif %}
+                      </header>
+                      {% ifdef DESCRIPTION %}
+                      <div class="post-excerpt">
+                          <p>{{ DESCRIPTION }}</p>
+                      </div>
+                      {% endif %}
+                  </article>
+              </li>
+          {% endblock %}
+          {% block listing_once %}</ul>{% endblock %}
+          
+          {% block listing_empty %}
+              <div class="no-posts">
+                  <p>
+                      {% if LANG == "ca" %}No s'han trobat entrades amb aquesta etiqueta.{% endif %}
+                      {% if LANG == "es" %}No se han encontrado entradas con esta etiqueta.{% endif %}
+                      {% if LANG == "en" %}No posts found with this tag.{% endif %}
+                  </p>
+              </div>
+          {% endblock %}
+      </section>
+
+  </main>
+
+  <footer>
+      &copy; {{ AUTHOR_NAME }} &middot; Built with blogc
+  </footer>
+
+  <style>
+    /* Tag page specific styles */
+    .tag-info {
+        margin: 2rem 0;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-left: 4px solid #005ED9;
+        border-radius: 4px;
+    }
+
+    .tag-info p {
+        margin: 0 0 1rem 0;
+        font-size: 1.1rem;
+        color: #333;
+    }
+
+    .back-link {
+        color: #005ED9;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .back-link:hover {
+        color: #0000EE;
+        text-decoration: underline;
+    }
+
+    .posts-list {
+        margin: 2rem 0;
+    }
+
+    .posts-list ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .post-item {
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .post-item:last-child {
+        border-bottom: none;
+    }
+
+    .post-item h2 {
+        font-size: 1.5rem;
+        margin: 0 0 0.5rem 0;
+    }
+
+    .post-item h2 a {
+        color: #005ED9;
+        text-decoration: none;
+    }
+
+    .post-item h2 a:hover {
+        text-decoration: underline;
+    }
+
+    .post-item time {
+        font-size: 0.9rem;
+        color: #888;
+        display: block;
+        margin-bottom: 1rem;
+    }
+
+    .post-tags {
+        margin: 1rem 0;
+    }
+
+    .tag {
+        display: inline-block;
+        background: #f0f0f0;
+        color: #666;
+        padding: 0.3rem 0.6rem;
+        margin: 0 0.5rem 0.5rem 0;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 0.85rem;
+        transition: all 0.2s ease;
+    }
+
+    .tag:hover {
+        background: #005ED9;
+        color: white;
+    }
+
+    .current-tag {
+        background: #005ED9 !important;
+        color: white !important;
+        font-weight: bold;
+    }
+
+    .post-excerpt {
+        margin-top: 1rem;
+        color: #666;
+        line-height: 1.5;
+    }
+
+    .no-posts {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: #888;
+    }
+
+    .no-posts p {
+        font-size: 1.1rem;
+        margin: 0;
+    }
+
+    @media (max-width: 768px) {
+        .tag-info {
+            margin: 1rem 0;
+            padding: 0.75rem;
+        }
+        
+        .post-item h2 {
+            font-size: 1.25rem;
+        }
+    }
+  </style>
+</body>
+
+</html>
