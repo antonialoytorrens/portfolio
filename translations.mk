@@ -4,7 +4,7 @@
 ALL_LANGS = ca en es
 
 # Consolidated translation mappings: key,ca,es,en
-I18N_MAPPINGS = \
+I18N_MENU_MAPPINGS = \
 	education,educacio,educacion,education \
 	about,sobre-mi,acerca-de-mi,about-me \
 	contact,contacte,contacto,contact \
@@ -17,13 +17,14 @@ I18N_MAPPINGS = \
 # Define comma for use in functions
 comma = ,
 
-# Extract all page keys from I18N_MAPPINGS
-PAGE_KEYS = $(foreach mapping,$(I18N_MAPPINGS),$(word 1,$(subst $(comma), ,$(mapping))))
+# Extract all page keys from I18N_MENU_MAPPINGS
+PAGE_KEYS = $(foreach mapping,$(I18N_MENU_MAPPINGS),$(word 1,$(subst $(comma), ,$(mapping))))
 
-# Language position mapping (1-based indexing for comma-separated values)
-ca_pos = 2
-en_pos = 4
-es_pos = 3
+# Language to position mapping function
+# Usage: $(call get_lang_pos,ca) returns 2
+define get_lang_pos
+$(strip $(if $(filter $1,ca),2,$(if $(filter $1,es),3,$(if $(filter $1,en),4,))))
+endef
 
 # Helper function to get nth word from comma-separated list
 # Usage: $(call get_word_csv,education$(comma)educacio$(comma)educacion$(comma)education,2)
@@ -32,20 +33,20 @@ get_word_csv = $(word $2,$(subst $(comma), ,$1))
 # Function to find mapping line by key
 # Usage: $(call find_mapping,education)
 define find_mapping
-$(strip $(foreach mapping,$(I18N_MAPPINGS),$(if $(filter $1,$(word 1,$(subst $(comma), ,$(mapping)))),$(mapping))))
+$(strip $(foreach mapping,$(I18N_MENU_MAPPINGS),$(if $(filter $1,$(word 1,$(subst $(comma), ,$(mapping)))),$(mapping))))
 endef
 
 # Function to get page name for specific language
 # Usage: $(call get_page_name,education,ca)
 define get_page_name
-$(call get_word_csv,$(call find_mapping,$1),$($2_pos))
+$(call get_word_csv,$(call find_mapping,$1),$(call get_lang_pos,$2))
 endef
 
 # Function to find page key by name and language
 # Usage: $(call find_page_key,educacio,ca)
 define find_page_key
-$(strip $(foreach mapping,$(I18N_MAPPINGS),\
-$(if $(filter $1,$(call get_word_csv,$(mapping),$($2_pos))),\
+$(strip $(foreach mapping,$(I18N_MENU_MAPPINGS),\
+$(if $(filter $1,$(call get_word_csv,$(mapping),$(call get_lang_pos,$2))),\
 $(word 1,$(subst $(comma), ,$(mapping))))))
 endef
 
@@ -64,6 +65,7 @@ endef
 define get_page_translations
 $(strip $(if $(call find_page_key,$1,$2),\
     $(foreach lang,$(ALL_LANGS),-D CURRENT_URL_$(shell echo $(lang) | tr a-z A-Z)=/$(lang)/$(call get_page_name,$(call find_page_key,$1,$2),$(lang))) \
-    $(foreach key,$(PAGE_KEYS),-D MENU_$(shell echo $(key) | tr a-z A-Z)=/$2/$(call get_page_name,$(key),$2)) \
+    $(foreach key,$(PAGE_KEYS),-D URL_$(shell echo $(key) | tr a-z A-Z)=/$2/$(call get_page_name,$(key),$2)) \
+	$(foreach key,$(PAGE_KEYS),-D MENU_$(shell echo $(key) | tr a-z A-Z)=$(call get_page_name,$(key),$2)) \
 ))
 endef
