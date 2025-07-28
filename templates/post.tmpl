@@ -40,7 +40,8 @@
   <main>
       <article class="post">
           <header class="post-header">
-              <time datetime="{{ DATE }}" class="post-date">{{ DATE_FORMATTED }}</time>
+              <!-- FILENAME_10: pick the 10 first characters of the blog filename, which represents the post publication date. --> 
+              <time datetime="{{ FILENAME_10 }}" class="post-date">{{ FILENAME_10 }}</time>
               {% ifdef TAGS %}
               <div class="post-tags">
                   {% if LANG == "ca" %}Etiquetes:{% endif %}

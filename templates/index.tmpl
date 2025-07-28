@@ -63,7 +63,8 @@
               <article>
                   <header>
                       <h3><a href="{{ BASE_URL }}/{{ LANG }}/blog/post/{{ FILENAME }}.html">{{ TITLE }}</a></h3>
-                      <time datetime="{{ DATE }}">{{ DATE_FORMATTED }}</time>
+                      <!-- FILENAME_10: pick the 10 first characters of the blog filename, which represents the post publication date. -->
+                      <time datetime="{{ FILENAME_10 }}">{{ FILENAME_10 }}</time>
                       {% ifdef TAGS %}
                       <div class="post-tags">
                           {% if LANG == "ca" %}Etiquetes:{% endif %}
