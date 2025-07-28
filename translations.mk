@@ -1,8 +1,5 @@
 # translations.mk - Translation mappings for multilingual site
 
-# Define all supported languages
-ALL_LANGS = ca en es
-
 # Consolidated translation mappings: key,ca,es,en
 I18N_MENU_MAPPINGS = \
 	education,educacio,educacion,education \
@@ -23,7 +20,7 @@ PAGE_KEYS = $(foreach mapping,$(I18N_MENU_MAPPINGS),$(word 1,$(subst $(comma), ,
 # Language to position mapping function
 # Usage: $(call get_lang_pos,ca) returns 2
 define get_lang_pos
-$(strip $(if $(filter $1,ca),2,$(if $(filter $1,es),3,$(if $(filter $1,en),4,))))
+$(strip $(if $(filter $1,key),1,$(if $(filter $1,ca),2,$(if $(filter $1,es),3,$(if $(filter $1,en),4,)))))
 endef
 
 # Helper function to get nth word from comma-separated list
@@ -64,8 +61,8 @@ endef
 # Usage: $(call get_page_translations,educacio,ca)
 define get_page_translations
 $(strip $(if $(call find_page_key,$1,$2),\
-    $(foreach lang,$(ALL_LANGS),-D CURRENT_URL_$(shell echo $(lang) | tr a-z A-Z)=/$(lang)/$(call get_page_name,$(call find_page_key,$1,$2),$(lang))) \
+    -D CURRENT_URL_KEY=$(call find_page_key,$1,$2) \
+    $(foreach lang,$(LANGS),-D CURRENT_URL_$(shell echo $(lang) | tr a-z A-Z)=/$(lang)/$(call get_page_name,$(call find_page_key,$1,$2),$(lang))) \
     $(foreach key,$(PAGE_KEYS),-D URL_$(shell echo $(key) | tr a-z A-Z)=/$2/$(call get_page_name,$(key),$2)) \
-	$(foreach key,$(PAGE_KEYS),-D MENU_$(shell echo $(key) | tr a-z A-Z)=$(call get_page_name,$(key),$2)) \
 ))
 endef
