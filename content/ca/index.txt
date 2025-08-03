@@ -1,11 +1,9 @@
-
-MAIN_PAGE: Home
-PAGE_SLUG: home
+PAGE_SLUG: index
 ---------------------------------
 <section class="profile">
     <img class="avatar" alt="avatar" src="/images/avatar.png" />
-    ## Antoni Aloy Torrens
-    ### Programador, Desenvolupador Web i Pianista
+    <h2>Antoni Aloy Torrens</h2>
+    <h3>Programador, Desenvolupador Web i Pianista</h3>
 </section>
 <section class="profiledesc">
     Soc programador i desenvolupador web amb experiència en projectes tecnològics diversos.

@@ -10,201 +10,110 @@
     <meta name="generator" content="blogc {{ BLOGC_VERSION }}">
     <link rel="stylesheet" href="{{ BASE_URL }}/assets/css/reset.css">
     <link rel="stylesheet" href="{{ BASE_URL }}/assets/css/styles.css">
+    <link rel="stylesheet" href="{{ BASE_URL }}/assets/css/posts.css">
 </head>
 
 <body>
-  <header>
-      <nav>
-          <!-- Navigation links -->
-          <p>
-              <a class="navlink {% if MAKE_TYPE == "post" %} active{% endif %}" href="{{ BASE_URL }}/{{ LANG }}/{{ BLOG_SLUG }}">{{ BLOG_TITLE }}</a>
-              <span class="cw">&nbsp;|&nbsp;</span>
-              <a class="navlink {% if PAGE_SLUG == EDUCATION_SLUG %} active{% endif %}" href="{{ BASE_URL }}/{{ LANG }}/{{ EDUCATION_SLUG }}">{{ EDUCATION_TITLE }}</a>
-              <span class="cw">&nbsp;|&nbsp;</span>
-              <a class="navlink {% if PAGE_SLUG == EXPERIENCE_SLUG %} active{% endif %}" href="{{ BASE_URL }}/{{ LANG }}/{{ EXPERIENCE_SLUG }}">{{ EXPERIENCE_TITLE }}</a>
-              <span class="cw">&nbsp;|&nbsp;</span>
-              <a class="navlink {% if PAGE_SLUG == PROJECTS_SLUG %} active{% endif %}" href="{{ BASE_URL }}/{{ LANG }}/{{ PROJECTS_SLUG }}">{{ PROJECTS_TITLE }}</a>
-          </p>
-          <!-- Language selection -->
-          <p>
-              <a class="navlink" href="{{ BASE_URL }}{{ CURRENT_URL_CA }}" class="{% if LANG == "ca" %} active{% endif %}">CA</a>
-              <span class="cw">|</span>
-              <a class="navlink" href="{{ BASE_URL }}{{ CURRENT_URL_ES }}" class="{% if LANG == "es" %} active{% endif %}">ES</a>
-              <span class="cw">|</span>
-              <a class="navlink" href="{{ BASE_URL }}{{ CURRENT_URL_EN }}" class="{% if LANG == "en" %} active{% endif %}">EN</a>
-          </p>
-      </nav>
-      <h1>{% ifdef MAIN_PAGE %}{{ MAIN_PAGE }}{% else %}{{ TITLE }}{% endif %}</h1>
-  </header>
+    <header>
+        <nav>
+            <!-- Navigation links -->
+            <p>
+                <a class="navlink {% if PAGE_SLUG == URL_BLOG %}active{% else %} {% if CURRENT_URL_KEY == "blog" %}active{% endif %}{% endif %}" href="{{ BASE_URL }}{{ URL_BLOG }}">Blog</a>
+                <span class="cw">&nbsp;|&nbsp;</span>
+                <a class="navlink {% if PAGE_SLUG == URL_EDUCATION %}active{% endif %}" href="{{ BASE_URL }}{{ URL_EDUCATION }}">{% if LANG == "ca" %}Educació{% endif %}{% if LANG == "en" %}Education{% endif %}{% if LANG == "es" %}Educación{% endif %}</a>
+                <span class="cw">&nbsp;|&nbsp;</span>
+                <a class="navlink {% if PAGE_SLUG == URL_ABOUT %}active{% endif %}" href="{{ BASE_URL }}{{ URL_ABOUT }}">{% if LANG == "ca" %}Sobre{% endif %}{% if LANG == "en" %}About{% endif %}{% if LANG == "es" %}Acerca{% endif %}</a>
+                <span class="cw">&nbsp;|&nbsp;</span>
+                <a class="navlink {% if PAGE_SLUG == URL_SERVICES %}active{% endif %}" href="{{ BASE_URL }}{{ URL_SERVICES }}">{% if LANG == "ca" %}Serveis{% endif %}{% if LANG == "en" %}Services{% endif %}{% if LANG == "es" %}Servicios{% endif %}</a>
+                <span class="cw">&nbsp;|&nbsp;</span>
+                <a class="navlink {% if PAGE_SLUG == URL_CONTACT %}active{% endif %}" href="{{ BASE_URL }}{{ URL_CONTACT }}">{% if LANG == "ca" %}Contacte{% endif %}{% if LANG == "en" %}Contact{% endif %}{% if LANG == "es" %}Contacto{% endif %}</a>
+            </p>
+            <!-- Language selection -->
+            <p>
+                <a class="navlink" href="{{ BASE_URL }}{{ CURRENT_URL_CA }}" class="{% if LANG == "ca" %} active{% endif %}">CA</a>
+                <span class="cw">|</span>
+                <a class="navlink" href="{{ BASE_URL }}{{ CURRENT_URL_ES }}" class="{% if LANG == "es" %} active{% endif %}">ES</a>
+                <span class="cw">|</span>
+                <a class="navlink" href="{{ BASE_URL }}{{ CURRENT_URL_EN }}" class="{% if LANG == "en" %} active{% endif %}">EN</a>
+            </p>
+        </nav>
+        <h1>{% ifdef MAIN_PAGE %}{{ MAIN_PAGE }}{% else %}{{ TITLE }}{% endif %}</h1>
+    </header>
 
-  <main>
-      <!-- Main page content (from index.txt using listing_entry) -->
-      {% block listing_entry %}
-          <section class="main-content">
-              {{ CONTENT }}
-          </section>
-      {% endblock %}
+    <main>
+        <!-- Main page content -->
+        {% block listing_entry %}
+            <section class="main-content">
+                {{ CONTENT }}
+            </section>
+        {% endblock %}
 
-      <!-- Latest blog posts section -->
-      {% block listing_once %}
-          {% ifdef FILENAME_FIRST %}
-          <section class="latest-posts">
-              <h2>
-                  {% if LANG == "ca" %}Últimes entrades{% endif %}
-                  {% if LANG == "es" %}Últimas entradas{% endif %}
-                  {% if LANG == "en" %}Latest posts{% endif %}
-              </h2>
-              <ul class="posts-list">
-          {% endif %}
-      {% endblock %}
+        <!-- Latest blog posts section -->
+        {% block listing_once %}
+            {% ifdef FILENAME_FIRST %}
+                <section class="latest-posts">
+                    <h2>
+                        {% if LANG == "ca" %}Últimes entrades{% endif %}
+                        {% if LANG == "es" %}Últimas entradas{% endif %}
+                        {% if LANG == "en" %}Latest posts{% endif %}
+                    </h2>
+                    <ul class="posts-list">
+            {% endif %}
+        {% endblock %}
 
-      {% block listing %}
-          <li class="post-item">
-              <article>
-                  <header>
-                      <h3><a href="{{ BASE_URL }}/{{ LANG }}/blog/post/{{ FILENAME }}.html">{{ TITLE }}</a></h3>
-                      <!-- FILENAME_10: pick the 10 first characters of the blog filename, which represents the post publication date. -->
-                      <time datetime="{{ FILENAME_10 }}">{{ FILENAME_10 }}</time>
-                      {% ifdef TAGS %}
-                      <div class="post-tags">
-                          {% if LANG == "ca" %}Etiquetes:{% endif %}
-                          {% if LANG == "es" %}Etiquetas:{% endif %}
-                          {% if LANG == "en" %}Tags:{% endif %}
-                          {% foreach TAGS %}
-                          <a href="{{ BASE_URL }}/{{ LANG }}/tag/{{ FOREACH_ITEM }}.html" class="tag">{{ FOREACH_ITEM }}</a>
-                          {% endforeach %}
-                      </div>
-                      {% endif %}
-                  </header>
-                  {% ifdef DESCRIPTION %}
-                  <div class="post-excerpt">
-                      <p>{{ DESCRIPTION }}</p>
-                  </div>
-                  {% endif %}
-              </article>
-          </li>
-      {% endblock %}
+        {% block listing %}
+            <li class="post-item">
+                <article>
+                    <header>
+                        <h3><a href="{{ BASE_URL }}blog/post/{{ FILENAME }}.html">{{ TITLE }}</a></h3>
+                        <!-- FILENAME_10: pick the 10 first characters of the blog filename, which represents the post publication date. -->
+                        <time datetime="{{ FILENAME_10 }}">{{ FILENAME_10 }}</time>
+                        {% ifdef TAGS %}
+                            <div class="post-tags">
+                                {% if LANG == "ca" %}Etiquetes:{% endif %}
+                                {% if LANG == "es" %}Etiquetas:{% endif %}
+                                {% if LANG == "en" %}Tags:{% endif %}
+                                {% foreach TAGS %}
+                                    <a href="{{ BASE_URL }}/{{ LANG }}/tag/{{ FOREACH_ITEM }}.html" class="tag">{{ FOREACH_ITEM }}</a>
+                                {% endforeach %}
+                            </div>
+                        {% endif %}
+                    </header>
+                    {% ifdef DESCRIPTION %}
+                        <div class="post-excerpt">
+                            <p>{{ DESCRIPTION }}</p>
+                        </div>
+                    {% endif %}
+                </article>
+            </li>
+        {% endblock %}
 
-      {% block listing_once %}
-          {% ifdef FILENAME_FIRST %}
-              </ul>
-              <div class="view-all-posts">
-                  <a href="{{ BASE_URL }}/{{ LANG }}/blog/" class="btn">
-                      {% if LANG == "ca" %}Veure totes les entrades{% endif %}
-                      {% if LANG == "es" %}Ver todas las entradas{% endif %}
-                      {% if LANG == "en" %}View all posts{% endif %}
-                  </a>
-              </div>
-          {% endif %}
-          </section>
-      {% endblock %}
+        {% block listing_once %}
+            {% ifdef FILENAME_FIRST %}
+                    </ul>
+                    <div class="view-all-posts">
+                        <a href="{{ BASE_URL }}blog/" class="btn">
+                            {% if LANG == "ca" %}Veure totes les entrades{% endif %}
+                            {% if LANG == "es" %}Ver todas las entradas{% endif %}
+                            {% if LANG == "en" %}View all posts{% endif %}
+                        </a>
+                    </div>
+            {% endif %}
+                </section>
+        {% endblock %}
 
-      {% block listing_empty %}
-          <!-- No posts available -->
-      {% endblock %}
+        {% block listing_empty %}
+            Not available
+        {% endblock %}
 
-  </main>
+        {% block entry %}
+            {{ CONTENT }}
+        {% endblock %}
+    </main>
 
-  <footer>
-      &copy; {{ AUTHOR_NAME }} &middot; Built with blogc
-  </footer>
-
-  <style>
-    /* Additional styles for the new features */
-    .latest-posts {
-        margin: 2rem 0;
-        padding-top: 2rem;
-        border-top: 1px solid #e0e0e0;
-    }
-
-    .latest-posts h2 {
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-        color: #333;
-    }
-
-    .posts-list {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
-
-    .post-item {
-        margin-bottom: 1.5rem;
-        padding-bottom: 1.5rem;
-        border-bottom: 1px solid #f0f0f0;
-    }
-
-    .post-item:last-child {
-        border-bottom: none;
-    }
-
-    .post-item h3 {
-        font-size: 1.2rem;
-        margin: 0 0 0.5rem 0;
-    }
-
-    .post-item h3 a {
-        color: #005ED9;
-        text-decoration: none;
-    }
-
-    .post-item h3 a:hover {
-        text-decoration: underline;
-    }
-
-    .post-item time {
-        font-size: 0.9rem;
-        color: #888;
-        display: block;
-        margin-bottom: 0.5rem;
-    }
-
-    .post-tags {
-        margin: 0.5rem 0;
-        font-size: 0.85rem;
-    }
-
-    .tag {
-        display: inline-block;
-        background: #f0f0f0;
-        color: #666;
-        padding: 0.2rem 0.5rem;
-        margin: 0 0.25rem 0.25rem 0;
-        border-radius: 3px;
-        text-decoration: none;
-        font-size: 0.8rem;
-    }
-
-    .tag:hover {
-        background: #005ED9;
-        color: white;
-    }
-
-    .post-excerpt {
-        margin-top: 0.5rem;
-        color: #666;
-    }
-
-    .view-all-posts {
-        text-align: center;
-        margin-top: 2rem;
-    }
-
-    .btn {
-        display: inline-block;
-        padding: 0.75rem 1.5rem;
-        background: #005ED9;
-        color: white;
-        text-decoration: none;
-        border-radius: 4px;
-        font-weight: bold;
-    }
-
-    .btn:hover {
-        background: #0000EE;
-    }
-  </style>
+    <footer>
+        &copy; {{ AUTHOR_NAME }} &middot; Built with blogc
+    </footer>
 </body>
 
 </html>

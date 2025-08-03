@@ -1,11 +1,11 @@
 # Project variables
 SHELL := /bin/sh
-AUTHOR_NAME = "Author"
+AUTHOR_NAME = "Antoni Aloy Torrens"
 AUTHOR_EMAIL = "author@example.org"
-SITE_TITLE = "Site Title"
+SITE_TITLE = "Portfolio"
 SITE_TAGLINE = "Site Tagline"
 BASE_DOMAIN = "http://example.org"
-BASE_URL = ""
+BASE_URL = "http://127.0.0.1:8080"
 DATE_FORMAT = "%b %d, %Y, %I:%M %p GMT"
 
 # Directories
@@ -21,7 +21,6 @@ include translations.mk
 
 # Templates
 MAIN_TPL = $(TEMPLATE_DIR)/index.tmpl
-INDEX_TPL = $(TEMPLATE_DIR)/index.tmpl
 POST_TPL = $(TEMPLATE_DIR)/post.tmpl
 TAG_TPL = $(TEMPLATE_DIR)/tag.tmpl
 
@@ -112,6 +111,7 @@ lang-index:
 		translation_vars="$(call get_page_translations,index,$(LANG))"; \
 		echo "   Building index with latest posts"; \
 		echo "   Blog posts: $$blog_posts"; \
+		echo "	 Translation vars: $$translation_vars"; \
 		if [ -n "$$blog_posts" ]; then \
 			$(BLOGC_BASE) \
 				-l -e $(CONTENT_DIR)/$(LANG)/index.txt \
@@ -122,7 +122,7 @@ lang-index:
 				-D FILTER_PAGE=1 \
 				$$translation_vars \
 				-o $(PUBLIC_DIR)/$(LANG)/index.html \
-				-t $(INDEX_TPL) \
+				-t $(MAIN_TPL) \
 				$$blog_posts; \
 		else \
 			$(BLOGC_BASE) \
@@ -130,7 +130,7 @@ lang-index:
 				-D LANG=$(LANG) \
 				$$translation_vars \
 				-o $(PUBLIC_DIR)/$(LANG)/index.html \
-				-t $(INDEX_TPL) \
+				-t $(MAIN_TPL) \
 				$(CONTENT_DIR)/$(LANG)/index.txt; \
 		fi; \
 	fi
@@ -165,7 +165,7 @@ lang-blog:
 			-D FILTER_PAGE=1 \
 			$$blog_vars \
 			-o $(PUBLIC_DIR)/$(LANG)/blog/index.html \
-			-t $(INDEX_TPL) \
+			-t $(MAIN_TPL) \
 			$(wildcard $(CONTENT_DIR)/$(LANG)/blog/*.txt); \
 	fi
 
