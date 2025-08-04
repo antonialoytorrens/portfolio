@@ -39,6 +39,10 @@ code {
     border-radius: 2px;
 }
 
+strong {
+    font-weight: bold;
+}
+
 pre {
     background: #f8f8f8;
     overflow-x: auto;
@@ -51,16 +55,12 @@ a {
     text-decoration: none;
 }
 
-a:visited {
-    color: #005ED9;
-}
-
 a:hover {
     color: #0000EE;
 }
 
 /* Navigation‑specific classes */
-.navlink, .navlink:hover, .navlink:active, .navlink:visited {
+.navlink, .navlink:hover {
     color: #FFFFFF;
 }
 

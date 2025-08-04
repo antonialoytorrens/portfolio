@@ -1,0 +1,11 @@
+TITLE: Pamboliada
+LINK: https://github.com/antonialoytorrens/pa-amb-oli
+REL_IMG_SRC: ../../assets/img/projects/pamboliada.gif
+IMG_ALT: Pàgina web de Pamboliada
+TAGS: web
+---------------------------------
+Treball realitzat durant l'FCT de Desenvolupament d'Aplicacions Web en el CIFP Pau Casesnoves.
+
+<br>
+
+Aquest projecte acadèmic consisteix en una aplicació web funcional per demostrar les competències adquirides. El seu objectiu era aplicar coneixements de 'backend' i 'frontend' en el desenvolupament d'un cas pràctic de principi a fi.

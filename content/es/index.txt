@@ -1,6 +1,4 @@
-
-MAIN_PAGE: Home
-PAGE_SLUG: home
+PAGE_TITLE: Inicio
 ---------------------------------
 <section class="profile">
     <img class="avatar" alt="avatar" src="/images/avatar.png" />

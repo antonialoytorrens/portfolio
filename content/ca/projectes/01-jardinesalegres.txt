@@ -1,0 +1,11 @@
+TITLE: Jardines Alegres S.L.
+LINK: https://jardinesalegres.com
+REL_IMG_SRC: ../../assets/img/projects/jardinesalegres.gif
+IMG_ALT: Pàgina web de Jardines Alegres
+TAGS: web
+---------------------------------
+Disseny i desenvolupament d'una pàgina web per a l'empresa de Jardines Alegres S.L.
+
+<br>
+
+Jardines Alegres S.L. crea espais exteriors únics mitjançant serveis de disseny i execució de projectes de jardineria, incloent la instal·lació de sistemes d’irrigació i la preparació del terreny. A més, ofereix manteniment periòdic de gespes, poda d’arbres i arbusts, i treballs especialitzats de plantació per mantenir cada jardí en òptimes condicions al llarg de l’any.

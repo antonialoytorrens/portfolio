@@ -1,5 +1,4 @@
-MAIN_PAGE: Educació
-PAGE_SLUG: educacio
+PAGE_TITLE: Education
 ---------------------------------
 <section class="timeline">
   <article>

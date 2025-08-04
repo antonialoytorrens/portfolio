@@ -1,0 +1,87 @@
+/* ========== PROJECT LISTING STYLES ========== */
+
+/* The main container for the projects section */
+.projects {
+    /* Adjust padding as needed */
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* We can still use .container to set a max-width for readability on large screens */
+.projects .container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.project-item {
+    display: flex;
+    align-items: flex-start; /* Aligns items to the top */
+    margin-bottom: 2.5rem;   /* Space between project items */
+    border: 1px solid #DFDFDF;
+    border-radius: 8px;
+    padding: 1.5rem;
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* Container for the image */
+.project-img-container {
+    align-self: center;
+    flex-shrink: 0; /* Prevents the image container from shrinking */
+    width: 200px;   /* Set a fixed width for the image column */
+    margin-right: 1.5rem; /* Creates space between the image and the text */
+}
+
+/* The actual image element */
+.project-img {
+    max-width: 200px;
+    width: 100%; /* Make the image fill its container */
+    height: auto;
+    margin: auto;
+    display: block; /* Removes bottom space under the image */
+    border-radius: 4px;
+}
+
+/* The text content container */
+.project-content {
+    flex-grow: 1; /* Allows the content to take up the remaining space */
+}
+
+.project-content h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    color: #003070;
+}
+
+.project-content h3 a {
+    color: inherit;
+    text-decoration: none;
+}
+.project-content h3 a:hover {
+    text-decoration: underline;
+    color: #005ED9;
+}
+
+.project-content p {
+    margin-top: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #444;
+}
+
+@media (max-width: 768px) {
+    .project-item {
+        flex-direction: column; /* Stack the items vertically */
+        align-items: center;    /* Center the items */
+        text-align: center;
+    }
+
+    .project-img-container {
+        width: 100%;
+        max-width: 250px; /* Control max image size on mobile */
+        margin-right: 0;  /* Remove the side margin */
+        margin-bottom: 1rem; /* Add space below the image */
+    }
+}

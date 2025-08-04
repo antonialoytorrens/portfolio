@@ -2,7 +2,7 @@
 SHELL := /bin/sh
 AUTHOR_NAME = "Antoni Aloy Torrens"
 AUTHOR_EMAIL = "author@example.org"
-SITE_TITLE = "Portfolio"
+SITE_TITLE = $(AUTHOR_NAME)
 SITE_TAGLINE = "Site Tagline"
 BASE_DOMAIN = "http://example.org"
 BASE_URL = "http://127.0.0.1:8080"
@@ -16,12 +16,19 @@ TEMPLATE_DIR = templates
 # Languages
 LANGS := ca en es
 
+# Directory pages
+DIRPAGES := education projects
+
+# Single pages
+# TODO: Add build stage IS_SINGLEPAGE=1 just to differenciate from dirpages
+SINGLEPAGES := about
+
 # Include translation mappings
 include translations.mk
 
 # Templates
 MAIN_TPL = $(TEMPLATE_DIR)/index.tmpl
-POST_TPL = $(TEMPLATE_DIR)/post.tmpl
+POST_TPL = $(TEMPLATE_DIR)/index.tmpl
 TAG_TPL = $(TEMPLATE_DIR)/tag.tmpl
 
 # Blog configuration
@@ -80,26 +87,32 @@ build-%:
 	@$(MAKE) lang-index LANG=$*
 	@echo "Language $* built successfully."
 
-# Build individual pages for a language (excluding index, which is handled separately)
+# Build individual pages for a language from content directories
 lang-pages:
-	@echo " - Building pages for $(LANG)..."
-	@$(foreach page,$(filter-out $(CONTENT_DIR)/$(LANG)/index.txt,$(wildcard $(CONTENT_DIR)/$(LANG)/*.txt)),\
-		page_name=$(basename $(notdir $(page))); \
-		translation_vars="$(call get_page_translations,$(basename $(notdir $(page))),$(LANG))"; \
-		if [ -n "$$translation_vars" ]; then \
-			echo "   Building page: $$page_name"; \
-			echo "	 Translation vars: $$translation_vars" \
-			$(MKDIR) -p $(PUBLIC_DIR)/$(LANG)/$$page_name; \
-			$(BLOGC_BASE) \
-				-D MENU=$$page_name \
-				-D LANG=$(LANG) \
-				-D SETLANG=/$(LANG)/$$page_name \
-				$$translation_vars \
-				-o $(PUBLIC_DIR)/$(LANG)/$$page_name/index.html \
-				-t $(MAIN_TPL) \
-				$(page); \
+	@echo " - Building directory pages for $(LANG)..."
+	@$(foreach page_key,$(DIRPAGES),\
+		$(eval PAGE_SLUG := $(call get_page_name,$(page_key),$(LANG))) \
+		$(eval SOURCE_DIR := $(CONTENT_DIR)/$(LANG)/$(PAGE_SLUG)) \
+		$(eval TRANSLATION_VARS := $(call get_page_translations,$(PAGE_SLUG),$(LANG))) \
+		if [ -d "$(SOURCE_DIR)" ]; then \
+			source_files=$$(find $(SOURCE_DIR) -name "*.txt" | $(SORT)); \
+			if [ -n "$$source_files" ]; then \
+				echo " Building page from directory: $(PAGE_SLUG)"; \
+				echo " Translation vars: $(TRANSLATION_VARS)"; \
+				$(MKDIR) -p $(PUBLIC_DIR)/$(LANG)/$(PAGE_SLUG); \
+				$(BLOGC_BASE) \
+					-l \
+					-D LANG=$(LANG) \
+					-D IS_DIRPAGE=1 \
+					$(TRANSLATION_VARS) \
+					-o $(PUBLIC_DIR)/$(LANG)/$(PAGE_SLUG)/index.html \
+					-t $(MAIN_TPL) \
+					$$source_files; \
+			else \
+				echo " Skipping page: $(PAGE_SLUG) (directory is empty)"; \
+			fi; \
 		else \
-			echo "   Skipping page: $$page_name (no translation mapping found)"; \
+			echo " Skipping page: Directory $(SOURCE_DIR) not found for language $(LANG)."; \
 		fi; \
 	)
 
@@ -108,15 +121,16 @@ lang-index:
 	@echo " - Building index with latest posts for $(LANG)..."
 	@if [ -f "$(CONTENT_DIR)/$(LANG)/index.txt" ]; then \
 		blog_posts=$$(find $(CONTENT_DIR)/$(LANG)/blog -name "*.txt" 2>/dev/null | head -$(LATEST_POSTS_COUNT) || true); \
+		# TODO: maybe translate index properly to index, inici, inicio, home? \
 		translation_vars="$(call get_page_translations,index,$(LANG))"; \
-		echo "   Building index with latest posts"; \
 		echo "   Blog posts: $$blog_posts"; \
 		echo "	 Translation vars: $$translation_vars"; \
 		if [ -n "$$blog_posts" ]; then \
 			$(BLOGC_BASE) \
 				-l -e $(CONTENT_DIR)/$(LANG)/index.txt \
-				-D MENU=index \
+				-D PAGE_TITLE=Index \
 				-D LANG=$(LANG) \
+				-D HAVE_POSTS=1 \
 				-D FILTER_SORT=1 \
 				-D FILTER_PER_PAGE=$(LATEST_POSTS_COUNT) \
 				-D FILTER_PAGE=1 \
@@ -126,8 +140,8 @@ lang-index:
 				$$blog_posts; \
 		else \
 			$(BLOGC_BASE) \
-				-D MENU=index \
 				-D LANG=$(LANG) \
+				-D PAGE_TITLE=Index \
 				$$translation_vars \
 				-o $(PUBLIC_DIR)/$(LANG)/index.html \
 				-t $(MAIN_TPL) \
@@ -143,8 +157,9 @@ lang-blog:
 		blog_vars="$(call get_page_translations,blog,$(LANG))"; \
 		echo "   Building post: $$post_id"; \
 		$(BLOGC_BASE) \
-			-D MENU=blog \
+			-D PAGE_TITLE=Blog \
 			-D LANG=$(LANG) \
+			-D HAVE_POSTS=1 \
 			-D IS_POST=1 \
 			$$blog_vars \
 			-o $(PUBLIC_DIR)/$(LANG)/blog/post/$$post_id.html \
@@ -158,7 +173,7 @@ lang-blog:
 		echo "   Building blog index for $(LANG)"; \
 		$(BLOGC_BASE) \
 			-l \
-			-D MENU=blog \
+			-D PAGE_TITLE=Blog \
 			-D LANG=$(LANG) \
 			-D FILTER_SORT=1 \
 			-D FILTER_PER_PAGE=$(POSTS_PER_PAGE) \
@@ -180,13 +195,13 @@ lang-tags:
 	  blog_vars="$(call get_page_translations,blog,$(LANG))"; \
 	  $(BLOGC_BASE) \
 	    -l \
-	    -D MENU=blog \
+	    -D PAGE_TITLE=Blog \
 	    -D LANG=$(LANG) \
 	    -D FILTER_TAG="$$tag" \
 	    -D FILTER_SORT=1 \
 	    -D CURRENT_TAG="$$tag" \
 	    $$blog_vars \
-	    -o $(PUBLIC_DIR)/$(LANG)/tag/$$tag.html \
+	    -o $(PUBLIC_DIR)/$(LANG)/blog/tag/$$tag.html \
 	    -t $(TAG_TPL) \
 	    $(CONTENT_DIR)/$(LANG)/blog/*.txt; \
 	done

@@ -1,0 +1,11 @@
+TITLE: Contribuïdor de PostmarketOS
+LINK: https://gitlab.com/users/antoni.aloytorrens/contributed
+REL_IMG_SRC: ../../assets/img/projects/postmarketos.gif
+IMG_ALT: PostmarketOS Home Page
+TAGS: foss
+---------------------------------
+Desenvolupament de la portabilitat Linux en diferents telèfons mòbils, tablets i dispositius encastats.
+
+<br>
+
+PostmarketOS és un sistema operatiu de codi obert basat en Alpine Linux, dissenyat per a telèfons intel·ligents. El seu objectiu és allargar la vida útil dels dispositius mòbils amb un enfocament en la seguretat, la privacitat i la llibertat de l'usuari.

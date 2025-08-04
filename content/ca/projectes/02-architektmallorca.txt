@@ -1,0 +1,11 @@
+TITLE: Rainer Henke Steiner - Architekt Mallorca
+LINK: https://architektmallorca.com
+REL_IMG_SRC: ../../assets/img/projects/architektmallorca.gif
+IMG_ALT: Pàgina web de Rainer Henke Steiner, Architekt Mallorca
+TAGS: web
+---------------------------------
+Disseny i desenvolupament d'una pàgina web per a l'empresa de l'arquitecte Rainer Henke Steiner.
+
+<br>
+
+El seu treball combina l'arquitectura moderna amb materials tradicionals, buscant una simbiosi entre funcionalitat i disseny. Té una àmplia experiència en la gestió d'obres complexes, des de la redacció del projecte fins a l'acabament de l'obra.

@@ -1,0 +1,56 @@
+PAGE_TITLE: Projectes
+---------------------------------
+<section class="projects">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <a href="https://jardinesalegres.com"><img class="responsive-img" src="{{ BASE_URL }}/images/projects/jardinesalegres.jpg" alt="Jardines Alegres Home Page" loading="lazy"></a>
+                <h3 class="title"><a href="https://jardinesalegres.com">Jardines Alegres S.L.</a></h3>
+                <p>Design and development of a web page for the company Jardines Alegres S.L.</p>
+                <p><a href="https://jardinesalegres.com">Website</a></p>
+            </div>
+            <div class="col">
+                <a href="https://architektmallorca.com"><img class="responsive-img" src="/images/projects/architektmallorca.jpg" alt="Rainer Henke Steiner, Architect Mallorca Home Page" loading="lazy"></a>
+                <h3 class="title"><a href="https://architektmallorca.com">Rainer Henke Steiner - Architect Mallorca</a></h3>
+                <p>Design and development of a web page for the company of the architect Rainer Henke Steiner.</p>
+                <p><a href="https://architektmallorca.com">Website</a></p>
+            </div>
+            <div class="col">
+                <a href="http://www.juanluisescriva.com/"><img class="responsive-img" src="/images/projects/juanluisescriva.jpg" alt="Juan Luis Escrivá Home Page" loading="lazy"></a>
+                <h3 class="title"><a href="http://www.juanluisescriva.com/">Juan Luis Escrivá</a></h3>
+                <p>Design and development of a web page for the composer Juan Luis Escrivá.</p>
+                <p><a href="http://www.juanluisescriva.com/">Website</a></p>
+            </div>
+            <div class="col">
+                <a href="https://www.architektbalearen.com/"><img class="responsive-img" src="/images/projects/architektbalearen.jpg" alt="Alwin Klotz, Architect Balearen Home Page" loading="lazy"></a>
+                <h3 class="title"><a href="https://www.architektbalearen.com/">Alwin Klotz - Architekt Balearen</a></h3>
+                <p>Design and development of a web page for the company of the architect Alwin Klotz.</p>
+                <p><a href="https://www.architektbalearen.com/">Website</a></p>
+            </div>
+            <div class="col">
+                <a href="https://ainalomaspsicologa.com"><img class="responsive-img" src="/images/projects/ainalomaspsicologa.jpg" alt="Aina Lomas, Psychologist Home Page" loading="lazy"></a>
+                <h3 class="title"><a href="https://ainalomaspsicologa.com">Aina Lomas - Psychologist</a></h3>
+                <p>Design and development of a web page for the psychologist Aina Lomas.</p>
+                <p><a href="https://ainalomaspsicologa.com">Website</a></p>
+            </div>
+            <div class="col">
+                <a href="https://gitlab.com/users/antoni.aloytorrens/contributed"><img class="responsive-img" src="/images/projects/postmarketos.jpg" alt="PostmarketOS Home Page" loading="lazy"></a>
+                <h3 class="title"><a href="https://gitlab.com/users/antoni.aloytorrens/contributed">PostmarketOS</a></h3>
+                <p>Linux porting development on different mobile phones, tablets and embedded devices.</p>
+                <p><a href="https://gitlab.com/users/antoni.aloytorrens/contributed">See in GitLab</a></p>
+            </div>
+            <div class="col">
+                <a href="https://pkgs.alpinelinux.org/packages?name=&branch=edge&maintainer=Antoni+Aloy"><img class="responsive-img" src="/images/projects/alpine.jpg" alt="Alpine Linux Home Page" loading="lazy"></a>
+                <h3 class="title"><a href="https://pkgs.alpinelinux.org/packages?name=&branch=edge&maintainer=Antoni+Aloy">Alpine Linux package maintainer</a></h3>
+                <p>Responsible for maintenance and collaborator in some packages of the Alpine Linux distribution.</p>
+                <p><a href="https://pkgs.alpinelinux.org/packages?name=&branch=edge&maintainer=Antoni+Aloy">See in repository</a></p>
+            </div>
+            <div class="col">
+                <a href="https://github.com/antonialoytorrens/pa-amb-oli"><img class="responsive-img" src="/images/projects/pamboliada.jpg" alt="Pamboliada Home Page" loading="lazy"></a>
+                <h3 class="title"><a href="https://github.com/antonialoytorrens/pa-amb-oli">Pamboliada</a></h3>
+                <p>Work carried out during the FCT of Web Application Development at CIFP Pau Casesnoves.</p>
+                <p><a href="https://github.com/antonialoytorrens/pa-amb-oli">See in GitHub</a></p>
+            </div>
+        </div>
+    </div>
+</section>

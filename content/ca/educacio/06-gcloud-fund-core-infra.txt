@@ -1,0 +1,10 @@
+TITLE: Certificació Coursera de Google Cloud Fundamentals: Core Infrastructure
+LINK_NAME: Certificat
+LINK: https://www.coursera.org/account/accomplishments/verify/VC7M2GJN5DHM
+START_DATE: 2022-07
+END_DATE: 2022-08
+---------------------------------
+* Comprensió del propòsit i el valor dels productes i serveis de Google Cloud.
+* Comprensió de l'organització i control de la infraestructura a Google Cloud.
+* Comprensió bàsica de la creació d'una infraestructura bàsica a Google Cloud.
+* Comprensió i destresa sobre les opcions d'emmagatzematge de Google Cloud.

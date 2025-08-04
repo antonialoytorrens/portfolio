@@ -1,13 +1,41 @@
-MAIN_PAGE: Educació
-PAGE_SLUG: educacio
+PAGE_TITLE: Educació
 ---------------------------------
 <section class="timeline">
   <article>
     <h3>2022 — Màster en Intel·ligència Artificial</h3>
     <p>Universitat Politècnica de Catalunya (UPC).</p>
   </article>
+
   <article>
     <h3>2018 — Grau en Enginyeria Informàtica</h3>
     <p>Universitat de les Illes Balears (UIB).</p>
+  </article>
+
+  <article>
+    <h3>2022 — Grau Professional en Orgue</h3>
+    <p><a href="https://emmat.incaciutat.com/" target="_blank">EMMAT</a>.</p>
+  </article>
+
+  <article>
+    <h3>2020 — Grau d'Enginyeria Informàtica</h3>
+    <p><a href="https://uoc.edu" target="_blank">Universitat Oberta de Catalunya</a>.</p>
+  </article>
+
+  <article>
+    <h3>2020 — Tècnic Superior en Desenvolupament d'Aplicacions Web</h3>
+    <p><a href="https://paucasesnovescifp.cat" target="_blank">CIFP Pau Casesnoves</a>.</p>
+  </article>
+
+  <article>
+    <h3>2022 — Grau Professional en Piano</h3>
+    <p><a href="https://emmat.incaciutat.com/" target="_blank">EMMAT</a>.</p>
+  </article>
+
+  <article>
+    <h3>2020 — Certificació de Linux Essentials</h3>
+    <p>
+      <a href="https://lpi.org/v/LPI000456258/gjlxpst22w" target="_blank">Certificat</a> emès per LPI.<br>
+      <em>Veure també: <a href="https://www.lpi.org/our-certifications/linux-essentials-overview" target="_blank">Linux Essentials Overview</a></em>
+    </p>
   </article>
 </section>

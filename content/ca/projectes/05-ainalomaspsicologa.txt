@@ -1,0 +1,11 @@
+TITLE: Aina Lomas - Psicòloga i Sexòloga
+LINK: https://ainalomaspsicologa.com
+REL_IMG_SRC: ../../assets/img/projects/ainalomaspsicologa.gif
+IMG_ALT: Pàgina web d'Aina Lomas, psicòloga
+TAGS: web
+---------------------------------
+Disseny i desenvolupament d'una pàgina web per a la psicòloga Aina Lomas.
+
+<br>
+
+És una psicòloga especialitzada en l'àrea de la sexualitat, la identitat de gènere i la teràpia de parella. També ofereix teràpia individual per a la gestió emocional, l'ansietat i la simptomatologia depressiva.

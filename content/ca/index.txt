@@ -1,4 +1,4 @@
-PAGE_SLUG: index
+PAGE_TITLE: Inici
 ---------------------------------
 <section class="profile">
     <img class="avatar" alt="avatar" src="/images/avatar.png" />

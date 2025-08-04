@@ -1,0 +1,11 @@
+TITLE: Alwin Klotz - Architekt Balearen
+LINK: https://www.architektbalearen.com/
+REL_IMG_SRC: ../../assets/img/projects/architektbalearen.gif
+IMG_ALT: Pàgina web d'Alwin Klotz, Architekt Balearen
+TAGS: web
+---------------------------------
+Disseny i desenvolupament d'una pàgina web per a l'arquitecte Alwin Klotz.
+
+<br>
+
+Aquest arquitecte independent ofereix serveis de planificació, gestió de projectes i consultoria a les Illes Balears. Posa un fort èmfasi en la construcció sostenible, l'eficiència energètica i l'ús de materials locals en els seus dissenys.

@@ -1,0 +1,11 @@
+TITLE: Juan Luis Escrivá
+LINK: http://www.juanluisescriva.com/
+REL_IMG_SRC: ../../assets/img/projects/juanluisescriva.gif
+IMG_ALT: Pàgina web de Juan Luis Escrivá
+TAGS: web
+---------------------------------
+Disseny i desenvolupament d'una pàgina web pel compositor Juan Luis Escrivá.
+
+<br>
+
+És un compositor graduat pel Conservatori Superior de les Illes Balears, especialitzat en música per a cinema, televisió i videojocs. El seu treball ha estat premiat internacionalment i estrenat en orquestres i festivals de cinema.

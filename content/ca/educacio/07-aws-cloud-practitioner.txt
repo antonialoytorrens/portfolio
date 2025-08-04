@@ -1,0 +1,13 @@
+TITLE: AWS Partner: AWS Cloud Practitioner Essentials
+LINK_NAME: Certificat
+LINK: antonialoytorrens.com/assets/img/education/aws-cloud-practitioner-essentials.png
+START_DATE: 2022-07
+END_DATE: 2022-08
+---------------------------------
+* Comprensió dels conceptes fonamentals del núvol i del valor aportat per AWS Cloud.
+* Familiarització amb la infraestructura global d’AWS: regions, zones de disponibilitat i punts de presència.
+* Coneixement dels serveis clau d’AWS: càlcul (EC2, Lambda), emmagatzematge (S3, EBS), bases de dades (RDS, DynamoDB) i xarxes (VPC).
+* Enteniment de les pràctiques de seguretat i compliment normatiu a AWS, incloent IAM i el model de responsabilitat compartida.
+* Visió general dels models de preus, facturació i plans de suport d’AWS.
+* Introducció a les eines de gestió i desplegament d’infraestructura: AWS Management Console, AWS CLI i AWS CloudFormation.
+* Conceptes bàsics de migració i arquitectures de solucions al núvol sobre AWS.

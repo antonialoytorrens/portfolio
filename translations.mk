@@ -5,7 +5,7 @@ I18N_MENU_MAPPINGS = \
 	education,educacio,educacion,education \
 	about,sobre-mi,acerca-de-mi,about-me \
 	contact,contacte,contacto,contact \
-	services,serveis,servicios,services \
+	projects,projectes,proyectos,projects \
 	portfolio,portfoli,portafolio,portfolio \
 	blog,blog,blog,blog \
 	index,index,index,index \
@@ -62,6 +62,7 @@ endef
 define get_page_translations
 $(strip $(if $(call find_page_key,$1,$2),\
     -D CURRENT_URL_KEY=$(call find_page_key,$1,$2) \
+	-D CURRENT_URL=/$2/$(call get_page_name,$(call find_page_key,$1,$2),$2) \
     $(foreach lang,$(LANGS),-D CURRENT_URL_$(shell echo $(lang) | tr a-z A-Z)=/$(lang)/$(call get_page_name,$(call find_page_key,$1,$2),$(lang))) \
     $(foreach key,$(PAGE_KEYS),-D URL_$(shell echo $(key) | tr a-z A-Z)=/$2/$(call get_page_name,$(key),$2)) \
 ))

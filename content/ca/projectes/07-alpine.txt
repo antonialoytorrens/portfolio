@@ -1,0 +1,11 @@
+TITLE: Mantenidor de paquets d'Alpine Linux
+LINK: https://pkgs.alpinelinux.org/packages?name=&branch=edge&maintainer=Antoni+Aloy
+REL_IMG_SRC: ../../assets/img/projects/alpine.gif
+IMG_ALT: Pàgina del repositori d'Alpine Linux
+TAGS: foss
+---------------------------------
+Responsable del manteniment i col·laborador en alguns paquets de la distribució Alpine Linux.
+
+<br>
+
+Alpine Linux és una distribució lleugera i orientada a la seguretat, molt popular en el món dels contenidors per la seva eficiència. Està basada en musl libc i BusyBox, cosa que li permet tenir una mida molt reduïda i una superfície d'atac mínima.
