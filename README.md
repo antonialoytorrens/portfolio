@@ -4,7 +4,7 @@ My personal portfolio, made with blogc.
 ## Tips
 ### Autorun make every time there's a change
 To run `make` automatically when there is a change of one of my files, I make use of [watchexec](https://github.com/watchexec/watchexec/releases/tag/v1.20.6), and run the following:
-`watchexec -e mk,txt,js,css,html,tmpl,gif,png,jpg,webp,ico -w Makefile make`
+`watchexec -e mk,txt,js,css,html,tmpl,gif,png,jpg,webp,ico make`
 
 Files in `.gitignore` get completely ignored.
 
