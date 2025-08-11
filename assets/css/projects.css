@@ -1,5 +1,9 @@
 /* ========== PROJECT LISTING STYLES ========== */
 
+h2 {
+    margin-bottom: 2.5rem;
+}
+
 /* The main container for the projects section */
 .projects {
     /* Adjust padding as needed */
