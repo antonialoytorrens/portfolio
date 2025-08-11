@@ -162,6 +162,21 @@
             {% endif %}
             <!-- Projects -->
             {% if CURRENT_URL == URL_PROJECTS %}
+                {% if FILENAME_3 == "101" %}    <!-- 1xx are foss projects -->
+                    <div class="project-category">
+                        <h2>Contribucions Open Source</h2>
+                    </div>
+                {% endif %}
+                {% if FILENAME_3 == "201" %}    <!-- 2xx are webdev projects -->
+                    <div class="project-category">
+                        <h2>Desenvolupament Web</h2>
+                    </div>
+                {% endif %}
+                {% if FILENAME_3 == "301" %}    <!-- 3xx are academic projects -->
+                    <div class="project-category">
+                        <h2>Acadèmics</h2>
+                    </div>
+                {% endif %}
                 {% ifdef TITLE %}
                     <article class="project-item">
                         <div class="project-img-container">
