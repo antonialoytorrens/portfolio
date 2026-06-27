@@ -1,0 +1,60 @@
+
+
+/* ========== EDUCATION LISTING STYLES ========== */
+
+.listing {
+    max-width: 75rem;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.listing article {
+    margin-bottom: 2rem;
+    padding-left: 1rem;
+    position: relative;
+}
+
+.listing article::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 0.4em;
+    width: 12px;
+    height: 12px;
+    background-color: #D93B00;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px #ccc;
+}
+
+.listing h3 {
+    font-size: 1.25rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.listing p {
+    font-size: 1rem;
+    color: #444;
+    margin-bottom: 0.5rem;
+}
+
+.listing ul {
+    margin-left: 1.25rem;
+    list-style-type: disc;
+}
+
+.listing ul li {
+    margin-bottom: 0.5rem;
+}
+
+.listing a {
+    color: #005ED9;
+    text-decoration: underline;
+}
+
+.listing a:hover {
+    color: #0000EE;
+    text-decoration: none;
+}

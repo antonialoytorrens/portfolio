@@ -1,0 +1,34 @@
+{
+  "slug.about": "sobre-mi",
+  "slug.blog": "blog",
+  "slug.education": "educacio",
+  "slug.projects": "projectes",
+  "slug.experience": "experiencia",
+  "slug.contact": "contacte",
+
+  "nav.about": "Sobre",
+  "nav.blog": "Blog",
+  "nav.education": "Educació",
+  "nav.projects": "Projectes",
+  "nav.experience": "Experiència",
+  "nav.contact": "Contacte",
+
+  "title.home": "Inici",
+  "title.blog": "Blog",
+  "title.education": "Educació",
+  "title.projects": "Projectes",
+  "title.experience": "Experiència",
+
+  "latest_posts": "Últimes entrades",
+  "view_all_posts": "Veure totes les entrades",
+  "read_more": "Llegir més",
+  "tags_label": "Etiquetes:",
+  "back_to_blog": "← Tornar al blog",
+
+  "tag.heading": "Etiqueta:",
+  "tag.tagged_with": "Entrades etiquetades amb",
+  "tag.view_all": "← Veure totes les entrades",
+  "tag.none_found": "No s'han trobat entrades amb aquesta etiqueta.",
+
+  "footer.built_with": "Fet amb sblg"
+}

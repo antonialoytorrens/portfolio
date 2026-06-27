@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <link rel="alternate" href="@@base_url@@/@@lang@@/@@slug.blog@@/" />
+    <link rel="self" href="@@base_url@@/@@lang@@/atom.xml" />
+    <title>@@author@@ — @@nav.blog@@ (@@lang@@)</title>
+    <updated />
+    <id>@@base_url@@/@@lang@@/</id>
+    <entry data-sblg-entry="1" data-sblg-forall="1" />
+</feed>

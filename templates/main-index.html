@@ -1,0 +1,15 @@
+        <!-- Home intro (per-language content, injected at build time). -->
+        @@home_intro@@
+
+        <!-- Latest posts (sblg blog mode over the post fragments). -->
+        <section class="latest-posts">
+            <h2>@@latest_posts@@</h2>
+            <ul class="posts-list">
+            <nav data-sblg-nav="1" data-sblg-navsz="5" data-sblg-navstyle-content="keep" data-sblg-navstyle-element="discard">
+            @@post_item@@
+            </nav>
+            </ul>
+            <div class="view-all-posts">
+                <a class="btn" href="/@@lang@@/@@slug.blog@@/">@@view_all_posts@@</a>
+            </div>
+        </section>

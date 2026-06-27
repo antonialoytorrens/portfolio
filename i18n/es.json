@@ -1,0 +1,34 @@
+{
+  "slug.about": "acerca-de-mi",
+  "slug.blog": "blog",
+  "slug.education": "educacion",
+  "slug.projects": "proyectos",
+  "slug.experience": "experiencia",
+  "slug.contact": "contacto",
+
+  "nav.about": "Acerca",
+  "nav.blog": "Blog",
+  "nav.education": "Educación",
+  "nav.projects": "Proyectos",
+  "nav.experience": "Experiencia",
+  "nav.contact": "Contacto",
+
+  "title.home": "Inicio",
+  "title.blog": "Blog",
+  "title.education": "Educación",
+  "title.projects": "Proyectos",
+  "title.experience": "Experiencia",
+
+  "latest_posts": "Últimas entradas",
+  "view_all_posts": "Ver todas las entradas",
+  "read_more": "Leer más",
+  "tags_label": "Etiquetas:",
+  "back_to_blog": "← Volver al blog",
+
+  "tag.heading": "Etiqueta:",
+  "tag.tagged_with": "Entradas etiquetadas con",
+  "tag.view_all": "← Ver todas las entradas",
+  "tag.none_found": "No se han encontrado entradas con esta etiqueta.",
+
+  "footer.built_with": "Hecho con sblg"
+}

@@ -1,0 +1,118 @@
+/* Posts styling that complements the main orange theme */
+article header {
+    background: none;
+}
+
+.latest-posts {
+    margin: 2rem 0;
+    padding-top: 2rem;
+    border-top: 1px solid #e0e0e0;
+}
+
+.latest-posts h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333333; /* Charcoal for secondary headings */
+}
+
+.posts-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.post-item {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.post-item:last-child {
+    border-bottom: none;
+}
+
+.post-item h3 {
+    font-size: 1.2rem;
+    margin: 0 0 0.5rem 0;
+}
+
+.post-item h3 a {
+    color: #D93B00; /* Use your orange theme instead of blue */
+    text-decoration: none;
+}
+
+.post-item h3 a:hover {
+    color: #B8310B; /* Darker orange on hover */
+    text-decoration: underline;
+}
+
+.post-item time {
+    font-size: 0.9rem;
+    color: #888888; /* Light gray for timestamps */
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.post-tags {
+    margin: 0.5rem 0;
+    font-size: 0.85rem;
+}
+
+.tag {
+    display: inline-block;
+    background: #f5f5f5; /* Light gray background */
+    color: #666666; /* Medium gray text */
+    padding: 0.2rem 0.5rem;
+    margin: 0 0.25rem 0.25rem 0;
+    border-radius: 3px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    border: 1px solid #e0e0e0;
+}
+
+.tag:visited {
+    color: #666666; /* Medium gray text */
+}
+
+.tag:hover {
+    background: #D93B00; /* Orange background on hover */
+    color: white;
+    border-color: #D93B00;
+}
+
+.post-excerpt {
+    margin-top: 0.5rem;
+    color: #666666; /* Consistent with body text */
+}
+
+.view-all-posts {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: #D93B00; /* Orange button to match theme */
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+    background: #B8310B; /* Darker orange on hover */
+}
+
+/* Optional: Light variant for secondary buttons */
+.btn.btn-outline {
+    background: transparent;
+    color: #D93B00;
+    border: 2px solid #D93B00;
+}
+
+.btn.btn-outline:hover {
+    background: #D93B00;
+    color: white;
+}

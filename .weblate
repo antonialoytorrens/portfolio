@@ -1,0 +1,9 @@
+[weblate]
+# Config for the Weblate command-line client (wlc).
+# Set url/key locally or via the WEBLATE_KEY env var; do not commit secrets.
+url = https://hosted.weblate.org/api/
+
+[component "portfolio/ui"]
+# File format:  JSON file (monolingual)
+# File mask:    i18n/*.json
+# Base file:    i18n/ca.json   (Catalan is the source/template language)
