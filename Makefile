@@ -1,11 +1,14 @@
 # Portfolio build — sblg + lowdown, with build-time i18n.
 #
 # sblg has no template logic, so per-language UI strings and per-page values are
-# baked into the templates *before* sblg runs:
+# baked into the templates *before* sblg runs. There is no custom interpreter:
+# article fragments are built with a small POSIX shell script (awk + lowdown),
+# and templating is plain cat + sed (@@key@@ substitutions generated from the
+# JSON catalog with jq):
 #
-#   content/<lang>/*.md  --(tools/mkarticle.py + lowdown)-->  sblg article fragment
-#   templates/_base.in.html + main-*.html + i18n/<lang>.json
-#                        --(tools/render.py)-->  concrete sblg template
+#   content/<lang>/*.md  --(tools/mkarticle.sh: awk + lowdown)-->  sblg fragment
+#   _base.head.html + main-*.html + _base.foot.html + i18n/<lang>.json
+#                        --(cat + sed, see the render() shell function)-->  template
 #   fragments + concrete template  --(sblg)-->  public/<lang>/...
 #
 # Body content that is not yet translated falls back to the source language
@@ -32,10 +35,10 @@ WORK_DIR     := $(PUBLIC_DIR)/.work
 SBLG    := sblg
 LOWDOWN := lowdown --html-no-skiphtml --html-no-escapehtml
 JQ      := jq
-RENDER  := python3 tools/render.py
-MKART   := python3 tools/mkarticle.py
+MKART   := sh tools/mkarticle.sh
 
-BASE_TPL := $(TEMPLATE_DIR)/_base.in.html
+HEAD_TPL := $(TEMPLATE_DIR)/_base.head.html
+FOOT_TPL := $(TEMPLATE_DIR)/_base.foot.html
 ITEM_TPL := $(TEMPLATE_DIR)/_postitem.html
 
 # Local preview server
@@ -73,9 +76,43 @@ build-one:
 	  if [ -f $(CONTENT_DIR)/$$L/$$1.md ]; then echo $(CONTENT_DIR)/$$L/$$1.md
 	  else echo $(CONTENT_DIR)/$(SRCLANG)/$$1.md; fi
 	}
-	# render <out> <extra render args...> : base template -> concrete template
-	render() { local out=$$1; shift; $(RENDER) $(BASE_TPL) "$$J" \
-	    lang="$$L" author="$(AUTHOR)" year="$(YEAR)" "$$@" > "$$out"; }
+	# flatsed [key=value...] : emit a sed script of flat @@key@@ -> value
+	# substitutions, drawn from the JSON catalog ($J) plus any extra key=value
+	# pairs. SOH (0x01) is used as the sed delimiter so values may contain
+	# / | $ { } etc. freely; only \ and & (sed-special on the RHS) are escaped,
+	# and '.' in keys is escaped so it matches literally.
+	flatsed() {
+	  local D TAB k v kv
+	  D=$$(printf '\001'); TAB=$$(printf '\t')
+	  { $(JQ) -r 'to_entries[]|"\(.key)\t\(.value)"' "$$J"
+	    for kv in "$$@"; do printf '%s\t%s\n' "$${kv%%=*}" "$${kv#*=}"; done
+	  } | while IFS=$$TAB read -r k v; do
+	    k=$${k//./\\.}
+	    v=$${v//\\/\\\\}; v=$${v//&/\\&}
+	    printf 's%s@@%s@@%s%s%sg\n' "$$D" "$$k" "$$D" "$$v" "$$D"
+	  done
+	}
+	# subst <template> [key=value...] : flat @@key@@ substitution -> stdout
+	subst() { local t=$$1; shift; sed -f <(flatsed "$$@") "$$t"; }
+	# render <out> <main-template> [home=FILE] [item=FILE] -- [key=value...]
+	#   Assemble base head + main + foot with cat, splice in the per-page
+	#   content includes (home intro / post-item partial) with sed, then run the
+	#   flat @@key@@ substitution. No template engine — just cat + sed.
+	render() {
+	  local out=$$1 main=$$2; shift 2
+	  local home="" item=""
+	  while [ "$$1" != "--" ]; do
+	    case "$$1" in home=*) home=$${1#home=};; item=*) item=$${1#item=};; esac
+	    shift
+	  done
+	  shift
+	  local inc=$(WORK_DIR)/$$L/.inc.sed
+	  mkdir -p "$${inc%/*}"; : > "$$inc"
+	  if [ -n "$$home" ]; then printf '/@@home_intro@@/{\nr %s\nd\n}\n' "$$home" >> "$$inc"; fi
+	  if [ -n "$$item" ]; then printf '/@@post_item@@/{\nr %s\nd\n}\n' "$$item" >> "$$inc"; fi
+	  cat $(HEAD_TPL) "$$main" $(FOOT_TPL) | sed -f "$$inc" \
+	    | sed -f <(flatsed lang="$$L" author="$(AUTHOR)" year="$(YEAR)" "$$@") > "$$out"
+	}
 
 	# --- slugs (this language + every language, for the switcher) --------
 	SB=$$(val slug.blog); SE=$$(val slug.education)
@@ -107,10 +144,9 @@ build-one:
 	# --- home page (/<lang>/) : intro + latest posts (blog mode) ---------
 	$(LOWDOWN) "$$(pagesrc index)" > $(WORK_DIR)/$$L/intro.html
 	TH=$$(val title.home)
-	render $(WORK_DIR)/$$L/tmpl-index.html section=about \
-	  page_heading="$$TH" page_title="$$TH" page_description="" \
-	  main@=$(TEMPLATE_DIR)/main-index.html post_item@=$(ITEM_TPL) \
-	  home_intro@=$(WORK_DIR)/$$L/intro.html $$sw_home
+	render $(WORK_DIR)/$$L/tmpl-index.html $(TEMPLATE_DIR)/main-index.html \
+	  home=$(WORK_DIR)/$$L/intro.html item=$(ITEM_TPL) -- \
+	  section=about page_heading="$$TH" page_title="$$TH" page_description="" $$sw_home
 	$(SBLG) -o $(PUBLIC_DIR)/$$L/index.html -t $(WORK_DIR)/$$L/tmpl-index.html "$${FRAGS[@]}"
 
 	# --- standalone content pages (-c) -----------------------------------
@@ -118,10 +154,9 @@ build-one:
 	  local sec=$$1 name=$$2 slug=$$3 sw=$$4
 	  mkdir -p $(PUBLIC_DIR)/$$L/$$slug
 	  $(MKART) "$$(pagesrc $$name)" -o $(WORK_DIR)/$$L/page-$$name.xml
-	  render $(WORK_DIR)/$$L/tmpl-$$name.html section=$$sec \
-	    page_heading='$${sblg-title}' page_title='$${sblg-titletext}' \
-	    page_description='$${sblg-get|description}' \
-	    main@=$(TEMPLATE_DIR)/main-page.html $$sw
+	  render $(WORK_DIR)/$$L/tmpl-$$name.html $(TEMPLATE_DIR)/main-page.html -- \
+	    section=$$sec page_heading='$${sblg-title}' page_title='$${sblg-titletext}' \
+	    page_description='$${sblg-get|description}' $$sw
 	  $(SBLG) -c -o $(PUBLIC_DIR)/$$L/$$slug/index.html \
 	    -t $(WORK_DIR)/$$L/tmpl-$$name.html $(WORK_DIR)/$$L/page-$$name.xml
 	}
@@ -132,19 +167,17 @@ build-one:
 	# --- blog index (/<lang>/<blog>/) ------------------------------------
 	mkdir -p $(PUBLIC_DIR)/$$L/$$SB
 	TB=$$(val title.blog)
-	render $(WORK_DIR)/$$L/tmpl-blog.html section=blog \
-	  page_heading="$$TB" page_title="$$TB" page_description="" \
-	  main@=$(TEMPLATE_DIR)/main-blog.html post_item@=$(ITEM_TPL) $$sw_blog
+	render $(WORK_DIR)/$$L/tmpl-blog.html $(TEMPLATE_DIR)/main-blog.html item=$(ITEM_TPL) -- \
+	  section=blog page_heading="$$TB" page_title="$$TB" page_description="" $$sw_blog
 	$(SBLG) -o $(PUBLIC_DIR)/$$L/$$SB/index.html -t $(WORK_DIR)/$$L/tmpl-blog.html "$${FRAGS[@]}"
 
 	# --- individual posts (-c) -------------------------------------------
 	mkdir -p $(PUBLIC_DIR)/$$L/$$SB/post
 	for fr in "$${FRAGS[@]}"; do
 	  n=$$(basename $$fr .xml)
-	  render $(WORK_DIR)/$$L/tmpl-post-$$n.html section=blog \
-	    page_heading='$${sblg-title}' page_title='$${sblg-titletext}' \
-	    page_description='$${sblg-get|description}' \
-	    main@=$(TEMPLATE_DIR)/main-post.html $$sw_blog
+	  render $(WORK_DIR)/$$L/tmpl-post-$$n.html $(TEMPLATE_DIR)/main-post.html -- \
+	    section=blog page_heading='$${sblg-title}' page_title='$${sblg-titletext}' \
+	    page_description='$${sblg-get|description}' $$sw_blog
 	  $(SBLG) -c -o $(PUBLIC_DIR)/$$L/$$SB/post/$$n.html \
 	    -t $(WORK_DIR)/$$L/tmpl-post-$$n.html $$fr
 	done
@@ -154,15 +187,14 @@ build-one:
 	THEAD=$$(val tag.heading)
 	for t in $$($(SBLG) -l "$${FRAGS[@]}" | cut -f2 | sort -u); do
 	  [ -n "$$t" ] || continue
-	  render $(WORK_DIR)/$$L/tmpl-tag-$$t.html section=blog tag="$$t" \
-	    page_heading="$$THEAD $$t" page_title="$$THEAD $$t" page_description="" \
-	    main@=$(TEMPLATE_DIR)/main-tag.html post_item@=$(ITEM_TPL) $$sw_blog
+	  render $(WORK_DIR)/$$L/tmpl-tag-$$t.html $(TEMPLATE_DIR)/main-tag.html item=$(ITEM_TPL) -- \
+	    section=blog tag="$$t" page_heading="$$THEAD $$t" page_title="$$THEAD $$t" page_description="" $$sw_blog
 	  $(SBLG) -o $(PUBLIC_DIR)/$$L/$$SB/tag/$$t.html \
 	    -t $(WORK_DIR)/$$L/tmpl-tag-$$t.html "$${FRAGS[@]}"
 	done
 
 	# --- Atom feed (/<lang>/atom.xml) ------------------------------------
-	$(RENDER) $(TEMPLATE_DIR)/atom.in.xml "$$J" \
+	subst $(TEMPLATE_DIR)/atom.in.xml \
 	  lang="$$L" author="$(AUTHOR)" base_url="$(BASE_DOMAIN)" \
 	  > $(WORK_DIR)/$$L/atom-tmpl.xml
 	$(SBLG) -a -o $(PUBLIC_DIR)/$$L/atom.xml -t $(WORK_DIR)/$$L/atom-tmpl.xml "$${FRAGS[@]}"

@@ -9,14 +9,17 @@ source language.
 
 ## Requirements
 
-| Tool      | Used for                                  |
-|-----------|-------------------------------------------|
-| `sblg`    | merging article fragments into templates  |
-| `lowdown` | Markdown → (XML-well-formed) HTML          |
-| `jq`      | reading the JSON translation catalogs      |
-| `python3` | the two build helpers in `tools/`          |
-| `make`    | orchestration                              |
-| `xmllint` | (optional) well-formedness checks          |
+| Tool          | Used for                                       |
+|---------------|------------------------------------------------|
+| `sblg`        | merging article fragments into templates       |
+| `lowdown`     | Markdown → (XML-well-formed) HTML               |
+| `jq`          | reading the JSON translation catalogs          |
+| `make`        | orchestration                                  |
+| `awk` + `sed` | the build helpers — no scripting runtime needed |
+| `xmllint`     | (optional) well-formedness checks              |
+
+The build uses only POSIX text tools plus `jq`; there is no Python or other
+interpreter to install.
 
 ## Build
 
@@ -39,17 +42,26 @@ symbols. So all per-language UI text and per-page values are baked into the
 templates *before* sblg runs:
 
 ```
-content/<lang>/*.md ──(tools/mkarticle.py + lowdown)──▶ sblg <article> fragment
-templates/*.in.html + i18n/<lang>.json
-                    ──(tools/render.py)──▶ concrete sblg template
+content/<lang>/*.md ──(tools/mkarticle.sh: awk + lowdown)──▶ sblg <article> fragment
+_base.head.html + main-*.html + _base.foot.html + i18n/<lang>.json
+                    ──(cat + sed, in the Makefile)──▶ concrete sblg template
 fragments + concrete template ──(sblg)──▶ public/<lang>/…
 ```
 
-- **`tools/mkarticle.py`** turns a Markdown file (with a small `---` front-matter
+There is **no custom template engine**:
+
+- **`tools/mkarticle.sh`** turns a Markdown file (with a small `---` front-matter
   block) into an sblg article fragment, carrying metadata as `data-sblg-*`
-  attributes.
-- **`tools/render.py`** substitutes `@@key@@` placeholders in a template from the
-  language's JSON catalog plus per-page values (`section`, `url.self.*`, …).
+  attributes. It is plain POSIX shell: `awk` parses the front matter and emits the
+  `<article …>` tag, `lowdown` renders the body.
+- **Templating is `cat` + `sed`** (the `render` shell function in the `Makefile`).
+  Pages are assembled by concatenating `_base.head.html`, the page's `main-*.html`,
+  and `_base.foot.html`; per-page content partials (the home intro and the
+  post-item listing row) are spliced in with `sed`; then every `@@key@@`
+  placeholder is replaced via a `sed` script generated from the language's JSON
+  catalog with `jq` (plus per-page values like `section` and `url.self.*`). The
+  substitution uses a `\001` delimiter, so values may freely contain `/`, `|`,
+  `$`, `{`, `}` (e.g. the `${sblg-get|description}` symbol).
 
 Page types: home + content pages (education, projects, experience) are built in
 standalone mode (`sblg -c`); the blog index, home "latest posts", and tag pages
