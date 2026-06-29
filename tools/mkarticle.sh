@@ -81,7 +81,6 @@ open=$(awk -v source="$source" '
 		if ("date" in meta)      printf " data-sblg-datetime=\"%s\"", esc(substr(meta["date"], 1, 10))
 		if ("tags" in meta)      printf " data-sblg-tags=\"%s\"",    esc(meta["tags"])
 		if ("img" in meta)       printf " data-sblg-img=\"%s\"",     esc(meta["img"])
-		if ("description" in meta) printf " data-sblg-set-description=\"%s\"", esc(meta["description"])
 		for (i = 1; i <= n; i++) {
 			k = order[i]
 			if (k == "title" || k == "date" || k == "tags" || k == "img" || k == "description") continue
