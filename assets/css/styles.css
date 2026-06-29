@@ -170,6 +170,12 @@ ul {
     list-style: circle;
 }
 
+hr {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 0;
+}
+
 footer {
     text-align: center;
     padding: 1rem 0;
@@ -177,6 +183,19 @@ footer {
 
 .cw {
     color: #FFFFFF;
+}
+
+/* -------- ASIDE -------- */
+
+aside {
+    font-family: "Merriweather", Georgia, serif;
+    font-style: italic;
+    color: #888888;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 /* -------- POSTS -------- */
