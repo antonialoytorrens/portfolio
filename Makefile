@@ -61,6 +61,7 @@ assets:
 	@echo "==> Copying assets"
 	mkdir -p $(PUBLIC_DIR)
 	cp -a assets $(PUBLIC_DIR)/
+	cat assets/css/reset.css assets/css/styles.css > $(PUBLIC_DIR)/assets/css/bundle.css
 
 # Build everything for one language. Pass LANG=<lang>.
 build-one:

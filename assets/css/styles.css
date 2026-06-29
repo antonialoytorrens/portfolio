@@ -1,27 +1,58 @@
+/* -------- FONTS -------- */
+
+@font-face {
+    font-family: "Merriweather";
+    src: url("/assets/fonts/Merriweather/Merriweather-VariableFont_opsz,wdth,wght.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Merriweather";
+    src: url("/assets/fonts/Merriweather/Merriweather-Italic-VariableFont_opsz,wdth,wght.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("/assets/fonts/Roboto/Roboto-VariableFont_wdth,wght.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("/assets/fonts/Roboto/Roboto-Italic-VariableFont_wdth,wght.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* -------- BASE -------- */
+
 html {
-    background: #FFFFFF;
-    overflow-y: scroll;
-    /* ensures scrollbar in IE */
+    overflow-y: scroll; /* prevents layout shift when page height changes */
 }
 
 body {
-    font-family: "Inter var", "Noto Sans", "Open Sans", "Roboto", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 16px;
-    /* legacy */
+    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px; /* px fallback for browsers without rem support */
+    font-size: 1rem;
     line-height: 1.4;
     color: #666666;
     background: #FFFFFF;
 }
 
-@media all {
-    body {
-        font-size: 1rem;
-    }
+/* -------- HEADINGS -------- */
 
-    /* modern */
+h1, h2, h3 {
+    font-family: "Merriweather", Georgia, serif;
 }
 
-/* -------- FONTS -------- */
 h1 {
     font-size: 3.5rem;
     color: #FFFFFF;
@@ -32,11 +63,6 @@ h2 {
     font-weight: bold;
 }
 
-time {
-    line-height: 1.4;
-}
-
-/* Inline code blocks that may appear in {{ CONTENT }} */
 code {
     font-family: "Fira Code VF", monospace;
     background: rgba(0, 0, 0, .06);
@@ -55,6 +81,7 @@ pre {
 }
 
 /* -------- CONTENT LINKS -------- */
+
 a {
     color: #005ED9;
     text-decoration: none;
@@ -64,12 +91,17 @@ a:hover {
     color: #0000EE;
 }
 
-/* Navigation‑specific classes */
-.navlink, .navlink:hover {
+/* Navigation-specific classes */
+nav {
+    font-family: "Merriweather", Georgia, serif;
+}
+
+.navlink {
     color: #FFFFFF;
 }
 
 .navlink:hover {
+    color: #FFFFFF;
     text-decoration: underline;
 }
 
@@ -109,9 +141,9 @@ body[data-lang="en"] .lang-en {
 }
 
 /* -------- LAYOUT -------- */
+
 header {
-    /* On small screens, padding works best */
-    padding: 1rem;
+    padding: 1rem 0;
     background-color: #D93B00;
     border-bottom: 1px solid #595959;
 }
@@ -119,6 +151,7 @@ header {
 header nav, header h1 {
     max-width: 75rem;
     margin: auto;
+    padding: 0 1rem;
 }
 
 header nav p {
@@ -127,7 +160,9 @@ header nav p {
 }
 
 main {
-    margin: 1rem;
+    max-width: 75rem;
+    margin: 2rem auto;
+    padding: 0 1rem;
 }
 
 ul {
@@ -144,15 +179,259 @@ footer {
     color: #FFFFFF;
 }
 
-/* -------- DARK-MODE BROWSER SCHEME -------- */
-/*
-@media (prefers-color-scheme: dark) {
-    html {
-        filter: invert(1) hue-rotate(180deg);
-    }
+/* -------- POSTS -------- */
+
+article header {
+    background: none;
 }
 
-html[theme="dark-mode"] {
-    filter: invert(1) hue-rotate(180deg);
+.latest-posts {
+    margin: 2rem 0;
+    padding-top: 2rem;
+    border-top: 1px solid #e0e0e0;
 }
-*/
+
+.latest-posts h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333333;
+}
+
+.posts-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.post-item {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.post-item:last-child {
+    border-bottom: none;
+}
+
+.post-item h3 {
+    font-size: 1.2rem;
+    margin: 0 0 0.5rem 0;
+}
+
+.post-item h3 a {
+    color: #D93B00;
+    text-decoration: none;
+}
+
+.post-item h3 a:hover {
+    color: #B8310B;
+    text-decoration: underline;
+}
+
+.post-item time {
+    font-size: 0.9rem;
+    color: #888888;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.post-tags {
+    margin: 0.5rem 0;
+    font-size: 0.85rem;
+}
+
+.tag {
+    display: inline-block;
+    background: #f5f5f5;
+    color: #666666;
+    padding: 0.2rem 0.5rem;
+    margin: 0 0.25rem 0.25rem 0;
+    border-radius: 3px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    border: 1px solid #e0e0e0;
+}
+
+.tag:visited {
+    color: #666666;
+}
+
+.tag:hover {
+    background: #D93B00;
+    color: white;
+    border-color: #D93B00;
+}
+
+.post-excerpt {
+    margin-top: 0.5rem;
+}
+
+.view-all-posts {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: #D93B00;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+    background: #B8310B;
+}
+
+.btn.btn-outline {
+    background: transparent;
+    color: #D93B00;
+    border: 2px solid #D93B00;
+}
+
+.btn.btn-outline:hover {
+    background: #D93B00;
+    color: white;
+}
+
+/* -------- EDUCATION -------- */
+
+.listing {
+    margin: 2rem 0;
+    padding: 1rem 0;
+}
+
+.listing article {
+    margin-bottom: 2rem;
+    padding-left: 1rem;
+    position: relative;
+}
+
+.listing article::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 0.4em;
+    width: 12px;
+    height: 12px;
+    background-color: #D93B00;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px #ccc;
+}
+
+.listing h3 {
+    font-size: 1.25rem;
+    color: #003070;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.listing p {
+    color: #444;
+    margin-bottom: 0.5rem;
+}
+
+.listing ul {
+    margin-left: 1.25rem;
+    list-style-type: disc;
+}
+
+.listing ul li {
+    margin-bottom: 0.5rem;
+}
+
+.listing a {
+    color: #005ED9;
+    text-decoration: underline;
+}
+
+.listing a:hover {
+    color: #0000EE;
+    text-decoration: none;
+}
+
+/* -------- PROJECTS -------- */
+
+h2 {
+    margin-bottom: 2.5rem;
+}
+
+.projects {
+    padding: 0;
+}
+
+.projects .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.project-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 2.5rem;
+    border: 1px solid #DFDFDF;
+    border-radius: 8px;
+    padding: 1.5rem;
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.project-img-container {
+    align-self: center;
+    flex-shrink: 0;
+    width: 200px;
+    margin-right: 1.5rem;
+}
+
+.project-img {
+    max-width: 200px;
+    width: 100%;
+    height: auto;
+    margin: auto;
+    display: block;
+    border-radius: 4px;
+}
+
+.project-content {
+    flex-grow: 1;
+}
+
+.project-content h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    color: #003070;
+}
+
+.project-content h3 a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.project-content h3 a:hover {
+    text-decoration: underline;
+    color: #005ED9;
+}
+
+.project-content p {
+    line-height: 1.5;
+    color: #444;
+}
+
+@media (max-width: 768px) {
+    .project-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .project-img-container {
+        width: 100%;
+        max-width: 250px;
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+}
