@@ -101,6 +101,10 @@ build-one:
 	}
 	# assemble <name> : cat partials/head + templates/<name>.html + partials/foot -> stdout.
 	assemble() { cat $(HEAD_TPL) "$(TEMPLATE_DIR)/$$1.html" $(FOOT_TPL); }
+	# linkify_tags <file> : rewrite sblg's <span class="sblg-tag"> outputs to anchor links.
+	linkify_tags() {
+	  sed -i 's|<span class="sblg-tag">\([^<]*\)</span>|<a href="/'"$$L"'/'"$$SB"'/tag/\1.html" class="sblg-tag">\1</a>|g' "$$1"
+	}
 	# inject [KEY=FILE ...] : replace each @@KEY@@ placeholder with the contents of FILE.
 	inject() {
 	  sed -f <(for arg in "$$@"; do
@@ -143,6 +147,7 @@ build-one:
 	  | subst - section=about page_heading="$$TH" page_title="$$TH" page_description="" $$sw_home \
 	  > $(WORK_DIR)/$$L/tmpl-index.html
 	$(SBLG) -o $(PUBLIC_DIR)/$$L/index.html -t $(WORK_DIR)/$$L/tmpl-index.html "$${FRAGS[@]}"
+	linkify_tags $(PUBLIC_DIR)/$$L/index.html
 
 	# --- standalone content pages (-c) -----------------------------------
 	build_page() { # <section> <name> <slug> <switcher>
@@ -169,6 +174,7 @@ build-one:
 	  | subst - section=blog page_heading="$$TB" page_title="$$TB" page_description="" $$sw_blog \
 	  > $(WORK_DIR)/$$L/tmpl-blog.html
 	$(SBLG) -o $(PUBLIC_DIR)/$$L/$$SB/index.html -t $(WORK_DIR)/$$L/tmpl-blog.html "$${FRAGS[@]}"
+	linkify_tags $(PUBLIC_DIR)/$$L/$$SB/index.html
 
 	# --- individual posts (-c) -------------------------------------------
 	mkdir -p $(PUBLIC_DIR)/$$L/$$SB/post
@@ -180,6 +186,7 @@ build-one:
 	for fr in "$${FRAGS[@]}"; do
 	  n=$$(basename $$fr .xml)
 	  $(SBLG) -c -o $(PUBLIC_DIR)/$$L/$$SB/post/$$n.html -t $(WORK_DIR)/$$L/tmpl-post.html $$fr
+	  linkify_tags $(PUBLIC_DIR)/$$L/$$SB/post/$$n.html
 	done
 
 	# --- tag pages -------------------------------------------------------
@@ -190,9 +197,10 @@ build-one:
 	  assemble tag \
 	    | inject post_item=$(ITEM_TPL) \
 	    | subst - \
-	      section=blog tag="$$t" page_heading="$$THEAD $$t" page_title="$$THEAD $$t" page_description="" $$sw_blog \
+	      section=blog tag="$$t" page_heading="$$TB" page_title="$$THEAD $$t" page_description="" $$sw_blog \
 	    > $(WORK_DIR)/$$L/tmpl-tag-$$t.html
 	  $(SBLG) -o $(PUBLIC_DIR)/$$L/$$SB/tag/$$t.html -t $(WORK_DIR)/$$L/tmpl-tag-$$t.html "$${FRAGS[@]}"
+	  linkify_tags $(PUBLIC_DIR)/$$L/$$SB/tag/$$t.html
 	done
 
 	# --- Atom feed (/<lang>/atom.xml) ------------------------------------

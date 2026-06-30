@@ -210,7 +210,7 @@ body[data-lang="en"] .lang-en {
     text-decoration: underline;
 }
 
-/* Tags emitted by sblg's ${sblg-tags} symbol (rendered as <span> elements). */
+/* Tags emitted by sblg's ${sblg-tags} symbol (rewritten to <a> links at build time). */
 .post-tags .sblg-tag {
     display: inline-block;
     background: #f5f5f5;
@@ -221,6 +221,12 @@ body[data-lang="en"] .lang-en {
     font-size: 13px;
     font-size: 0.8rem;
     border: 1px solid #e0e0e0;
+    text-decoration: none;
+}
+.post-tags .sblg-tag:hover {
+    background: #e8e8e8;
+    color: #333333;
+    border-color: #ccc;
 }
 
 .post-tags .sblg-tags-notfound {
@@ -377,6 +383,10 @@ article header {
 
 .post-excerpt {
     margin-top: 0.5rem;
+}
+
+.post-content h2 {
+    margin-top: 2rem;
 }
 
 .view-all-posts {
