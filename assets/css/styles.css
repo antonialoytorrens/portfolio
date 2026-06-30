@@ -1,35 +1,119 @@
 /* -------- FONTS -------- */
 
+/* Static fallback for IE11 and pre-2018 browsers */
 @font-face {
     font-family: "Merriweather";
-    src: url("/assets/fonts/Merriweather/Merriweather-VariableFont_opsz,wdth,wght.ttf") format("truetype");
-    font-weight: 100 900;
+    src: url("/assets/fonts/Merriweather/static/Merriweather_24pt-Regular.ttf") format("truetype");
+    font-weight: 400;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
     font-family: "Merriweather";
-    src: url("/assets/fonts/Merriweather/Merriweather-Italic-VariableFont_opsz,wdth,wght.ttf") format("truetype");
-    font-weight: 100 900;
+    src: url("/assets/fonts/Merriweather/static/Merriweather_24pt-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Merriweather";
+    src: url("/assets/fonts/Merriweather/static/Merriweather_24pt-Italic.ttf") format("truetype");
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Merriweather";
+    src: url("/assets/fonts/Merriweather/static/Merriweather_24pt-BoldItalic.ttf") format("truetype");
+    font-weight: 700;
     font-style: italic;
     font-display: swap;
 }
 
 @font-face {
     font-family: "Roboto";
-    src: url("/assets/fonts/Roboto/Roboto-VariableFont_wdth,wght.ttf") format("truetype");
-    font-weight: 100 900;
+    src: url("/assets/fonts/Roboto/static/Roboto-Regular.ttf") format("truetype");
+    font-weight: 400;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
     font-family: "Roboto";
-    src: url("/assets/fonts/Roboto/Roboto-Italic-VariableFont_wdth,wght.ttf") format("truetype");
-    font-weight: 100 900;
+    src: url("/assets/fonts/Roboto/static/Roboto-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("/assets/fonts/Roboto/static/Roboto-Italic.ttf") format("truetype");
+    font-weight: 400;
     font-style: italic;
     font-display: swap;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("/assets/fonts/Roboto/static/Roboto-BoldItalic.ttf") format("truetype");
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Fira Code VF";
+    src: url("/assets/fonts/Fira_Code/static/FiraCode-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Variable fonts for modern browsers (Chrome 66+, Firefox 62+, Safari 11+) */
+@supports (font-variation-settings: normal) {
+    @font-face {
+        font-family: "Merriweather";
+        src: url("/assets/fonts/Merriweather/Merriweather-VariableFont_opsz,wdth,wght.ttf") format("truetype");
+        font-weight: 100 900;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: "Merriweather";
+        src: url("/assets/fonts/Merriweather/Merriweather-Italic-VariableFont_opsz,wdth,wght.ttf") format("truetype");
+        font-weight: 100 900;
+        font-style: italic;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: "Roboto";
+        src: url("/assets/fonts/Roboto/Roboto-VariableFont_wdth,wght.ttf") format("truetype");
+        font-weight: 100 900;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: "Roboto";
+        src: url("/assets/fonts/Roboto/Roboto-Italic-VariableFont_wdth,wght.ttf") format("truetype");
+        font-weight: 100 900;
+        font-style: italic;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: "Fira Code VF";
+        src: url("/assets/fonts/Fira_Code/FiraCode-VariableFont_wght.ttf") format("truetype");
+        font-weight: 300 700;
+        font-style: normal;
+        font-display: swap;
+    }
 }
 
 /* -------- BASE -------- */
@@ -54,11 +138,13 @@ h1, h2, h3 {
 }
 
 h1 {
+    font-size: 56px;
     font-size: 3.5rem;
     color: #FFFFFF;
 }
 
 h2 {
+    font-size: 30px;
     font-size: 1.85rem;
     font-weight: bold;
 }
@@ -132,6 +218,7 @@ body[data-lang="en"] .lang-en {
     padding: 0.2rem 0.5rem;
     margin: 0 0.25rem 0.25rem 0;
     border-radius: 3px;
+    font-size: 13px;
     font-size: 0.8rem;
     border: 1px solid #e0e0e0;
 }
@@ -155,6 +242,7 @@ header nav, header h1 {
 }
 
 header nav p {
+    font-size: 18px;
     font-size: 1.125rem;
     text-align: right;
 }
@@ -191,6 +279,7 @@ aside {
     font-family: "Merriweather", Georgia, serif;
     font-style: italic;
     color: #888888;
+    font-size: 17px;
     font-size: 1.05rem;
     line-height: 1.7;
     margin-bottom: 2rem;
@@ -211,6 +300,7 @@ article header {
 }
 
 .latest-posts h2 {
+    font-size: 24px;
     font-size: 1.5rem;
     margin-bottom: 1rem;
     color: #333333;
@@ -233,6 +323,7 @@ article header {
 }
 
 .post-item h3 {
+    font-size: 19px;
     font-size: 1.2rem;
     margin: 0 0 0.5rem 0;
 }
@@ -248,6 +339,7 @@ article header {
 }
 
 .post-item time {
+    font-size: 14px;
     font-size: 0.9rem;
     color: #888888;
     display: block;
@@ -256,6 +348,7 @@ article header {
 
 .post-tags {
     margin: 0.5rem 0;
+    font-size: 14px;
     font-size: 0.85rem;
 }
 
@@ -267,6 +360,7 @@ article header {
     margin: 0 0.25rem 0.25rem 0;
     border-radius: 3px;
     text-decoration: none;
+    font-size: 13px;
     font-size: 0.8rem;
     border: 1px solid #e0e0e0;
 }
@@ -343,6 +437,7 @@ article header {
 }
 
 .listing h3 {
+    font-size: 20px;
     font-size: 1.25rem;
     color: #003070;
     margin-bottom: 0.5rem;
@@ -421,6 +516,7 @@ h2 {
 
 .project-content h3 {
     margin-bottom: 0.5rem;
+    font-size: 24px;
     font-size: 1.5rem;
     color: #003070;
 }
