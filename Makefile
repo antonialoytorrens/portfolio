@@ -1,24 +1,7 @@
-# Portfolio build — sblg + lowdown, with build-time i18n.
-#
-# sblg has no template logic, so per-language UI strings and per-page values are
-# baked into the templates *before* sblg runs. There is no custom interpreter:
-# article fragments are built with a small POSIX shell script (awk + lowdown),
-# and templating is plain sed (@@key@@ substitutions generated from the JSON
-# catalog with jq, via the subst() shell function):
-#
-#   content/<lang>/*.md  --(tools/mkarticle.sh: awk + lowdown)-->  sblg fragment
-#   partials/head + templates/<page>.html + partials/foot
-#                        --(assemble | inject | subst)-->  concrete template
-#   fragments + concrete template  --(sblg)-->  public/<lang>/...
-#
-# Body content that is not yet translated falls back to the source language
-# (SRCLANG), so every language has every page; the chrome is always localised.
-
 SHELL        := /bin/bash
 .ONESHELL:
 .SHELLFLAGS  := -ec
 
-# ---- Configuration -------------------------------------------------------
 AUTHOR       := Antoni Aloy Torrens
 BASE_DOMAIN  := https://antonialoytorrens.com
 LANGS        := ca es en
@@ -31,7 +14,6 @@ TEMPLATE_DIR := templates
 PUBLIC_DIR   := public
 WORK_DIR     := $(PUBLIC_DIR)/.work
 
-# ---- Tools ---------------------------------------------------------------
 SBLG    := sblg
 LOWDOWN := lowdown --html-no-skiphtml --html-no-escapehtml
 JQ      := jq
@@ -63,70 +45,62 @@ assets:
 	cp -a assets $(PUBLIC_DIR)/
 	cat assets/css/reset.css assets/css/styles.css > $(PUBLIC_DIR)/assets/css/bundle.css
 
-# Build everything for one language. Pass LANG=<lang>.
+# Build for one language (pass LANG=<lang>)
 build-one:
 	@L=$(LANG)
 	J=$(I18N_DIR)/$$L.json
 	echo "==> Building language '$$L'"
 
-	# --- helpers ---------------------------------------------------------
+	# Helpers
 	val() { $(JQ) -r --arg k "$$1" '.[$$k]' "$$J"; }
 	slug() { $(JQ) -r --arg k "slug.$$2" '.[$$k]' $(I18N_DIR)/$$1.json; }
-	# Prefer the language's own content file, else fall back to SRCLANG.
+	# Fall back to SRCLANG if content unavailable
 	pagesrc() {
 	  if [ -f $(CONTENT_DIR)/$$L/$$1.md ]; then echo $(CONTENT_DIR)/$$L/$$1.md
 	  else echo $(CONTENT_DIR)/$(SRCLANG)/$$1.md; fi
 	}
-	# flatsed [key=value...] : emit a sed script of flat @@key@@ -> value
-	# substitutions, drawn from the JSON catalog ($J) plus any extra key=value
-	# pairs. SOH (0x01) is used as the sed delimiter so values may contain
-	# / | $ { } etc. freely; only \ and & (sed-special on the RHS) are escaped,
-	# and '.' in keys is escaped so it matches literally.
-	flatsed() {
-	  local D TAB k v kv
-	  D=$$(printf '\001'); TAB=$$(printf '\t')
-	  { $(JQ) -r 'to_entries[]|"\(.key)\t\(.value)"' "$$J"
-	    for kv in "$$@"; do printf '%s\t%s\n' "$${kv%%=*}" "$${kv#*=}"; done
-	  } | while IFS=$$TAB read -r k v; do
-	    k=$${k//./\\.}
-	    v=$${v//\\/\\\\}; v=$${v//&/\\&}
-	    printf 's%s@@%s@@%s%s%sg\n' "$$D" "$$k" "$$D" "$$v" "$$D"
+	# Generate language URLs for the switcher
+	switcher() {
+	  for x in $(LANGS); do
+	    if [ -n "$$1" ]; then printf 'url.self.%s=/%s/%s/ ' "$$x" "$$x" "$$(slug $$x $$1)"
+	    else printf 'url.self.%s=/%s/ ' "$$x" "$$x"; fi
 	  done
 	}
-	# subst <template|-> [key=value...] : flat @@key@@ substitution -> stdout. Use - for stdin.
+	# Generate sed script for @@key@@ substitutions from JSON + key=value pairs
+	flatsed() {
+	  $(JQ) -rn --args '
+	    ( input | to_entries ) +
+	    ( $$ARGS.positional | map(index("=") as $$i | {key: .[:$$i], value: .[$$i+1:]}) )
+	    | .[]
+	    | ( .key            | gsub("\\.";  "\\.") )                    as $$k
+	    | ( .value|tostring | gsub("\\\\"; "\\\\") | gsub("&"; "\\&") ) as $$v
+	    | "s\u0001@@\($$k)@@\u0001\($$v)\u0001g"
+	  ' "$$@" < "$$J"
+	}
+	# Apply @@key@@ substitutions (- for stdin)
 	subst() {
 	  local t=$$1; shift
 	  [ "$$t" = - ] && t=/dev/stdin
 	  sed -f <(flatsed lang="$$L" author="$(AUTHOR)" year="$(YEAR)" "$$@") "$$t"
 	}
-	# assemble <name> : cat partials/head + templates/<name>.html + partials/foot -> stdout.
+	# Concatenate head + template + foot
 	assemble() { cat $(HEAD_TPL) "$(TEMPLATE_DIR)/$$1.html" $(FOOT_TPL); }
-	# inject [KEY=FILE ...] : replace each @@KEY@@ placeholder with the contents of FILE.
+	# Replace @@KEY@@ placeholders with file contents
 	inject() {
 	  sed -f <(for arg in "$$@"; do
 	    printf '/@@%s@@/{\nr %s\nd\n}\n' "$${arg%%=*}" "$${arg#*=}"
 	  done)
 	}
-	# link_tags <file> : sblg renders ${sblg-tags} as <span class="sblg-tag"> with no href; convert to <a>.
+	# Convert sblg spans to tag links
 	link_tags() {
 	  sed -i "s|<span class=\"sblg-tag\">\([^<]*\)</span>|<a class=\"sblg-tag\" href=\"/$$L/$$SB/tag/\1.html\">\1</a>|g" "$$1"
 	}
 
-	# --- slugs (this language + every language, for the switcher) --------
-	SB=$$(val slug.blog); SE=$$(val slug.education)
-	SP=$$(val slug.projects); SX=$$(val slug.experience)
-	declare -A BLOG EDU PROJ EXP
-	for x in $(LANGS); do
-	  BLOG[$$x]=$$(slug $$x blog);       EDU[$$x]=$$(slug $$x education)
-	  PROJ[$$x]=$$(slug $$x projects);   EXP[$$x]=$$(slug $$x experience)
-	done
-	sw_home="url.self.ca=/ca/ url.self.es=/es/ url.self.en=/en/"
-	sw_blog="url.self.ca=/ca/$${BLOG[ca]}/ url.self.es=/es/$${BLOG[es]}/ url.self.en=/en/$${BLOG[en]}/"
-	sw_edu="url.self.ca=/ca/$${EDU[ca]}/ url.self.es=/es/$${EDU[es]}/ url.self.en=/en/$${EDU[en]}/"
-	sw_proj="url.self.ca=/ca/$${PROJ[ca]}/ url.self.es=/es/$${PROJ[es]}/ url.self.en=/en/$${PROJ[en]}/"
-	sw_exp="url.self.ca=/ca/$${EXP[ca]}/ url.self.es=/es/$${EXP[es]}/ url.self.en=/en/$${EXP[en]}/"
+	# Slugs & language switchers
+	SB=$$(val slug.blog)
+	sw_home=$$(switcher); sw_blog=$$(switcher blog)
 
-	# --- blog post fragments (with fallback) -----------------------------
+	# Blog post fragments (fall back to SRCLANG if not found)
 	mkdir -p $(WORK_DIR)/$$L/blog $(PUBLIC_DIR)/$$L
 	BLOGSRC=$(CONTENT_DIR)/$$L/blog
 	ls $$BLOGSRC/*.md >/dev/null 2>&1 || BLOGSRC=$(CONTENT_DIR)/$(SRCLANG)/blog
@@ -139,7 +113,7 @@ build-one:
 	  done
 	fi
 
-	# --- home page (/<lang>/) : intro + latest posts (blog mode) ---------
+	# Home page: intro + latest posts
 	$(LOWDOWN) "$$(pagesrc index)" > $(WORK_DIR)/$$L/intro.html
 	TH=$$(val title.home)
 	assemble index \
@@ -149,24 +123,25 @@ build-one:
 	$(SBLG) -o $(PUBLIC_DIR)/$$L/index.html -t $(WORK_DIR)/$$L/tmpl-index.html "$${FRAGS[@]}"
 	link_tags $(PUBLIC_DIR)/$$L/index.html
 
-	# --- standalone content pages (-c) -----------------------------------
-	build_page() { # <section> <name> <slug> <switcher>
-	  local sec=$$1 name=$$2 slug=$$3 sw=$$4
+	# Standalone content pages
+	build_page() {
+	  local name=$$1 slug
+	  slug=$$(val slug.$$name)
 	  mkdir -p $(PUBLIC_DIR)/$$L/$$slug
 	  $(MKART) "$$(pagesrc $$name)" -o $(WORK_DIR)/$$L/page-$$name.xml
 	  assemble page \
 	    | subst - \
-	      section=$$sec page_heading='$${sblg-title}' page_title='$${sblg-titletext}' \
-	      page_description='$${sblg-aside}' $$sw \
+	      section=$$name page_heading='$${sblg-title}' page_title='$${sblg-titletext}' \
+	      page_description='$${sblg-aside}' $$(switcher $$name) \
 	    > $(WORK_DIR)/$$L/tmpl-$$name.html
 	  $(SBLG) -c -o $(PUBLIC_DIR)/$$L/$$slug/index.html \
 	    -t $(WORK_DIR)/$$L/tmpl-$$name.html $(WORK_DIR)/$$L/page-$$name.xml
 	}
-	build_page education education "$$SE" "$$sw_edu"
-	build_page projects   projects   "$$SP" "$$sw_proj"
-	build_page experience experience "$$SX" "$$sw_exp"
+	build_page education
+	build_page projects
+	build_page experience
 
-	# --- blog index (/<lang>/<blog>/) ------------------------------------
+	# Blog index
 	mkdir -p $(PUBLIC_DIR)/$$L/$$SB
 	TB=$$(val title.blog)
 	assemble blog \
@@ -176,7 +151,7 @@ build-one:
 	$(SBLG) -o $(PUBLIC_DIR)/$$L/$$SB/index.html -t $(WORK_DIR)/$$L/tmpl-blog.html "$${FRAGS[@]}"
 	link_tags $(PUBLIC_DIR)/$$L/$$SB/index.html
 
-	# --- individual posts (-c) -------------------------------------------
+	# Individual posts
 	mkdir -p $(PUBLIC_DIR)/$$L/$$SB/post
 	assemble post \
 	  | subst - \
@@ -189,7 +164,7 @@ build-one:
 	  link_tags $(PUBLIC_DIR)/$$L/$$SB/post/$$n.html
 	done
 
-	# --- tag pages -------------------------------------------------------
+	# Tag pages
 	mkdir -p $(PUBLIC_DIR)/$$L/$$SB/tag
 	THEAD=$$(val tag.heading)
 	for t in $$($(SBLG) -l "$${FRAGS[@]}" | cut -f2 | sort -u); do
@@ -203,7 +178,7 @@ build-one:
 	  link_tags $(PUBLIC_DIR)/$$L/$$SB/tag/$$t.html
 	done
 
-	# --- Atom feed (/<lang>/atom.xml) ------------------------------------
+	# Atom feed
 	subst $(TEMPLATE_DIR)/atom.in.xml base_url="$(BASE_DOMAIN)" > $(WORK_DIR)/$$L/atom-tmpl.xml
 	$(SBLG) -a -o $(PUBLIC_DIR)/$$L/atom.xml -t $(WORK_DIR)/$$L/atom-tmpl.xml "$${FRAGS[@]}"
 
