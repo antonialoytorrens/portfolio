@@ -322,6 +322,10 @@ article header {
     padding: 0;
 }
 
+.post-content h2 {
+    margin-top: 2.5rem;
+}
+
 .post-item {
     margin-bottom: 1.5rem;
     padding-bottom: 1.5rem;
