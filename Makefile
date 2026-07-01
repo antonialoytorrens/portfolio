@@ -33,11 +33,16 @@ REMOTE_HOST ?= example.com
 REMOTE_PATH ?= /var/www/html
 RSYNC_OPTS  ?= -avz --delete
 
-.PHONY: all assets clean serve rsync help build-one
+LANG_TARGETS := $(addprefix build-,$(LANGS))
 
-all: assets
-	@for l in $(LANGS); do $(MAKE) --no-print-directory build-one LANG=$$l; done
+.PHONY: all assets clean serve rsync help build-one $(LANG_TARGETS)
+
+all: $(LANG_TARGETS)
 	@echo "Build complete -> $(PUBLIC_DIR)/"
+
+# Per-language targets
+$(LANG_TARGETS): build-%: assets
+	@$(MAKE) --no-print-directory build-one LANG=$*
 
 assets:
 	@echo "==> Copying assets"
@@ -188,14 +193,15 @@ clean:
 	@echo "==> Cleaning $(PUBLIC_DIR)/"
 	rm -rf $(PUBLIC_DIR)
 
-serve: all
+serve:
 	@echo "==> Serving $(PUBLIC_DIR)/ at http://$(SERVE_HOST):$(SERVE_PORT)/"
 	cd $(PUBLIC_DIR) && python3 -m http.server $(SERVE_PORT) --bind $(SERVE_HOST)
 
-rsync: all
+rsync:
 	@echo "==> Syncing $(PUBLIC_DIR)/ to $(REMOTE_USER)@$(REMOTE_HOST):$(REMOTE_PATH)"
 	rsync $(RSYNC_OPTS) $(PUBLIC_DIR)/ $(REMOTE_USER)@$(REMOTE_HOST):$(REMOTE_PATH)
 
 help:
 	@echo "Targets: all (default), assets, build-<lang>, clean, serve, rsync"
 	@echo "Languages: $(LANGS)  (source/fallback: $(SRCLANG))"
+	@echo "Parallel: 'make -j' builds languages concurrently (add -Otarget to group output)"
