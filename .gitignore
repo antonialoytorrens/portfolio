@@ -1,5 +1,6 @@
 # Build output
 /public/
+/.work/
 
 # OS / editor cruft
 .DS_Store

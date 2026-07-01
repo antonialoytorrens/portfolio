@@ -13,7 +13,7 @@ CONTENT_DIR  := content
 I18N_DIR     := i18n
 TEMPLATE_DIR := templates
 PUBLIC_DIR   := public
-WORK_DIR     := $(PUBLIC_DIR)/.work
+WORK_DIR     := .work
 
 SBLG    := sblg
 LOWDOWN := lowdown --html-no-skiphtml --html-no-escapehtml
@@ -49,6 +49,7 @@ assets:
 	mkdir -p $(PUBLIC_DIR)
 	cp -a assets $(PUBLIC_DIR)/
 	cat assets/css/reset.css assets/css/styles.css > $(PUBLIC_DIR)/assets/css/bundle.css
+	rm -f $(PUBLIC_DIR)/assets/css/reset.css $(PUBLIC_DIR)/assets/css/styles.css
 
 # Build for one language (pass LANG=<lang>)
 build-one:
@@ -217,8 +218,8 @@ build-one:
 	echo "    language '$$L' done."
 
 clean:
-	@echo "==> Cleaning $(PUBLIC_DIR)/"
-	rm -rf $(PUBLIC_DIR)
+	@echo "==> Cleaning $(PUBLIC_DIR)/ and $(WORK_DIR)/"
+	rm -rf $(PUBLIC_DIR) $(WORK_DIR)
 
 serve:
 	@echo "==> Serving $(PUBLIC_DIR)/ at http://$(SERVE_HOST):$(SERVE_PORT)/"
