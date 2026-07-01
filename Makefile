@@ -107,6 +107,10 @@ build-one:
 	    printf '/@@%s@@/{\nr %s\nd\n}\n' "$${arg%%=*}" "$${arg#*=}"
 	  done)
 	}
+	# link_tags <file> : sblg renders ${sblg-tags} as <span class="sblg-tag"> with no href; convert to <a>.
+	link_tags() {
+	  sed -i "s|<span class=\"sblg-tag\">\([^<]*\)</span>|<a class=\"sblg-tag\" href=\"/$$L/$$SB/tag/\1.html\">\1</a>|g" "$$1"
+	}
 
 	# --- slugs (this language + every language, for the switcher) --------
 	SB=$$(val slug.blog); SE=$$(val slug.education)
@@ -143,6 +147,7 @@ build-one:
 	  | subst - section=about page_heading="$$TH" page_title="$$TH" page_description="" $$sw_home \
 	  > $(WORK_DIR)/$$L/tmpl-index.html
 	$(SBLG) -o $(PUBLIC_DIR)/$$L/index.html -t $(WORK_DIR)/$$L/tmpl-index.html "$${FRAGS[@]}"
+	link_tags $(PUBLIC_DIR)/$$L/index.html
 
 	# --- standalone content pages (-c) -----------------------------------
 	build_page() { # <section> <name> <slug> <switcher>
@@ -169,6 +174,7 @@ build-one:
 	  | subst - section=blog page_heading="$$TB" page_title="$$TB" page_description="" $$sw_blog \
 	  > $(WORK_DIR)/$$L/tmpl-blog.html
 	$(SBLG) -o $(PUBLIC_DIR)/$$L/$$SB/index.html -t $(WORK_DIR)/$$L/tmpl-blog.html "$${FRAGS[@]}"
+	link_tags $(PUBLIC_DIR)/$$L/$$SB/index.html
 
 	# --- individual posts (-c) -------------------------------------------
 	mkdir -p $(PUBLIC_DIR)/$$L/$$SB/post
@@ -180,6 +186,7 @@ build-one:
 	for fr in "$${FRAGS[@]}"; do
 	  n=$$(basename $$fr .xml)
 	  $(SBLG) -c -o $(PUBLIC_DIR)/$$L/$$SB/post/$$n.html -t $(WORK_DIR)/$$L/tmpl-post.html $$fr
+	  link_tags $(PUBLIC_DIR)/$$L/$$SB/post/$$n.html
 	done
 
 	# --- tag pages -------------------------------------------------------
@@ -193,6 +200,7 @@ build-one:
 	      section=blog tag="$$t" page_heading="$$THEAD $$t" page_title="$$THEAD $$t" page_description="" $$sw_blog \
 	    > $(WORK_DIR)/$$L/tmpl-tag-$$t.html
 	  $(SBLG) -o $(PUBLIC_DIR)/$$L/$$SB/tag/$$t.html -t $(WORK_DIR)/$$L/tmpl-tag-$$t.html "$${FRAGS[@]}"
+	  link_tags $(PUBLIC_DIR)/$$L/$$SB/tag/$$t.html
 	done
 
 	# --- Atom feed (/<lang>/atom.xml) ------------------------------------

@@ -223,6 +223,16 @@ body[data-lang="en"] .lang-en {
     border: 1px solid #e0e0e0;
 }
 
+.post-tags a.sblg-tag {
+    text-decoration: none;
+}
+
+.post-tags a.sblg-tag:hover {
+    background: #D93B00;
+    color: white;
+    border-color: #D93B00;
+}
+
 .post-tags .sblg-tags-notfound {
     display: none;
 }
