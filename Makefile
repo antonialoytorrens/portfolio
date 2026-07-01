@@ -42,7 +42,7 @@ all: $(LANG_TARGETS)
 
 # Per-language targets
 $(LANG_TARGETS): build-%: assets
-	@$(MAKE) --no-print-directory build-one LANG=$*
+	@$(MAKE) --no-print-directory build-one LNG=$*
 
 assets:
 	@echo "==> Copying assets"
@@ -51,9 +51,9 @@ assets:
 	cat assets/css/reset.css assets/css/styles.css > $(PUBLIC_DIR)/assets/css/bundle.css
 	rm -f $(PUBLIC_DIR)/assets/css/reset.css $(PUBLIC_DIR)/assets/css/styles.css
 
-# Build for one language (pass LANG=<lang>)
+# Build for one language (pass LNG=<lang>)
 build-one:
-	@L=$(LANG)
+	@L=$(LNG)
 	J=$(I18N_DIR)/$$L.json
 	echo "==> Building language '$$L'"
 
@@ -119,7 +119,7 @@ build-one:
 	      esac
 	    done < <($(LOWDOWN) -L "$$md")
 	    printf '>\n'
-	    [ -n "$$desc" ] && printf '<aside>%s</aside>\n' "$$(printf %s "$$desc" | xmlesc)"
+	    #[ -n "$$desc" ] && printf '<aside>%s</aside>\n' "$$(printf %s "$$desc" | xmlesc)"
 	    $(LOWDOWN) "$$md"
 	    printf '</article>\n'
 	  } > "$$out"
@@ -128,6 +128,10 @@ build-one:
 	link_tags() {
 	  sed -i "s|<span class=\"sblg-tag\">\([^<]*\)</span>|<a class=\"sblg-tag\" href=\"/$$L/$$SB/tag/\1.html\">\1</a>|g" "$$1"
 	}
+
+	# Localized post dates: LC_ALL pins the locale, TZ=UTC the calendar day.
+	export LC_ALL=$$(val date.locale)
+	export TZ=UTC
 
 	# Slugs & language switchers
 	SB=$$(val slug.blog)

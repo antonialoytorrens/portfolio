@@ -1,4 +1,7 @@
 {
+  "date.locale": "es_ES.UTF-8",
+  "date.format": "%-d de %B de %Y",
+
   "slug.about": "acerca-de-mi",
   "slug.blog": "blog",
   "slug.education": "educacion",
