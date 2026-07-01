@@ -1,3 +1,4 @@
+#!/usr/bin/make -f
 SHELL        := /bin/bash
 .ONESHELL:
 .SHELLFLAGS  := -ec
@@ -17,7 +18,6 @@ WORK_DIR     := $(PUBLIC_DIR)/.work
 SBLG    := sblg
 LOWDOWN := lowdown --html-no-skiphtml --html-no-escapehtml
 JQ      := jq
-MKART   := sh tools/mkarticle.sh
 
 HEAD_TPL  := $(TEMPLATE_DIR)/partials/head.html
 FOOT_TPL  := $(TEMPLATE_DIR)/partials/foot.html
@@ -96,6 +96,33 @@ build-one:
 	    printf '/@@%s@@/{\nr %s\nd\n}\n' "$${arg%%=*}" "$${arg#*=}"
 	  done)
 	}
+	# Markdown + front matter -> sblg <article> fragment (mkart <md> <out> [source]).
+	# Maps every front-matter key to its sblg field; unknown keys -> data-sblg-set-*.
+	xmlesc() { sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g'; }
+	mkart() {
+	  local md=$$1 out=$$2 source=$${3:-} key val desc=""
+	  {
+	    printf '<article data-sblg-article="1"'
+	    [ -n "$$source" ] && printf ' data-sblg-source="%s"' "$$(printf %s "$$source" | xmlesc)"
+	    while read -r key; do
+	      [ -n "$$key" ] || continue
+	      val=$$($(LOWDOWN) -X "$$key" "$$md")
+	      case "$$key" in
+	        title)       printf ' data-sblg-title="%s"'    "$$(printf %s "$$val"        | xmlesc)" ;;
+	        date)        printf ' data-sblg-datetime="%s"' "$$(printf %s "$${val:0:10}" | xmlesc)" ;;
+	        tags)        printf ' data-sblg-tags="%s"'     "$$(printf %s "$$val"        | xmlesc)" ;;
+	        img)         printf ' data-sblg-img="%s"'      "$$(printf %s "$$val"        | xmlesc)" ;;
+	        author)      printf ' data-sblg-author="%s"'   "$$(printf %s "$$val"        | xmlesc)" ;;
+	        description) desc=$$val ;;
+	        *)           printf ' data-sblg-set-%s="%s"' "$$key" "$$(printf %s "$$val" | xmlesc)" ;;
+	      esac
+	    done < <($(LOWDOWN) -L "$$md")
+	    printf '>\n'
+	    [ -n "$$desc" ] && printf '<aside>%s</aside>\n' "$$(printf %s "$$desc" | xmlesc)"
+	    $(LOWDOWN) "$$md"
+	    printf '</article>\n'
+	  } > "$$out"
+	}
 	# Convert sblg spans to tag links
 	link_tags() {
 	  sed -i "s|<span class=\"sblg-tag\">\([^<]*\)</span>|<a class=\"sblg-tag\" href=\"/$$L/$$SB/tag/\1.html\">\1</a>|g" "$$1"
@@ -113,7 +140,7 @@ build-one:
 	if ls $$BLOGSRC/*.md >/dev/null 2>&1; then
 	  for f in $$BLOGSRC/*.md; do
 	    n=$$(basename $$f .md)
-	    $(MKART) $$f --source "$$SB/post/$$n.html" -o $(WORK_DIR)/$$L/blog/$$n.xml
+	    mkart "$$f" $(WORK_DIR)/$$L/blog/$$n.xml "$$SB/post/$$n.html"
 	    FRAGS+=($(WORK_DIR)/$$L/blog/$$n.xml)
 	  done
 	fi
@@ -133,7 +160,7 @@ build-one:
 	  local name=$$1 slug
 	  slug=$$(val slug.$$name)
 	  mkdir -p $(PUBLIC_DIR)/$$L/$$slug
-	  $(MKART) "$$(pagesrc $$name)" -o $(WORK_DIR)/$$L/page-$$name.xml
+	  mkart "$$(pagesrc $$name)" $(WORK_DIR)/$$L/page-$$name.xml
 	  assemble page \
 	    | subst - \
 	      section=$$name page_heading='$${sblg-title}' page_title='$${sblg-titletext}' \
