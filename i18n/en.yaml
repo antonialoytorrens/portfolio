@@ -1,0 +1,76 @@
+about:
+  other: About Me
+experience:
+  other: Experience
+education:
+  other: Education
+skills:
+  other: Skills
+projects:
+  other: Projects
+hobbies:
+  other: Hobbies
+choose_language:
+  other: Choose language
+location:
+  other: "Binissalem, Majorca, Spain"
+about_bio:
+  other: "I dedicate myself professionally to programming and web development. "
+job_title:
+  other: Junior Web Developer
+job_description:
+  other: "Development of acceptance tests with the technology of "
+job_dates:
+  other: June 2019 - July 2019
+education_degree:
+  other: Certificate of Higher Education
+education_webdev:
+  other: Web Applications Development
+education_average:
+  other: Average
+education_daw_dates:
+  other: September 2018 - June 2020
+conservatory:
+  other: Music Conservatory Antoni Torrandell
+conservatory_grade:
+  other: Middle Grade
+conservatory_piano:
+  other: Piano
+conservatory_dates:
+  other: September 2012 - Present
+linux_essentials:
+  other: Linux Essentials Certification
+linux_essentials_dates:
+  other: September 2019 - June 2020
+programming_languages:
+  other: Programming Languages
+databases:
+  other: Databases
+libraries_frameworks:
+  other: Libraries and frameworks
+systems:
+  other: Systems
+tools:
+  other: Tools
+hobbies_music:
+  other: Apart from web development, I also really like the world of music, playing the piano and acting as an interpreter in some concerts.
+hobbies_outdoors:
+  other: I also usually go hiking or traveling abroad to enjoy the outdoors and see new places.
+icons_made_by:
+  other: Icons made by
+conjunction_and:
+  other: "and"
+from:
+  other: from
+lang_ca:
+  other: Català
+lang_es:
+  other: Español
+lang_en:
+  other: English
+profile_alt:
+  other: Author profile picture
+email_alt:
+  other: Email of Antoni Aloy Torrens
+toggle_nav:
+  other: Toggle navigation

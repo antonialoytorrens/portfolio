@@ -2,8 +2,6 @@
 .DS_Store
 .AppleDouble
 .LSOverride
-
-# Icon must ends with two \r.
 Icon
 
 # Thumbnails
@@ -13,81 +11,12 @@ Icon
 .Spotlight-V100
 .Trashes
 
+# Editor
+.idea/
+.vscode/
 
-### Python ###
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-
-# C extensions
-*.so
-
-# Distribution / packaging
-.Python
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-.tox/
-.coverage
-.cache
-nosetests.xml
-coverage.xml
-htmlcov/
-
-# Translations
-*.mo
-
-# Mr Developer
-.mr.developer.cfg
-.project
-.pydevproject
-
-# Rope
-.ropeproject
-
-# Django stuff:
-*.log
-*.pot
-.staticfiles/
-.media/
-
-# Django-compressor caching
-static/CACHE/*
-
-# Sphinx documentation
-docs/_build/
-
-# npm
-node_modules/
-
-# Campass
-.sass-cache
-
-# Celery
-celerybeat-schedule
-
-# Vagrant
-.vagrant
-
-# Redis
-dump.rdb
-
-# python-dotenv
-.env
-
-# bittstop
-_docs_html/
-media/cache/*
-provisioner/site.retry
-
-# Virtualenv
-venv/
+## LibreOffice .lock files ###
+.~lock*
 
 ### Vim ###
 [._]*.s[a-w][a-z]
@@ -96,13 +25,10 @@ venv/
 Session.vim
 .netrwhist
 
-# Pycharm
-.idea/
+# Hugo
+/public/
+/resources/_gen/
+.hugo_build.lock
 
-## LibreOffice .lock files ###
-
-.~lock*
-
-## VSCode .vscode folder and files ##
-
-.vscode/
+# Env
+.env

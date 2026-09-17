@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang }}">
+    <head>
+        {{ partial "head.html" . }}
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        {{ partial "nav.html" . }}
+        <!-- Page Content-->
+        <div class="container-fluid p-0">
+            <!-- About-->
+            <section class="resume-section" id="about">
+                <div class="resume-section-content">
+                    <h1 class="mb-0">
+                        Antoni
+                        <span class="text-primary">Aloy Torrens</span>
+                    </h1>
+                    <div class="subheading mb-5">
+                        {{ i18n "location" }} ·
+                        <img class="img-fluid" src="/assets/img/email.webp" alt="{{ i18n "email_alt" }}"/>
+                    </div>
+                    <p class="lead text-justify mb-5">{{ i18n "about_bio" }}</p>
+                    <div class="d-flex justify-content-center"><span class="d-lg-none"><img width="100" height="200" class="img-fluid img-profile mx-auto mb-5" src="/assets/img/profile.webp" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImagen+de+Perfil%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EEsta+es+la+imagen+de+perfil+de+Antoni+Aloy+Torrens%3C%2Fbody%3E%3C%2Fhtml%3E" alt="{{ i18n "profile_alt" }}"  /></span></div>
+                    <div class="social-icons text-center">
+                        <a class="social-icon" href="https://www.linkedin.com/in/antoni-aloy-torrens-7283481b2/" target="_blank"><em class="fab fa-linkedin-in"></em><span class="d-none">LinkedIn</span></a>
+                        <a class="social-icon" href="https://github.com/antonialoytorrens" target="_blank"><em class="fab fa-github"></em><span class="d-none">GitHub</span></a>
+                        <a class="social-icon" href="https://gitlab.com/antoni.aloytorrens" target="_blank"><em class="fab fa-gitlab"></em><span class="d-none">GitLab</span></a>
+                        <a class="social-icon" href="https://matrix.to/#/@aat596:matrix.org" target="_blank"><em class="fac fa-matrix"></em><span class="d-none">Matrix</span></a>
+                        <a class="social-icon" href="https://forum.xda-developers.com/member.php?u=10788301" target="_blank"><em class="fac fa-xda"></em><span class="d-none">XDA</span></a>
+                    </div>
+                </div>
+            </section>
+            <hr class="m-0" />
+            <!-- Experience-->
+            <section class="resume-section" id="experience">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">{{ i18n "experience" }}</h2>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1 mr-5">
+                            <h3 class="mb-0">{{ i18n "job_title" }}</h3>
+                            <div class="subheading mb-3"><a class="btn-link" href="https://apsl.net" target="_blank">APSL S.L.</a>, Advanced Programming Solutions</div>
+                            <p>{{ i18n "job_description" }}<a class="btn-link" href="https://robotframework.org/" target="_blank">Robot Framework</a>.</p>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary">{{ i18n "job_dates" }}</span></div>
+                    </div>
+                </div>
+            </section>
+            <hr class="m-0" />
+            <!-- Education-->
+            <section class="resume-section" id="education">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">{{ i18n "education" }}</h2>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1 mr-5">
+                            <h3 class="mb-0"><a class="btn-link" href="https://paucasesnovescifp.cat/" target="_blank">CIFP Pau Casesnoves</a></h3>
+                            <div class="subheading mb-3">{{ i18n "education_degree" }}</div>
+                            <div>{{ i18n "education_webdev" }}</div>
+                            <p>{{ i18n "education_average" }}: 7.5/10</p>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary">{{ i18n "education_daw_dates" }}</span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                        <div class="flex-grow-1 mr-5">
+                            <h3 class="mb-0"><a class="btn-link" href="http://emmat.incaciutat.com/" target="_blank">{{ i18n "conservatory" }}</a></h3>
+                            <div class="subheading mb-3">{{ i18n "conservatory_grade" }}</div>
+                            <div>{{ i18n "conservatory_piano" }}</div>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary">{{ i18n "conservatory_dates" }}</span></div>
+                    </div>
+                    <div class="d-flex flex-column flex-md-row justify-content-between">
+                        <div class="flex-grow-1 mr-5">
+                            <h3 class="mb-0"><a class="btn-link" href="https://lpi.org/v/LPI000456258/gjlxpst22w" target="_blank">{{ i18n "linux_essentials" }}</a></h3>
+                        </div>
+                        <div class="flex-shrink-0"><span class="text-primary">{{ i18n "linux_essentials_dates" }}</span></div>
+                    </div>
+                </div>
+            </section>
+            <hr class="m-0" />
+            <!-- Skills-->
+            <section class="resume-section" id="skills">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">{{ i18n "skills" }}</h2>
+                    <div class="subheading mb-3">{{ i18n "programming_languages" }}</div>
+                    <ul class="list-inline dev-icons">
+                        <li class="list-inline-item"><img alt="JavaScript" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EJavaScript+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>JavaScript</b>" src="/assets/img/javascript.svg"/></li>
+                        <li class="list-inline-item"><img alt="Java" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EJava+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>Java</b>" src="/assets/img/java.svg"/></li>
+                        <li class="list-inline-item"><img alt="Python" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EPython+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>Python</b>" src="/assets/img/python.svg"/></li>
+                    </ul>
+                    <div class="subheading mb-3">{{ i18n "databases" }}</div>
+                    <ul class="list-inline dev-icons">
+                        <li class="list-inline-item"><img alt="MySQL" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EMySQL+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>MySQL</b>" src="/assets/img/mysql.svg"/></li>
+                        <li class="list-inline-item"><img alt="PostgreSQL" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EPostgreSQL+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>PostgreSQL</b>" src="/assets/img/postgresql.svg"/></li>
+                    </ul>
+                    <div class="subheading mb-3">{{ i18n "libraries_frameworks" }}</div>
+                    <ul class="list-inline dev-icons">
+                        <li class="list-inline-item"><img alt="Bootstrap" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EBootstrap+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>Bootstrap</b>" src="/assets/img/bootstrap.svg"/></li>
+                        <li class="list-inline-item"><img alt="JQuery" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EJQuery+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>JQuery</b>" src="/assets/img/jquery.svg"/></li>
+                        <li class="list-inline-item"><img alt="Django" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EDjango+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>Django</b>" src="/assets/img/django.svg"/></li>
+                        <li class="list-inline-item"><img alt="Qt" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EQt+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>Qt</b>" src="/assets/img/qt.svg"/></li>
+                    </ul>
+                    <div class="subheading mb-3">{{ i18n "systems" }}</div>
+                    <ul class="list-inline dev-icons">
+                        <li class="list-inline-item"><img alt="Docker" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EDocker+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>Docker</b>" src="/assets/img/docker.svg"/></li>
+                        <li class="list-inline-item"><img alt="Linux" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3ELinux+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>Linux</b>" src="/assets/img/linux.svg"/></li>
+                        <li class="list-inline-item"><img alt="Ubuntu" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EUbuntu+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>Ubuntu</b>" src="/assets/img/ubuntu.svg"/></li>
+                        <li class="list-inline-item"><img alt="Debian" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EDebian+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>Debian</b>" src="/assets/img/debian.svg"/></li>
+                        <li class="list-inline-item"><img alt="PostmarketOS" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EPostmarketOS+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>PostmarketOS</b>" src="/assets/img/postmarketos.svg"/></li>
+                        <li class="list-inline-item"><img alt="Alpine Linux" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EAlpineLinux+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>Alpine Linux</b>" src="/assets/img/alpine-linux.svg"/></li>
+                    </ul>
+                    <div class="subheading mb-3">{{ i18n "tools" }}</div>
+                     <ul class="list-inline dev-icons">
+                        <li class="list-inline-item"><img alt="HTML5" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EHTML5+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>HTML5</b>" src="/assets/img/html5.svg"/></li>
+                        <li class="list-inline-item"><img alt="CSS3" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3ECSS3+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>CSS3</b>" src="/assets/img/css.svg"/></li>
+                        <li class="list-inline-item"><img alt="Git" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EGit+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>Git</b>" src="/assets/img/git.svg"/></li>
+                        <li class="list-inline-item"><img alt="Visual Studio Code" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EVisualStudioCode+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>Visual Studio Code</b>" src="/assets/img/code.svg"/></li>
+                        <li class="list-inline-item"><img alt="NetBeans" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3ENetBeans+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>NetBeans</b>" src="/assets/img/netbeans.svg"/></li>
+                        <li class="list-inline-item"><img alt="Bash" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EBash+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>Bash</b>" src="/assets/img/bash.svg"/></li>
+                        <li class="list-inline-item"><img alt="GIMP" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EGIMP+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>GIMP</b>" src="/assets/img/gimp.svg"/></li>
+                        <li class="list-inline-item"><img alt="Audacity" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EAudacity+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>Audacity</b>" src="/assets/img/audacity.svg"/></li>
+                        <li class="list-inline-item"><img alt="LibreOffice" longdesc="data:text/html;charset=utf-8;%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3ELogo%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3ELibreOffice+Logo%3C%2Fbody%3E%3C%2Fhtml%3E" data-toggle="tooltip" data-html="true" title="<b>LibreOffice</b>" src="/assets/img/libreoffice.svg"/></li>
+                    </ul>
+                </div>
+            </section>
+            <hr class="m-0" />
+            <!-- Projects-->
+            <section class="resume-section" id="projects">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">{{ i18n "projects" }}</h2>
+                    <div class="row display-sm-grid row-eq-height justify-content-left">
+                        {{ $lang := .Site.Language.Lang }}
+                        {{ range site.Data.projects }}
+                        {{ $project := . }}
+                        {{ $img := resources.Get (printf "projects/%s" $project.image) }}
+                        <div class="col-xsl-6 col-xl-4 col-mmd-12">
+                            {{ with $img }}
+                            {{ $thumb := .Fill "440x440 Center" }}
+                            <div class="card mb-4 box-shadow w-100 h-100">
+                                <img class="card-img-top" longdesc="{{ index $project.longdesc $lang }}" alt="{{ index $project.alt $lang }}" src="{{ $thumb.RelPermalink }}">
+                            {{ end }}
+                                <div class="card-body">
+                                    <p class="lead font-weight-bold">{{ index $project.title $lang }}</p>
+                                    <p class="lead regular text-justify">{{ index $project.subtitle $lang }}</p>
+                                    <p><a class="btn-link" href="{{ $project.web_link }}" target="_blank">{{ index $project.web_name $lang }}</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        {{ end }}
+                    </div>
+                </div>
+            </section>
+            <hr class="m-0" />
+            <!-- Interests-->
+            <section class="resume-section" id="interests">
+                <div class="resume-section-content">
+                    <h2 class="mb-5">{{ i18n "hobbies" }}</h2>
+                    <p class="lead text-justify">{{ i18n "hobbies_music" }}</p>
+                    <p class="lead mb-0 text-justify">{{ i18n "hobbies_outdoors" }}</p>
+                </div>
+            </section>
+            <hr class="m-0" />
+            <div class="container float-left">
+                <div class="row p-3 pb-0 mb-0">
+                    <div class="disclaimer text-center">
+                        <a target="_blank" href="http://www.w3.org/WAI/WCAG1A-Conformance"
+                            title="Explanation of Level A Conformance">
+                        <img height="32" width="88"
+                                src="/assets/img/wcag1A.webp"
+                                alt="Level A conformance icon,
+                                W3C-WAI Web Content Accessibility Guidelines 1.0"></a>
+                    </div>
+                </div>
+                <div class="row p-3 pb-0 mb-0">
+                    <p class="text-left">{{ i18n "icons_made_by" }} <a class="btn-link" target="_blank" href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> {{ i18n "conjunction_and" }} <a class="btn-link" target="_blank" href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> {{ i18n "from" }} <a class="btn-link" target="_blank" href="https://www.flaticon.com/" title="Flaticon">Flaticon</a>.</p>
+                </div>
+            </div>
+        </div>
+        {{ partial "footer.html" . }}
+    </body>
+</html>
