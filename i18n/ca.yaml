@@ -1,0 +1,76 @@
+about:
+  other: Sobre mi
+experience:
+  other: Experiència
+education:
+  other: Educació
+skills:
+  other: Habilitats
+projects:
+  other: Projectes
+hobbies:
+  other: Aficions
+choose_language:
+  other: Tria idioma
+location:
+  other: "Binissalem, Mallorca, Espanya"
+about_bio:
+  other: "Em dedico a la programació i desenvolupament de pàgines web. "
+job_title:
+  other: Desenvolupador Web Júnior
+job_description:
+  other: "Desenvolupament de tests d'acceptació amb la tecnologia de "
+job_dates:
+  other: Juny 2019 - Juliol 2019
+education_degree:
+  other: Cicle Formatiu de Grau Superior
+education_webdev:
+  other: Desenvolupament d'Aplicacions Web
+education_average:
+  other: Mitjana
+education_daw_dates:
+  other: Setembre 2018 - Juny 2020
+conservatory:
+  other: Conservatori Municipal de Música Antoni Torrandell
+conservatory_grade:
+  other: Grau Mitjà
+conservatory_piano:
+  other: Especialitat Piano
+conservatory_dates:
+  other: Setembre 2012 - Present
+linux_essentials:
+  other: Certificació de Linux Essentials
+linux_essentials_dates:
+  other: Setembre 2019 - Juny 2020
+programming_languages:
+  other: Llenguatges de Programació
+databases:
+  other: Bases de Dades
+libraries_frameworks:
+  other: Llibreries i frameworks
+systems:
+  other: Sistemes
+tools:
+  other: Eines
+hobbies_music:
+  other: A part de desenvolupar pàgines web, també m'agrada molt el món de la música, tocar el piano i fer d'intèrpret en alguns concerts.
+hobbies_outdoors:
+  other: També acostumo a anar d'excursió o viatjar per gaudir de l'aire lliure i conèixer llocs nous.
+icons_made_by:
+  other: Icones fetes per
+conjunction_and:
+  other: "i"
+from:
+  other: des de
+lang_ca:
+  other: Català
+lang_es:
+  other: Español
+lang_en:
+  other: English
+profile_alt:
+  other: Imatge de perfil de l'autor
+email_alt:
+  other: Email d'Antoni Aloy Torrens
+toggle_nav:
+  other: Commuta la navegació

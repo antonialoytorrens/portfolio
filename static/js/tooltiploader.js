@@ -2,6 +2,6 @@ $(function() {
     $('[data-toggle="tooltip"]').tooltip()
 
     $("#lang").change(function() {
-        $("#formLang").submit();
+        window.location = "/" + $(this).val() + "/";
     });
 })

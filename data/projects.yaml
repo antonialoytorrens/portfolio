@@ -1,0 +1,161 @@
+- id: 3
+  image: jardines-alegres.webp
+  web_link: "http://jardinesalegres.com/"
+  title:
+    ca: Jardines Alegres S.L.
+    es: Jardines Alegres S.L.
+    en: Jardines Alegres S.L.
+  subtitle:
+    ca: Disseny i desenvolupament d'una pàgina web per a l'empresa de Jardines Alegres S.L.
+    es: Diseño y desarrollo de una página web para la empresa de Jardines Alegres S.L.
+    en: Design and development of a web page for the company Jardines Alegres S.L.
+  web_name:
+    ca: "http://jardinesalegres.com/"
+    es: "http://jardinesalegres.com/"
+    en: "http://jardinesalegres.com/"
+  alt:
+    ca: Pàgina Web de Jardines Alegres S.L.
+    es: Página Web de Jardines Alegres S.L.
+    en: Jardines Alegres S.L. Web Page
+  longdesc:
+    ca: "%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImage%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EJardines+Alegres%3C%2Fbody%3E%3C%2Fhtml%3E"
+    es: "%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImage%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EJardines+Alegres%3C%2Fbody%3E%3C%2Fhtml%3E"
+    en: "%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImage%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EJardines+Alegres%3C%2Fbody%3E%3C%2Fhtml%3E"
+- id: 4
+  image: postmarketos.webp
+  web_link: "https://gitlab.com/users/antoni.aloytorrens/contributed"
+  title:
+    ca: Col·laborador de PostmarketOS
+    es: Colaborador de PostmarketOS
+    en: PostmarketOS Contributor
+  subtitle:
+    ca: Desenvolupament de la portabilitat Linux en diferents telèfons mòbils, tablets i dispositius encastats.
+    es: Desarrollo de la portabilidad de Linux en diferentes teléfonos móviles, tabletas y dispositivos embebidos.
+    en: Linux porting development on different mobile phones, tablets and embedded devices.
+  web_name:
+    ca: Veure a GitLab
+    es: Ver en GitLab
+    en: See in GitLab
+  alt:
+    ca: Logo de PostmarketOS
+    es: Logo de PostmarketOS
+    en: PostmarketOS Logo
+  longdesc:
+    ca: "%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImage%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EPostmarketOS+Logo%3C%2Fbody%3E%3C%2Fhtml%3E"
+    es: "%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImage%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EPostmarketOS+Logo%3C%2Fbody%3E%3C%2Fhtml%3E"
+    en: "%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImage%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EPostmarketOS+Logo%3C%2Fbody%3E%3C%2Fhtml%3E"
+- id: 6
+  image: pamboliada.webp
+  web_link: "https://github.com/antonialoytorrens/pa-amb-oli.git"
+  title:
+    ca: Pamboliada
+    es: Pamboliada
+    en: Pamboliada
+  subtitle:
+    ca: Treball realitzat durant l'FCT de Desenvolupament d'Aplicacions Web en el CIFP Pau Casesnoves.
+    es: Trabajo realizado durante el FCT de Desarrollo de Aplicaciones Web en el CIFP Pau Casesnoves.
+    en: Work carried out during the FCT of Web Application Development at CIFP Pau Casesnoves.
+  web_name:
+    ca: Veure a GitHub
+    es: Ver en GitHub
+    en: See in GitHub
+  alt:
+    ca: Pàgina Web de Pamboliada
+    es: Página Web de Pamboliada
+    en: Pamboliada Web Page
+  longdesc:
+    ca: "%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImage%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EPamboliada%3C%2Fbody%3E%3C%2Fhtml%3E"
+    es: "%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImage%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EPamboliada%3C%2Fbody%3E%3C%2Fhtml%3E"
+    en: "%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImage%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EPamboliada%3C%2Fbody%3E%3C%2Fhtml%3E"
+- id: 7
+  image: architektmallorca.webp
+  web_link: "https://architektmallorca.com"
+  title:
+    ca: Rainer Henke Steiner
+    es: Rainer Henke Steiner
+    en: Rainer Henke Steiner
+  subtitle:
+    ca: Disseny i desenvolupament d'una pàgina web per a l'empresa de l'arquitecte Rainer Henke Steiner.
+    es: Diseño y desarrollo de una página web para la empresa del arquitecto Rainer Henke Steiner.
+    en: Design and development of a web page for the company of the architect Rainer Henke Steiner.
+  web_name:
+    ca: "https://architektmallorca.com"
+    es: "https://architektmallorca.com"
+    en: "https://architektmallorca.com"
+  alt:
+    ca: Pàgina Web Architekt Mallorca Rainer Henke Steiner
+    es: Página Web Architekt Mallorca Rainer Henke Steiner
+    en: Architekt Mallorca Rainer Henke Steiner Web Page
+  longdesc:
+    ca: "%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImage%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EArchitekt+Mallorca%3C%2Fbody%3E%3C%2Fhtml%3E"
+    es: "%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImage%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EArchitekt+Mallorca%3C%2Fbody%3E%3C%2Fhtml%3E"
+    en: "%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImage%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EArchitekt+Mallorca%3C%2Fbody%3E%3C%2Fhtml%3E"
+- id: 8
+  image: alpine-linux.png
+  web_link: "https://pkgs.alpinelinux.org/packages?name=&branch=edge&maintainer=Antoni+Aloy"
+  title:
+    ca: Mantenidor de paquets d'Alpine Linux
+    es: Mantenedor de paquetes de Alpine Linux
+    en: Alpine Linux package maintainer
+  subtitle:
+    ca: Responsable del manteniment i col·laborador en alguns paquets de la distribució Alpine Linux.
+    es: Responsable del mantenimiento y colaborador en algunos paquetes de la distribución Alpine Linux.
+    en: Responsible for maintenance and collaborator in some packages of the Alpine Linux distribution.
+  web_name:
+    ca: Veure al repositori
+    es: Ver al repositorio
+    en: See in repository
+  alt:
+    ca: Repositori d'Alpine Linux
+    es: Repositorio de Alpine Linux
+    en: Alpine Linux repository
+  longdesc:
+    ca: "%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImage%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EAlpineLinux%3C%2Fbody%3E%3C%2Fhtml%3E"
+    es: "%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImage%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EAlpineLinux%3C%2Fbody%3E%3C%2Fhtml%3E"
+    en: "%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImage%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EAlpineLinux%3C%2Fbody%3E%3C%2Fhtml%3E"
+- id: 9
+  image: juan-luis-escriva.webp
+  web_link: "http://www.juanluisescriva.com/"
+  title:
+    ca: Juan Luis Escrivá
+    es: Juan Luis Escrivá
+    en: Juan Luis Escrivá
+  subtitle:
+    ca: Disseny i desenvolupament d'una pàgina web pel compositor i músic Juan Luis Escrivá.
+    es: Diseño y desarrollo de una página web para el compositor y músico Juan Luis Escrivá.
+    en: Design and development of a web page for the composer and musician Juan Luis Escrivá.
+  web_name:
+    ca: "http://www.juanluisescriva.com/"
+    es: "http://www.juanluisescriva.com/"
+    en: "http://www.juanluisescriva.com/"
+  alt:
+    ca: Pàgina Web Juan Luis Escrivá
+    es: Página Web Juan Luis Escrivá
+    en: Juan Luis Escrivá Web Page
+  longdesc:
+    ca: "%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImage%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EJuan+Luis+Escriva%3C%2Fbody%3E%3C%2Fhtml%3E"
+    es: "%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImage%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EJuan+Luis+Escriva%3C%2Fbody%3E%3C%2Fhtml%3E"
+    en: "%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImage%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EJuan+Luis+Escriva%3C%2Fbody%3E%3C%2Fhtml%3E"
+- id: 10
+  image: debian.jpg
+  web_link: "https://salsa.debian.org/aat596"
+  title:
+    ca: Col·laborador de Debian
+    es: Colaborador de Debian
+    en: Debian Contributor
+  subtitle:
+    ca: Ajudo a enviar errors i/o resoldre'ls. A vegades, també realitzo suggerències de nous paquets que haurien d'estar a la distribució.
+    es: Ayudo a enviar errores y/o resolverlos. A veces, también realizo sugerencias de nuevos paquetes que deberían estar en la distribución.
+    en: I help submitting bugs and/or solving them. Sometimes, I also file suggestions of new packages that should be in the distribution.
+  web_name:
+    ca: Veure Perfil Debian
+    es: Ver Perfil Debian
+    en: See Debian Profile
+  alt:
+    ca: Logo Debian
+    es: Logo Debian
+    en: Debian Logo
+  longdesc:
+    ca: "%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImage%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EDebian%3C%2Fbody%3E%3C%2Fhtml%3E"
+    es: "%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImage%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EDebian%3C%2Fbody%3E%3C%2Fhtml%3E"
+    en: "%3C%21DOCTYPE+html%3E%3Chtml%3E%3Chead%3E%3Ctitle%3EImage%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3EDebian%3C%2Fbody%3E%3C%2Fhtml%3E"

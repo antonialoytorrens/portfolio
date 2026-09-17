@@ -1,0 +1,30 @@
+#baseURL = "127.0.0.1"
+title = "Antoni Aloy Torrens"
+languageCode = "es"
+defaultContentLanguage = "es"
+defaultContentLanguageInSubdir = true
+disableKinds = ["taxonomy", "term", "RSS", "section"]
+enableRobotsTXT = true
+
+[languages.es]
+languageName = "Español"
+languageCode = "es"
+weight = 1
+
+[languages.ca]
+languageName = "Català"
+languageCode = "ca"
+weight = 2
+
+[languages.en]
+languageName = "English"
+languageCode = "en"
+weight = 3
+
+[params]
+author = "Antoni Aloy Torrens"
+description = "Web Curriculum Vitae"
+
+[imaging]
+quality = 85
+anchor = "Center"
