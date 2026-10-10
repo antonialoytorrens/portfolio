@@ -22,7 +22,7 @@ REMOTE_PATH ?= /var/www/portfolio
 RSYNC       ?= rsync
 RSYNC_OPTS  ?= -avE --progress --delete
 
-.PHONY: all build minify serve draft clean rsync deploy help
+.PHONY: all build minify serve draft clean rsync deploy help sonarqube coverage-sonar
 
 all: build
 
@@ -56,3 +56,20 @@ help:
 	@echo "  make rsync          rsync $(PUBLIC_DIR) -> $(REMOTE):$(REMOTE_PATH)"
 	@echo "  make deploy         minify + rsync"
 	@echo "  make help           This list"
+	@echo "  make sonarqube      SonarQube analysis"
+
+# --- SonarQube ---
+ifneq (,$(wildcard ./.env))
+include .env
+export
+endif
+
+coverage-sonar:
+	-coverage run -m pytest -q
+	-coverage xml -o coverage.xml
+
+sonarqube: coverage-sonar
+	pysonar \
+		--sonar-host-url=$(SONAR_HOST_URL) \
+		--sonar-token=$(SONAR_TOKEN) \
+		--sonar-project-key=$(SONAR_PROJECT_KEY)
