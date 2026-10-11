@@ -20,5 +20,10 @@ COPY requirements-tools.txt /tmp/reqs-tools.txt
 RUN python3 -m venv /opt/venv && /opt/venv/bin/pip install --upgrade pip && /opt/venv/bin/pip install -r /tmp/reqs-tools.txt
 ENV PATH=/opt/venv/bin:$PATH
 
+RUN useradd --create-home --shell /bin/bash builder \
+	&& mkdir -p /workspace \
+	&& chown builder:builder /workspace
+
+USER builder
 WORKDIR /workspace
 CMD ["bash"]
