@@ -30,6 +30,78 @@ REMOTE_HOST=${REMOTE_HOST:-example.com}
 REMOTE_PATH=${REMOTE_PATH:-/var/www/html}
 RSYNC_OPTS=${RSYNC_OPTS:--avz --delete}
 
+# L, J and SB are set by build_one. Bash locals are visible to callees.
+val() { $JQ -r --arg k "$1" '.[$k]' "$J"; }
+slug() { $JQ -r --arg k "slug.$2" '.[$k]' "$I18N_DIR/$1.json"; }
+pagesrc() {
+	if [ -f "$CONTENT_DIR/$L/$1.md" ]; then echo "$CONTENT_DIR/$L/$1.md"
+	else echo "$CONTENT_DIR/$SRCLANG/$1.md"; fi
+}
+# i18n json + k=v -> sed script. @@key@@ subst. delim SOH. escape \ & and dots in keys.
+flatsed() {
+	local D TAB k v kv
+	D=$(printf '\001'); TAB=$(printf '\t')
+	{ $JQ -r 'to_entries[]|"\(.key)\t\(.value)"' "$J"
+	  for kv in "$@"; do printf '%s\t%s\n' "${kv%%=*}" "${kv#*=}"; done
+	} | while IFS=$TAB read -r k v; do
+		k=${k//./\\.}
+		v=${v//\\/\\\\}; v=${v//&/\\&}
+		printf 's%s@@%s@@%s%s%sg\n' "$D" "$k" "$D" "$v" "$D"
+	done
+}
+subst() {
+	local t=$1; shift
+	[ "$t" = - ] && t=/dev/stdin
+	sed -f <(flatsed lang="$L" author="$AUTHOR" year="$YEAR" "$@") "$t"
+}
+assemble() { cat "$HEAD_TPL" "$TEMPLATE_DIR/$1.html" "$FOOT_TPL"; }
+linkify_tags() {
+	sed -i 's|<span class="sblg-tag">\([^<]*\)</span>|<a href="/'"$L"'/'"$SB"'/tag/\1.html" class="sblg-tag">\1</a>|g' "$1"
+}
+inject() {
+	sed -f <(for arg in "$@"; do
+		printf '/@@%s@@/{\nr %s\nd\n}\n' "${arg%%=*}" "${arg#*=}"
+	done)
+}
+# $1 = slug key, empty = home. Words: url.self.<lang>=/<lang>/<slug>/
+selfurls() {
+	local x s key=${1:-}
+	for x in $LANGS; do
+		s=""
+		[ -n "$key" ] && s="/$(slug "$x" "$key")"
+		printf 'url.self.%s=/%s%s/ ' "$x" "$x" "$s"
+	done
+}
+# publish <tpl> <work> <out> <link 0|1> [sblg flags and inputs] -- [inject k=v] -- <subst k=v>
+# inject before subst: spliced partials still contain @@key@@.
+publish() {
+	local tpl="$1" work="$2" out="$3" link="$4"
+	shift 4
+	local flags=() files=() iargs=()
+	while [ $# -gt 0 ] && [ "$1" != "--" ]; do
+		case $1 in
+			-*) flags+=("$1") ;;
+			*)  files+=("$1") ;;
+		esac
+		shift
+	done
+	[ $# -gt 0 ] && shift
+	while [ $# -gt 0 ] && [ "$1" != "--" ]; do
+		iargs+=("$1")
+		shift
+	done
+	[ $# -gt 0 ] && shift
+	if [ ${#iargs[@]} -gt 0 ]; then
+		assemble "$tpl" | inject "${iargs[@]}" | subst - "$@" > "$work"
+	else
+		assemble "$tpl" | subst - "$@" > "$work"
+	fi
+	$SBLG "${flags[@]}" -o "$out" -t "$work" "${files[@]}"
+	if [ "$link" = 1 ]; then
+		linkify_tags "$out"
+	fi
+}
+
 assets() {
 	echo "==> Copying assets"
 	mkdir -p "$PUBLIC_DIR"
@@ -46,112 +118,62 @@ build_one() {
 	local J=$I18N_DIR/$L.json
 	echo "==> Building language '$L'"
 
-	val() { $JQ -r --arg k "$1" '.[$k]' "$J"; }
-	slug() { $JQ -r --arg k "slug.$2" '.[$k]' "$I18N_DIR/$1.json"; }
-	pagesrc() {
-		if [ -f "$CONTENT_DIR/$L/$1.md" ]; then echo "$CONTENT_DIR/$L/$1.md"
-		else echo "$CONTENT_DIR/$SRCLANG/$1.md"; fi
-	}
-	# i18n json + k=v -> sed script. @@key@@ subst. delim SOH. escape \ & and dots in keys.
-	flatsed() {
-		local D TAB k v kv
-		D=$(printf '\001'); TAB=$(printf '\t')
-		{ $JQ -r 'to_entries[]|"\(.key)\t\(.value)"' "$J"
-		  for kv in "$@"; do printf '%s\t%s\n' "${kv%%=*}" "${kv#*=}"; done
-		} | while IFS=$TAB read -r k v; do
-			k=${k//./\\.}
-			v=${v//\\/\\\\}; v=${v//&/\\&}
-			printf 's%s@@%s@@%s%s%sg\n' "$D" "$k" "$D" "$v" "$D"
-		done
-	}
-	subst() {
-		local t=$1; shift
-		[ "$t" = - ] && t=/dev/stdin
-		sed -f <(flatsed lang="$L" author="$AUTHOR" year="$YEAR" "$@") "$t"
-	}
-	assemble() { cat "$HEAD_TPL" "$TEMPLATE_DIR/$1.html" "$FOOT_TPL"; }
-	linkify_tags() {
-		sed -i 's|<span class="sblg-tag">\([^<]*\)</span>|<a href="/'"$L"'/'"$SB"'/tag/\1.html" class="sblg-tag">\1</a>|g' "$1"
-	}
-	inject() {
-		sed -f <(for arg in "$@"; do
-			printf '/@@%s@@/{\nr %s\nd\n}\n' "${arg%%=*}" "${arg#*=}"
-		done)
-	}
-
-	local SB SE SP SX x
+	local SB SE SP SX
 	SB=$(val slug.blog); SE=$(val slug.education)
 	SP=$(val slug.projects); SX=$(val slug.experience)
-	declare -A BLOG EDU PROJ EXP
-	for x in $LANGS; do
-		BLOG[$x]=$(slug "$x" blog);       EDU[$x]=$(slug "$x" education)
-		PROJ[$x]=$(slug "$x" projects);   EXP[$x]=$(slug "$x" experience)
-	done
-	local sw_home sw_blog sw_edu sw_proj sw_exp
-	sw_home="url.self.ca=/ca/ url.self.es=/es/ url.self.en=/en/"
-	sw_blog="url.self.ca=/ca/${BLOG[ca]}/ url.self.es=/es/${BLOG[es]}/ url.self.en=/en/${BLOG[en]}/"
-	sw_edu="url.self.ca=/ca/${EDU[ca]}/ url.self.es=/es/${EDU[es]}/ url.self.en=/en/${EDU[en]}/"
-	sw_proj="url.self.ca=/ca/${PROJ[ca]}/ url.self.es=/es/${PROJ[es]}/ url.self.en=/en/${PROJ[en]}/"
-	sw_exp="url.self.ca=/ca/${EXP[ca]}/ url.self.es=/es/${EXP[es]}/ url.self.en=/en/${EXP[en]}/"
 
 	mkdir -p "$WORK_DIR/$L/blog" "$PUBLIC_DIR/$L"
+	shopt -s nullglob
 	local BLOGSRC=$CONTENT_DIR/$L/blog
-	ls $BLOGSRC/*.md >/dev/null 2>&1 || BLOGSRC=$CONTENT_DIR/$SRCLANG/blog
-	local FRAGS=() f n
-	if ls $BLOGSRC/*.md >/dev/null 2>&1; then
-		for f in $BLOGSRC/*.md; do
-			n=$(basename "$f" .md)
-			$MKART "$f" --source "$SB/post/$n.html" -o "$WORK_DIR/$L/blog/$n.xml"
-			FRAGS+=("$WORK_DIR/$L/blog/$n.xml")
-		done
+	local posts=("$BLOGSRC"/*.md)
+	if [ ${#posts[@]} -eq 0 ]; then
+		BLOGSRC=$CONTENT_DIR/$SRCLANG/blog
+		posts=("$BLOGSRC"/*.md)
 	fi
+	shopt -u nullglob
+	local FRAGS=() f n
+	for f in "${posts[@]}"; do
+		n=$(basename "$f" .md)
+		$MKART "$f" --source "$SB/post/$n.html" -o "$WORK_DIR/$L/blog/$n.xml"
+		FRAGS+=("$WORK_DIR/$L/blog/$n.xml")
+	done
 
 	$LOWDOWN "$(pagesrc index)" > "$WORK_DIR/$L/intro.html"
 	local TH TB THEAD
 	TH=$(val title.home)
-	assemble index \
-		| inject home_intro=$WORK_DIR/$L/intro.html post_item=$ITEM_TPL \
-		| subst - section=about page_heading="$TH" page_title="$TH" page_description="" $sw_home \
-		> "$WORK_DIR/$L/tmpl-index.html"
-	$SBLG -o "$PUBLIC_DIR/$L/index.html" -t "$WORK_DIR/$L/tmpl-index.html" "${FRAGS[@]}"
-	linkify_tags "$PUBLIC_DIR/$L/index.html"
+	publish index "$WORK_DIR/$L/tmpl-index.html" "$PUBLIC_DIR/$L/index.html" 1 \
+		"${FRAGS[@]}" -- \
+		home_intro=$WORK_DIR/$L/intro.html post_item=$ITEM_TPL -- \
+		section=about page_heading="$TH" page_title="$TH" page_description="" $(selfurls)
 
 	build_page() {
-		local sec=$1 name=$2 slug=$3 sw=$4
+		local name=$1 slug=$2
 		mkdir -p "$PUBLIC_DIR/$L/$slug"
 		$MKART "$(pagesrc "$name")" -o "$WORK_DIR/$L/page-$name.xml"
-		assemble page \
-			| subst - \
-				section=$sec page_heading='${sblg-title}' page_title='${sblg-titletext}' \
-				page_description='${sblg-aside}' $sw \
-			> "$WORK_DIR/$L/tmpl-$name.html"
-		$SBLG -c -o "$PUBLIC_DIR/$L/$slug/index.html" \
-			-t "$WORK_DIR/$L/tmpl-$name.html" "$WORK_DIR/$L/page-$name.xml"
+		publish page "$WORK_DIR/$L/tmpl-$name.html" "$PUBLIC_DIR/$L/$slug/index.html" 0 \
+			-c "$WORK_DIR/$L/page-$name.xml" -- -- \
+			section=$name page_heading='${sblg-title}' page_title='${sblg-titletext}' \
+			page_description='${sblg-aside}' $(selfurls "$name")
 	}
-	build_page education education "$SE" "$sw_edu"
-	build_page projects   projects   "$SP" "$sw_proj"
-	build_page experience experience "$SX" "$sw_exp"
+	build_page education "$SE"
+	build_page projects "$SP"
+	build_page experience "$SX"
 
 	mkdir -p "$PUBLIC_DIR/$L/$SB"
 	TB=$(val title.blog)
-	assemble blog \
-		| inject post_item=$ITEM_TPL \
-		| subst - section=blog page_heading="$TB" page_title="$TB" page_description="" $sw_blog \
-		> "$WORK_DIR/$L/tmpl-blog.html"
-	$SBLG -o "$PUBLIC_DIR/$L/$SB/index.html" -t "$WORK_DIR/$L/tmpl-blog.html" "${FRAGS[@]}"
-	linkify_tags "$PUBLIC_DIR/$L/$SB/index.html"
+	publish blog "$WORK_DIR/$L/tmpl-blog.html" "$PUBLIC_DIR/$L/$SB/index.html" 1 \
+		"${FRAGS[@]}" -- \
+		post_item=$ITEM_TPL -- \
+		section=blog page_heading="$TB" page_title="$TB" page_description="" $(selfurls blog)
 
 	mkdir -p "$PUBLIC_DIR/$L/$SB/post"
-	assemble post \
-		| subst - \
-			section=blog page_heading='${sblg-title}' page_title='${sblg-titletext}' \
-			page_description='${sblg-aside}' $sw_blog \
-		> "$WORK_DIR/$L/tmpl-post.html"
 	local fr
 	for fr in "${FRAGS[@]}"; do
 		n=$(basename "$fr" .xml)
-		$SBLG -c -o "$PUBLIC_DIR/$L/$SB/post/$n.html" -t "$WORK_DIR/$L/tmpl-post.html" "$fr"
-		linkify_tags "$PUBLIC_DIR/$L/$SB/post/$n.html"
+		publish post "$WORK_DIR/$L/tmpl-post.html" "$PUBLIC_DIR/$L/$SB/post/$n.html" 1 \
+			-c "$fr" -- -- \
+			section=blog page_heading='${sblg-title}' page_title='${sblg-titletext}' \
+			page_description='${sblg-aside}' $(selfurls blog)
 	done
 
 	mkdir -p "$PUBLIC_DIR/$L/$SB/tag"
@@ -159,13 +181,10 @@ build_one() {
 	local t
 	for t in $($SBLG -l "${FRAGS[@]}" | cut -f2 | sort -u); do
 		[ -n "$t" ] || continue
-		assemble tag \
-			| inject post_item=$ITEM_TPL \
-			| subst - \
-				section=blog tag="$t" page_heading="$TB" page_title="$THEAD $t" page_description="" $sw_blog \
-			> "$WORK_DIR/$L/tmpl-tag-$t.html"
-		$SBLG -o "$PUBLIC_DIR/$L/$SB/tag/$t.html" -t "$WORK_DIR/$L/tmpl-tag-$t.html" "${FRAGS[@]}"
-		linkify_tags "$PUBLIC_DIR/$L/$SB/tag/$t.html"
+		publish tag "$WORK_DIR/$L/tmpl-tag-$t.html" "$PUBLIC_DIR/$L/$SB/tag/$t.html" 1 \
+			"${FRAGS[@]}" -- \
+			post_item=$ITEM_TPL -- \
+			section=blog tag="$t" page_heading="$TB" page_title="$THEAD $t" page_description="" $(selfurls blog)
 	done
 
 	subst "$TEMPLATE_DIR/atom.in.xml" base_url="$BASE_DOMAIN" > "$WORK_DIR/$L/atom-tmpl.xml"
