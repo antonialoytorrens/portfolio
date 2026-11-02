@@ -2,7 +2,7 @@
                 <article>
                     <header>
                         <h3><a href="/@@lang@@/@@slug.blog@@/post/${sblg-stripbase}.html">${sblg-title}</a></h3>
-                        <time datetime="${sblg-date}">${sblg-date}</time>
+                        <time datetime="${sblg-date}">${sblg-datetime-fmt|@@date.format@@}</time>
                         <div class="post-tags">@@tags_label@@ ${sblg-tags}</div>
                     </header>
                     <div class="post-excerpt"><p>${sblg-aside}</p></div>

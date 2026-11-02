@@ -229,6 +229,16 @@ body[data-lang="en"] .lang-en {
     border-color: #ccc;
 }
 
+.post-tags a.sblg-tag {
+    text-decoration: none;
+}
+
+.post-tags a.sblg-tag:hover {
+    background: #D93B00;
+    color: white;
+    border-color: #D93B00;
+}
+
 .post-tags .sblg-tags-notfound {
     display: none;
 }
@@ -316,6 +326,10 @@ article header {
     list-style: none;
     margin: 0;
     padding: 0;
+}
+
+.post-content h2 {
+    margin-top: 2.5rem;
 }
 
 .post-item {

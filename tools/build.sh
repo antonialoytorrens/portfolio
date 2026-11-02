@@ -11,7 +11,7 @@ CONTENT_DIR=${CONTENT_DIR:-content}
 I18N_DIR=${I18N_DIR:-i18n}
 TEMPLATE_DIR=${TEMPLATE_DIR:-templates}
 PUBLIC_DIR=${PUBLIC_DIR:-public}
-WORK_DIR=${WORK_DIR:-$PUBLIC_DIR/.work}
+WORK_DIR=${WORK_DIR:-.work}
 
 SBLG=${SBLG:-sblg}
 LOWDOWN=${LOWDOWN:-lowdown --html-no-skiphtml --html-no-escapehtml}
@@ -107,6 +107,7 @@ assets() {
 	mkdir -p "$PUBLIC_DIR"
 	cp -a assets "$PUBLIC_DIR/"
 	cat assets/css/reset.css assets/css/styles.css > "$PUBLIC_DIR/assets/css/bundle.css"
+	rm -f "$PUBLIC_DIR/assets/css/reset.css" "$PUBLIC_DIR/assets/css/styles.css"
 }
 
 build_one() {
@@ -117,6 +118,9 @@ build_one() {
 	esac
 	local J=$I18N_DIR/$L.json
 	echo "==> Building language '$L'"
+	# Localized post dates: LC_ALL pins the locale, TZ=UTC the calendar day.
+	export LC_ALL=$(val date.locale)
+	export TZ=UTC
 
 	local SB SE SP SX
 	SB=$(val slug.blog); SE=$(val slug.education)
@@ -203,8 +207,8 @@ all() {
 }
 
 clean() {
-	echo "==> Cleaning $PUBLIC_DIR/"
-	rm -rf "$PUBLIC_DIR"
+	echo "==> Cleaning $PUBLIC_DIR/ and $WORK_DIR/"
+	rm -rf "$PUBLIC_DIR" "$WORK_DIR"
 }
 
 serve() {
