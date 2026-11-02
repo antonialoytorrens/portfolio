@@ -1,0 +1,41 @@
+# Git
+.git/
+.gitignore
+
+# Variables d'entorn
+.env
+.env.*
+
+# Artefactes de compilació
+public/
+
+# CI local i SonarQube
+.gitlab-ci-local/
+.gitlab-ci.yml
+.scannerwork/
+sonar-project.properties
+
+# Editor
+.vscode/
+.history/
+.ionide/
+*.vsix
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+Session.vim
+Sessionx.vim
+.netrwhist
+*~
+tags
+[._]*.un~
+
+# Documentació i fitxers de projecte no necessaris
+README.md
+LICENSE
+AI.md
+TODO

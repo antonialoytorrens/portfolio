@@ -1,32 +1,6 @@
 #!/bin/sh
-# Convert a Markdown source file into an sblg article fragment.
-#
-# sblg consumes well-formed XML "article" fragments. This script reads a
-# Markdown file with an optional `---`-delimited front-matter block, runs the
-# body through lowdown (raw HTML preserved, XML-well-formed output), and emits:
-#
-#     <article data-sblg-article="1" data-sblg-title="..." ...>
-#       ...lowdown body...
-#     </article>
-#
-# All article metadata is carried as attributes so the body stays clean and the
-# same fragment works both inlined as a full page (-c) and summarised in a
-# listing (<nav data-sblg-nav="1">):
-#
-#   front-matter key   ->  sblg attribute                       template symbol
-#   ----------------       ----------------------------------   ----------------
-#   title              ->  data-sblg-title                      ${sblg-title}
-#   date               ->  data-sblg-datetime (first 10 chars)  ${sblg-date}
-#   tags               ->  data-sblg-tags                       ${sblg-tags}
-#   description        ->  data-sblg-set-... + <aside>           ${sblg-get|description}
-#   img                ->  data-sblg-img                        ${sblg-img}
-#   <anything else>    ->  data-sblg-set-<key>                  ${sblg-get|<key>}
-#
-# Front matter is simple `key: value`, one per line (no nesting), which keeps it
-# trivially hand-editable.
-#
-# Usage:
-#     mkarticle.sh <input.md> [-o out.xml] [--source path]
+# md + front matter -> sblg <article>. attrs data-sblg-*. body via lowdown.
+# usage: mkarticle.sh <in.md> [-o out.xml] [--source path]
 set -eu
 
 LOWDOWN="lowdown --html-no-skiphtml --html-no-escapehtml"

@@ -1,0 +1,13 @@
+services:
+  portfolio-ci:
+    build: .
+    image: portfolio-ci
+    ports:
+      - "8080:8080"  # make serve (desenvolupament)
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+    environment:
+      - SONAR_TOKEN
+      - SONAR_HOST_URL
+      - SERVE_HOST=0.0.0.0
