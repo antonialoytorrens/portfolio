@@ -16,8 +16,8 @@ RUN apt-get update \
 	&& apt-get update \
 	&& apt-get install -yq --no-install-recommends \
 	make \
+	gcc \
 	lowdown \
-	jq \
 	rsync \
 	git \
 	curl \
