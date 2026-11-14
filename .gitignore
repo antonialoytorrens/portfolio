@@ -1,16 +1,13 @@
 # Build output
 /public/
 /.work/
+/bin/
 
 # OS / editor cruft
 .DS_Store
 ._*
 *.swp
 *~
-
-# Python bytecode (build helpers in tools/)
-__pycache__/
-*.py[cod]
 
 # SonarQube
 .scannerwork

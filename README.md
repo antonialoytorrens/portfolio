@@ -11,25 +11,28 @@ source language.
 
 | Tool          | Used for                                       |
 |---------------|------------------------------------------------|
+| `cc`          | compiling `bin/build` and `bin/mkarticle`      |
 | `sblg`        | merging article fragments into templates       |
 | `lowdown`     | Markdown → (XML-well-formed) HTML               |
-| `jq`          | reading the JSON translation catalogs          |
-| `make`        | orchestration (`tools/build.sh`)               |
-| `awk` + `sed` | the build helpers (no scripting runtime needed) |
+| `make`        | orchestration                                  |
 | `mini-httpd`  | `make serve` (`mini_httpd`)                    |
-| `xmllint`     | (optional) well-formedness checks              |
+| `rsync`       | `make rsync`                                   |
+| `curl`        | `make update-external` only                    |
 
-The build uses only POSIX text tools plus `jq`; there is no Python or other
-interpreter to install.
+`make` compiles the C tools, then `bin/build` runs the site build. Article
+dates are formatted in that code (ca/es/en month names), not with libc
+locales. `curl` is only for refreshing the copies under `external/`.
 
 ## Build
 
 ```sh
 make            # build everything into public/
 make build-one LANG=ca   # build a single language
+make test       # unit tests (Unity)
 make serve      # build, then serve public/ at http://127.0.0.1:8080
 make clean      # remove public/
 make rsync REMOTE_HOST=… REMOTE_USER=… REMOTE_PATH=…   # deploy
+make update-external     # refresh cJSON, Unity and stb_ds
 ```
 
 Output goes to `public/` (git-ignored). The site root `/` is **not** generated:
@@ -45,11 +48,11 @@ into the templates *before* sblg runs.
 ```mermaid
 flowchart TD
   md["content/lang markdown"]
-  mk["tools/mkarticle.sh: awk and lowdown"]
-  frag["article XML in public/.work"]
+  mk["bin/mkarticle and lowdown"]
+  frag["article XML in .work"]
   parts["partials/head.html plus templates/*.html plus partials/foot.html"]
-  i18n["i18n/lang.json"]
-  bake["tools/build.sh: cat, inject, sed"]
+  i18n["i18n/lang.json via cJSON"]
+  bake["bin/build"]
   tmpl["concrete sblg template"]
   sblgNode["sblg"]
   pub["public/lang"]
