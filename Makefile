@@ -18,8 +18,8 @@ SONAR_SCANNER  ?= sonar-scanner
 
 CFLAGS   ?= -std=c99 -Wall -Wextra -pedantic
 CPPFLAGS ?= -D_POSIX_C_SOURCE=200809L
-CJSON_CFLAGS := $(shell pkg-config --cflags libcjson)
-CJSON_LIBS   := $(shell pkg-config --libs libcjson)
+CJSON_CFLAGS := $(shell pkg-config --cflags libcjson 2>/dev/null)
+CJSON_LIBS   := $(shell pkg-config --libs libcjson 2>/dev/null)
 INCLUDES  = -Itools -Iexternal/stb -Iexternal/unity $(CJSON_CFLAGS)
 
 TEST_CFLAGS  = $(CPPFLAGS) $(INCLUDES) $(CFLAGS) -g -O0 \
