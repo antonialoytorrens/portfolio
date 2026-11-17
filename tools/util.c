@@ -7,7 +7,7 @@
 #define STB_DS_IMPLEMENTATION
 #include "stb_ds.h"
 
-#include "cJSON.h"
+#include <cjson/cJSON.h>
 
 #include <dirent.h>
 #include <errno.h>

@@ -12,6 +12,8 @@ source language.
 | Tool          | Used for                                       |
 |---------------|------------------------------------------------|
 | `cc`          | compiling `bin/build` and `bin/mkarticle`      |
+| `pkg-config`  | locating `libcjson` at compile time            |
+| `libcjson-dev`| JSON for `i18n/*.json` (`libcjson`)            |
 | `sblg`        | merging article fragments into templates       |
 | `lowdown`     | Markdown → (XML-well-formed) HTML               |
 | `make`        | orchestration                                  |
@@ -32,7 +34,7 @@ make test       # unit tests (Unity)
 make serve      # build, then serve public/ at http://127.0.0.1:8080
 make clean      # remove public/
 make rsync REMOTE_HOST=… REMOTE_USER=… REMOTE_PATH=…   # deploy
-make update-external     # refresh cJSON, Unity and stb_ds
+make update-external     # refresh Unity and stb_ds
 ```
 
 Output goes to `public/` (git-ignored). The site root `/` is **not** generated:

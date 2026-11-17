@@ -123,6 +123,8 @@ html {
 }
 
 body {
+    display: flex;
+    flex-direction: column;
     font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px; /* px fallback for browsers without rem support */
     font-size: 1rem;
@@ -246,18 +248,26 @@ body[data-lang="en"] .lang-en {
 /* -------- LAYOUT -------- */
 
 header {
-    padding: 1rem 0;
+    padding-bottom: 1rem;
     background-color: #D93B00;
     border-bottom: 1px solid #595959;
 }
 
-header nav, header h1 {
+.sitenav {
+    order: -1;
+    width: 100%;
+    box-sizing: border-box;
+    padding-top: 1rem;
+    background-color: #D93B00;
+}
+
+.sitenav p, header h1 {
     max-width: 75rem;
     margin: auto;
     padding: 0 1rem;
 }
 
-header nav p {
+.sitenav p {
     font-size: 18px;
     font-size: 1.125rem;
     text-align: right;

@@ -6,9 +6,10 @@ endif
 CC       ?= cc
 CFLAGS   ?= -std=c99 -Wall -Wextra -pedantic
 CPPFLAGS ?= -D_POSIX_C_SOURCE=200809L
-INCLUDES  = -Itools -Iexternal/cJSON -Iexternal/stb -Iexternal/unity
+CJSON_CFLAGS := $(shell pkg-config --cflags libcjson)
+CJSON_LIBS   := $(shell pkg-config --libs libcjson)
+INCLUDES  = -Itools -Iexternal/stb -Iexternal/unity $(CJSON_CFLAGS)
 
-JSON  = external/cJSON/cJSON.c
 UNITY = external/unity/unity.c
 UTIL  = tools/util.c
 
@@ -35,7 +36,7 @@ rsync: bin/build bin/mkarticle
 help: bin/build
 	./bin/build help
 	@echo "make test             unit tests"
-	@echo "make update-external  refresh cJSON, Unity, stb"
+	@echo "make update-external  refresh Unity, stb_ds"
 	@echo "make dockershell      shell in portfolio-ci container"
 
 test: bin/test_json bin/test_subst bin/test_mkarticle bin/test_date bin/test_linkify
@@ -54,11 +55,11 @@ dockershell:
 bin:
 	mkdir -p bin
 
-bin/build: tools/build.c $(UTIL) tools/util.h $(JSON) | bin
-	$(CC) $(CPPFLAGS) $(INCLUDES) $(CFLAGS) -o $@ tools/build.c $(UTIL) $(JSON)
+bin/build: tools/build.c $(UTIL) tools/util.h | bin
+	$(CC) $(CPPFLAGS) $(INCLUDES) $(CFLAGS) -o $@ tools/build.c $(UTIL) $(CJSON_LIBS)
 
-bin/mkarticle: tools/mkarticle.c $(UTIL) tools/util.h $(JSON) | bin
-	$(CC) $(CPPFLAGS) $(INCLUDES) $(CFLAGS) -o $@ tools/mkarticle.c $(UTIL) $(JSON)
+bin/mkarticle: tools/mkarticle.c $(UTIL) tools/util.h | bin
+	$(CC) $(CPPFLAGS) $(INCLUDES) $(CFLAGS) -o $@ tools/mkarticle.c $(UTIL) $(CJSON_LIBS)
 
-bin/test_%: tests/test_%.c $(UTIL) tools/util.h $(JSON) $(UNITY) | bin
-	$(CC) $(CPPFLAGS) $(INCLUDES) $(CFLAGS) -o $@ tests/test_$*.c $(UTIL) $(JSON) $(UNITY)
+bin/test_%: tests/test_%.c $(UTIL) tools/util.h $(UNITY) | bin
+	$(CC) $(CPPFLAGS) $(INCLUDES) $(CFLAGS) -o $@ tests/test_$*.c $(UTIL) $(UNITY) $(CJSON_LIBS)

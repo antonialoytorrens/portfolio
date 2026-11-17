@@ -256,6 +256,56 @@ static void selfurls(kvmap *page, const char *name)
 	}
 }
 
+static char *concat(const char *a, const char *b)
+{
+	size_t na = strlen(a);
+	size_t nb = strlen(b);
+	char *out = malloc(na + nb + 1);
+
+	if (!out)
+		die("oom");
+	memcpy(out, a, na);
+	memcpy(out + na, b, nb);
+	out[na + nb] = 0;
+	return out;
+}
+
+static kvmap *page_new(const char *section, const char *heading,
+	const char *title, const char *desc, const char *name)
+{
+	kvmap *page;
+
+	if (kv_new(&page) != 0)
+		die("oom");
+	if (kv_put(page, "section", section) != 0 ||
+		kv_put(page, "page_heading", heading) != 0 ||
+		kv_put(page, "page_title", title) != 0 ||
+		kv_put(page, "page_description", desc) != 0)
+		die("oom");
+	selfurls(page, name);
+	return page;
+}
+
+static void sblg_run(char **flags, size_t nflags, const char *out,
+	const char *tmpl, char **files, size_t nfiles)
+{
+	strvec *av = strvec_new();
+	size_t i;
+
+	strvec_push(av, C.sblg);
+	for (i = 0; i < nflags; i++)
+		strvec_push(av, flags[i]);
+	strvec_push(av, "-o");
+	strvec_push(av, out);
+	strvec_push(av, "-t");
+	strvec_push(av, tmpl);
+	for (i = 0; i < nfiles; i++)
+		strvec_push(av, files[i]);
+	if (strvec_spawn(av) != 0)
+		die("sblg %s", out);
+	strvec_free(av);
+}
+
 static char *assemble(const char *tpl)
 {
 	char head[PATH_MAX];
@@ -264,7 +314,7 @@ static char *assemble(const char *tpl)
 	char *a;
 	char *b;
 	char *c;
-	size_t na, nb, nc;
+	char *ab;
 	char *out;
 
 	pathf(head, sizeof head, "%s/partials/head.html", C.templates);
@@ -273,18 +323,11 @@ static char *assemble(const char *tpl)
 	a = must_read(head);
 	b = must_read(mid);
 	c = must_read(foot);
-	na = strlen(a);
-	nb = strlen(b);
-	nc = strlen(c);
-	out = malloc(na + nb + nc + 1);
-	if (!out)
-		die("oom");
-	memcpy(out, a, na);
-	memcpy(out + na, b, nb);
-	memcpy(out + na + nb, c, nc);
-	out[na + nb + nc] = 0;
+	ab = concat(a, b);
 	free(a);
 	free(b);
+	out = concat(ab, c);
+	free(ab);
 	free(c);
 	return out;
 }
@@ -314,8 +357,6 @@ static void publish(const char *lang, const char *blogslug, const char *tpl,
 	char *raw;
 	char *step;
 	char *baked = NULL;
-	strvec *av;
-	size_t i;
 
 	if (kv_new(&map) != 0)
 		die("oom");
@@ -340,19 +381,7 @@ static void publish(const char *lang, const char *blogslug, const char *tpl,
 	must_write(work, baked, strlen(baked));
 	free(baked);
 
-	av = strvec_new();
-	strvec_push(av, C.sblg);
-	for (i = 0; i < nflags; i++)
-		strvec_push(av, flags[i]);
-	strvec_push(av, "-o");
-	strvec_push(av, out);
-	strvec_push(av, "-t");
-	strvec_push(av, work);
-	for (i = 0; i < nfiles; i++)
-		strvec_push(av, files[i]);
-	if (strvec_spawn(av) != 0)
-		die("sblg %s", out);
-	strvec_free(av);
+	sblg_run(flags, nflags, out, work, files, nfiles);
 	kv_free(map);
 	if (dolink)
 		linkify_file(out, lang, blogslug);
@@ -360,14 +389,8 @@ static void publish(const char *lang, const char *blogslug, const char *tpl,
 
 static void run_mk(char **argv)
 {
-	strvec *av = strvec_new();
-	char **p;
-
-	for (p = argv; *p; p++)
-		strvec_push(av, *p);
-	if (strvec_spawn(av) != 0)
+	if (spawn_wait(argv) != 0)
 		die("mkarticle %s", argv[1]);
-	strvec_free(av);
 }
 
 static void build_one(const char *lang)
@@ -458,12 +481,7 @@ static void build_one(const char *lang)
 
 	th = need(jm, "title.home");
 	pathf(item, sizeof item, "%s/partials/postitem.html", C.templates);
-	if (kv_new(&page) != 0)
-		die("oom");
-	if (kv_put(page, "section", "about") != 0 || kv_put(page, "page_heading", th) != 0 ||
-		kv_put(page, "page_title", th) != 0 || kv_put(page, "page_description", "") != 0)
-		die("oom");
-	selfurls(page, NULL);
+	page = page_new("about", th, th, "", NULL);
 	inj[0].key = "home_intro";
 	inj[0].path = intro;
 	inj[1].key = "post_item";
@@ -501,14 +519,8 @@ static void build_one(const char *lang)
 			args[5] = xml;
 			args[6] = NULL;
 			run_mk(args);
-			if (kv_new(&page) != 0)
-				die("oom");
-			if (kv_put(page, "section", names[pi]) != 0 ||
-				kv_put(page, "page_heading", "${sblg-title}") != 0 ||
-				kv_put(page, "page_title", "${sblg-titletext}") != 0 ||
-				kv_put(page, "page_description", "${sblg-aside}") != 0)
-				die("oom");
-			selfurls(page, names[pi]);
+			page = page_new(names[pi], "${sblg-title}", "${sblg-titletext}",
+				"${sblg-aside}", names[pi]);
 			one[0] = xml;
 			pathf(work, sizeof work, "%s/%s/tmpl-%s.html", C.work, lang, names[pi]);
 			pathf(out, sizeof out, "%s/index.html", dir);
@@ -520,12 +532,7 @@ static void build_one(const char *lang)
 	pathf(dir, sizeof dir, "%s/%s/%s", C.public_dir, lang, sb);
 	must_mkdir(dir);
 	tb = need(jm, "title.blog");
-	if (kv_new(&page) != 0)
-		die("oom");
-	if (kv_put(page, "section", "blog") != 0 || kv_put(page, "page_heading", tb) != 0 ||
-		kv_put(page, "page_title", tb) != 0 || kv_put(page, "page_description", "") != 0)
-		die("oom");
-	selfurls(page, "blog");
+	page = page_new("blog", tb, tb, "", "blog");
 	inj[0].key = "post_item";
 	inj[0].path = item;
 	pathf(work, sizeof work, "%s/%s/tmpl-blog.html", C.work, lang);
@@ -550,14 +557,8 @@ static void build_one(const char *lang)
 			die("name too long");
 		memcpy(stemname, base, bl);
 		stemname[bl] = 0;
-		if (kv_new(&page) != 0)
-			die("oom");
-		if (kv_put(page, "section", "blog") != 0 ||
-			kv_put(page, "page_heading", "${sblg-title}") != 0 ||
-			kv_put(page, "page_title", "${sblg-titletext}") != 0 ||
-			kv_put(page, "page_description", "${sblg-aside}") != 0)
-			die("oom");
-		selfurls(page, "blog");
+		page = page_new("blog", "${sblg-title}", "${sblg-titletext}",
+			"${sblg-aside}", "blog");
 		one[0] = files[i];
 		cflag[0] = "-c";
 		pathf(work, sizeof work, "%s/%s/tmpl-post.html", C.work, lang);
@@ -590,13 +591,9 @@ static void build_one(const char *lang)
 			char title[512];
 
 			snprintf(title, sizeof title, "%s %s", thead, tag);
-			if (kv_new(&page) != 0)
+			page = page_new("blog", tb, title, "", "blog");
+			if (kv_put(page, "tag", tag) != 0)
 				die("oom");
-			if (kv_put(page, "section", "blog") != 0 || kv_put(page, "tag", tag) != 0 ||
-				kv_put(page, "page_heading", tb) != 0 || kv_put(page, "page_title", title) != 0 ||
-				kv_put(page, "page_description", "") != 0)
-				die("oom");
-			selfurls(page, "blog");
 			inj[0].key = "post_item";
 			inj[0].path = item;
 			pathf(work, sizeof work, "%s/%s/tmpl-tag-%s.html", C.work, lang, tag);
@@ -613,7 +610,7 @@ static void build_one(const char *lang)
 		char atom_out[PATH_MAX];
 		char *raw;
 		char *baked = NULL;
-		strvec *av;
+		char *aflag[1];
 
 		pathf(atom_in, sizeof atom_in, "%s/atom.in.xml", C.templates);
 		raw = must_read(atom_in);
@@ -632,18 +629,8 @@ static void build_one(const char *lang)
 		must_write(atom_tmpl, baked, strlen(baked));
 		free(baked);
 		pathf(atom_out, sizeof atom_out, "%s/%s/atom.xml", C.public_dir, lang);
-		av = strvec_new();
-		strvec_push(av, C.sblg);
-		strvec_push(av, "-a");
-		strvec_push(av, "-o");
-		strvec_push(av, atom_out);
-		strvec_push(av, "-t");
-		strvec_push(av, atom_tmpl);
-		for (i = 0; i < nfiles; i++)
-			strvec_push(av, files[i]);
-		if (strvec_spawn(av) != 0)
-			die("sblg %s", atom_out);
-		strvec_free(av);
+		aflag[0] = "-a";
+		sblg_run(aflag, 1, atom_out, atom_tmpl, files, nfiles);
 	}
 
 	free(files);
@@ -660,7 +647,6 @@ static void assets(void)
 	char bundle[PATH_MAX];
 	char *a;
 	char *b;
-	size_t na, nb;
 	char *both;
 
 	printf("==> Copying assets\n");
@@ -675,15 +661,8 @@ static void assets(void)
 	pathf(bundle, sizeof bundle, "%s/css/bundle.css", dest);
 	a = must_read(reset);
 	b = must_read(styles);
-	na = strlen(a);
-	nb = strlen(b);
-	both = malloc(na + nb + 1);
-	if (!both)
-		die("oom");
-	memcpy(both, a, na);
-	memcpy(both + na, b, nb);
-	both[na + nb] = 0;
-	must_write(bundle, both, na + nb);
+	both = concat(a, b);
+	must_write(bundle, both, strlen(both));
 	free(a);
 	free(b);
 	free(both);

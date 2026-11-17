@@ -17,6 +17,8 @@ RUN apt-get update \
 	&& apt-get install -yq --no-install-recommends \
 	make \
 	gcc \
+	pkgconf \
+	libcjson-dev \
 	lowdown \
 	rsync \
 	git \
