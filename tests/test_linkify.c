@@ -13,9 +13,17 @@ static void test_link(void)
 	const char *expect =
 		"pre <a href=\"/ca/blog/tag/web.html\" class=\"sblg-tag\">web</a>"
 		" <a href=\"/ca/blog/tag/css.html\" class=\"sblg-tag\">css</a>";
+	const char *adjacent =
+		"<span class=\"sblg-tag\">web</span><span class=\"sblg-tag\">css</span>";
+	const char *adjacent_expect =
+		"<a href=\"/ca/blog/tag/web.html\" class=\"sblg-tag\">web</a>"
+		" <a href=\"/ca/blog/tag/css.html\" class=\"sblg-tag\">css</a>";
 
 	TEST_ASSERT_EQUAL_INT(0, linkify(in, "ca", "blog", &out));
 	TEST_ASSERT_EQUAL_STRING(expect, out);
+	free(out);
+	TEST_ASSERT_EQUAL_INT(0, linkify(adjacent, "ca", "blog", &out));
+	TEST_ASSERT_EQUAL_STRING(adjacent_expect, out);
 	free(out);
 }
 

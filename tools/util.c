@@ -614,6 +614,7 @@ int linkify(const char *in, const char *lang, const char *slug, char **out)
 	const size_t clen = sizeof close - 1;
 	buf b = {0};
 	const char *p;
+	int prev_tag = 0;
 
 	if (!in || !lang || !slug)
 		return -1;
@@ -622,18 +623,24 @@ int linkify(const char *in, const char *lang, const char *slug, char **out)
 		const char *tag;
 		const char *end;
 		const char *lt;
+		size_t gap;
 
 		if (!hit) {
 			buf_str(&b, p);
 			break;
 		}
-		buf_add(&b, p, (size_t)(hit - p));
+		gap = (size_t)(hit - p);
+		if (gap)
+			buf_add(&b, p, gap);
+		else if (prev_tag)
+			buf_str(&b, " ");
 		tag = hit + olen;
 		end = strstr(tag, close);
 		lt = end ? memchr(tag, '<', (size_t)(end - tag)) : NULL;
 		if (!end || lt) {
 			buf_add(&b, hit, olen);
 			p = hit + olen;
+			prev_tag = 0;
 			continue;
 		}
 		buf_str(&b, "<a href=\"/");
@@ -646,6 +653,7 @@ int linkify(const char *in, const char *lang, const char *slug, char **out)
 		buf_add(&b, tag, (size_t)(end - tag));
 		buf_str(&b, "</a>");
 		p = end + clen;
+		prev_tag = 1;
 	}
 	*out = buf_take(&b);
 	return 0;

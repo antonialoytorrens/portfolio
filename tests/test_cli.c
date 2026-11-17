@@ -223,6 +223,7 @@ static void layout(const char *root, int posts, int head_en, const char *ca_json
 	lay(root, "bin/mini_httpd", stub_ok, 1);
 	lay(root, "bin/rsync", stub_ok, 1);
 	lay(root, "assets/css/vendor/reset.css", "a\n", 0);
+	lay(root, "assets/css/theme.css", "t\n", 0);
 	lay(root, "assets/css/styles.css", "b\n", 0);
 	lay(root, "templates/partials/head.html",
 		head_en ? "<html lang=\"en\">\n" : "<html lang=\"es\">\n", 0);
@@ -411,9 +412,13 @@ static void test_build_flow(void)
 	expect(root, assets, opt_site("ca", "ca", NULL), 0);
 	rel(root, "public/assets/css/bundle.css", path, sizeof path);
 	text = read_file(path, NULL);
-	TEST_ASSERT_EQUAL_STRING("a\nb\n", text);
+	TEST_ASSERT_EQUAL_STRING("a\nt\nb\n", text);
 	free(text);
 	rel(root, "public/assets/css/vendor/reset.css", path, sizeof path);
+	TEST_ASSERT_EQUAL_INT(-1, access(path, F_OK));
+	rel(root, "public/assets/css/theme.css", path, sizeof path);
+	TEST_ASSERT_EQUAL_INT(-1, access(path, F_OK));
+	rel(root, "public/assets/css/styles.css", path, sizeof path);
 	TEST_ASSERT_EQUAL_INT(-1, access(path, F_OK));
 	rel(root, "public/assets/css/vendor", path, sizeof path);
 	TEST_ASSERT_EQUAL_INT(-1, access(path, F_OK));

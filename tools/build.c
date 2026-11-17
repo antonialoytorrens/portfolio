@@ -759,12 +759,15 @@ static void assets(void)
 {
 	char dest[PATH_MAX];
 	char reset[PATH_MAX];
+	char theme[PATH_MAX];
 	char styles[PATH_MAX];
 	char bundle[PATH_MAX];
 	char vendor[PATH_MAX];
 	char *a;
 	char *b;
-	char *both;
+	char *c;
+	char *ab;
+	char *joined;
 
 	printf("==> Copying assets\n");
 	must_mkdir(C.public_dir);
@@ -774,16 +777,21 @@ static void assets(void)
 	if (copy_tree("assets", dest) != 0)
 		die("copy assets");
 	pathf(reset, sizeof reset, "%s/css/vendor/reset.css", dest);
+	pathf(theme, sizeof theme, "%s/css/theme.css", dest);
 	pathf(styles, sizeof styles, "%s/css/styles.css", dest);
 	pathf(bundle, sizeof bundle, "%s/css/bundle.css", dest);
 	a = must_read(reset);
-	b = must_read(styles);
-	both = concat(a, b);
-	must_write(bundle, both, strlen(both));
+	b = must_read(theme);
+	c = must_read(styles);
+	ab = concat(a, b);
+	joined = concat(ab, c);
+	must_write(bundle, joined, strlen(joined));
 	free(a);
 	free(b);
-	free(both);
-	if (unlink(reset) != 0 || unlink(styles) != 0)
+	free(c);
+	free(ab);
+	free(joined);
+	if (unlink(reset) != 0 || unlink(theme) != 0 || unlink(styles) != 0)
 		die("unlink css");
 	pathf(vendor, sizeof vendor, "%s/css/vendor", dest);
 	rmdir(vendor);

@@ -1,0 +1,79 @@
+/* Color tokens. Light is the default; dark follows the browser.
+   prefers-color-scheme is the only switch: there is no script. */
+
+:root {
+    color-scheme: light;
+    --color-bg: #FFFFFF;
+    --color-text: #666666;
+    --color-copy: #444;
+    --color-text-strong: #333333;
+    --color-heading: #003070;
+    --color-muted: #888888;
+    --color-link: #005ED9;
+    --color-link-hover: #0000EE;
+    --color-link-visited: #551A8B;
+    --color-accent: #D93B00;
+    --color-accent-hover: #B8310B;
+    --color-accent-text: #D93B00;
+    --color-accent-text-hover: #B8310B;
+    --color-on-accent: #FFFFFF;
+    --color-header-bg: #D93B00;
+    --color-header-border: #595959;
+    --color-code-bg: rgba(0, 0, 0, .06);
+    --color-pre-bg: #f8f8f8;
+    --color-tag-bg: #f5f5f5;
+    --color-tag-text: #666666;
+    --color-tag-border: #e0e0e0;
+    --color-tag-hover-bg: #e8e8e8;
+    --color-tag-hover-text: #333333;
+    --color-tag-hover-border: #ccc;
+    --color-border: #e0e0e0;
+    --color-border-soft: #f0f0f0;
+    --color-card-bg: #FFFFFF;
+    --color-card-border: #DFDFDF;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    --color-dot-ring: #fff;
+    --color-dot-halo: #ccc;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+        --color-bg: #171412;
+        --color-text: #C8C2BB;
+        --color-copy: #E7E1DA;
+        --color-text-strong: #E7E1DA;
+        --color-heading: #F2EBE4;
+        --color-muted: #9A938C;
+        --color-link: #8EBEFF;
+        --color-link-hover: #C5DEFF;
+        --color-link-visited: #9BB6DC;
+        --color-accent: #D93B00;
+        --color-accent-hover: #B8310B;
+        --color-accent-text: #FF7A45;
+        --color-accent-text-hover: #FF9A72;
+        --color-on-accent: #FFFFFF;
+        --color-header-bg: #D93B00;
+        --color-header-border: #595959;
+        --color-code-bg: #2C2724;
+        --color-pre-bg: #2C2724;
+        --color-tag-bg: #2C2724;
+        --color-tag-text: #C8C2BB;
+        --color-tag-border: #3A342F;
+        --color-tag-hover-bg: #3A342F;
+        --color-tag-hover-text: #E7E1DA;
+        --color-tag-hover-border: #5A534C;
+        --color-border: #3A342F;
+        --color-border-soft: #3A342F;
+        --color-card-bg: #221E1B;
+        --color-card-border: #3A342F;
+        --shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+        --color-dot-ring: #171412;
+        --color-dot-halo: #3A342F;
+    }
+
+    h2,
+    h3 {
+        color: var(--color-text-strong);
+    }
+}
