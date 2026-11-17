@@ -41,7 +41,7 @@ make coverage   # Cobertura XML in build/report/
 make scan-sonar # cppcheck, clang-tidy and flawfinder reports
 make sonarqube  # reports, coverage, then sonar-scanner
 make serve      # build, then serve public/ at http://127.0.0.1:8080
-make clean      # remove public/, build/ and the compiled binaries
+make clean      # remove public/, .work/, build/ and the compiled binaries
 make rsync REMOTE_HOST=… REMOTE_USER=… REMOTE_PATH=…   # deploy
 make update-external     # refresh Unity and stb_ds
 ```

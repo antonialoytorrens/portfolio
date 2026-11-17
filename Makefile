@@ -26,6 +26,8 @@ TEST_CFLAGS  = $(CPPFLAGS) $(INCLUDES) $(CFLAGS) -g -O0 \
 	-fprofile-instr-generate -fcoverage-mapping
 TEST_LDFLAGS = -fprofile-instr-generate
 
+PUBLIC_DIR ?= public
+WORK_DIR   ?= .work
 BUILD_DIR  = build
 OBJ_DIR    = $(BUILD_DIR)/obj
 REPORT_DIR = $(BUILD_DIR)/report
@@ -52,9 +54,8 @@ assets: bin/build
 build-one: bin/build bin/mkarticle
 	./bin/build build-one
 
-clean: bin/build
-	./bin/build clean
-	rm -rf $(BUILD_DIR)
+clean:
+	rm -rf $(PUBLIC_DIR) $(WORK_DIR) $(BUILD_DIR)
 	rm -f bin/build bin/mkarticle $(TEST_BINS)
 
 serve: bin/build bin/mkarticle
