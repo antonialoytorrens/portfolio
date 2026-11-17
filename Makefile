@@ -15,6 +15,8 @@ CPPCHECK       ?= cppcheck
 FLAWFINDER     ?= flawfinder
 LCOV2COBERTURA ?= lcov2xml
 SONAR_SCANNER  ?= sonar-scanner
+CLANG_RESOURCE_INCLUDE := $(shell $(CC) -print-resource-dir)/include
+SONAR_CXX_INCLUDES = tools,external/stb,/usr/include,/usr/include/x86_64-linux-gnu,$(CLANG_RESOURCE_INCLUDE)
 
 CFLAGS   ?= -std=c99 -Wall -Wextra -pedantic
 CPPFLAGS ?= -D_POSIX_C_SOURCE=200809L
@@ -131,7 +133,8 @@ sonarqube: scan-sonar coverage
 		-Dsonar.host.url=$(SONAR_HOST_URL) \
 		-Dsonar.token=$(SONAR_TOKEN) \
 		-Dsonar.verbose=true \
-		-Dsonar.projectKey=$(SONAR_PROJECT_KEY)
+		-Dsonar.projectKey=$(SONAR_PROJECT_KEY) \
+		-Dsonar.cxx.includeDirectories=$(SONAR_CXX_INCLUDES)
 
 bin $(OBJ_DIR) $(REPORT_DIR) $(PROF_DIR):
 	mkdir -p $@
