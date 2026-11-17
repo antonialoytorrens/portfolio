@@ -1,0 +1,67 @@
+---
+title: Educació
+description: Formació acadèmica, musical i certificacions tècniques d'Antoni Aloy Torrens.
+---
+<section class="listing">
+  <article>
+    <h3>Grau Professional en Orgue (2022-10 – Actualitat)</h3>
+    <p><a href="https://emmat.incaciutat.com/" target="_blank">EMMAT</a></p>
+  </article>
+  <article>
+    <h3>Grau d'Enginyeria Informàtica (2020-07 – Actualitat)</h3>
+    <p><a href="https://uoc.edu" target="_blank">Universitat Oberta de Catalunya</a></p>
+  </article>
+  <article>
+    <h3>AWS Partner: AWS Cloud Practitioner Essentials (2022-07 – 2022-08)</h3>
+    <p><a href="https://antonialoytorrens.com/assets/img/education/aws-cloud-practitioner-essentials.png" target="_blank">Certificat</a></p>
+    <ul>
+      <li>Comprensió dels conceptes fonamentals del núvol i del valor aportat per AWS Cloud.</li>
+      <li>Familiarització amb la infraestructura global d'AWS: regions, zones de disponibilitat i punts de presència.</li>
+      <li>Coneixement dels serveis clau d'AWS: càlcul (EC2, Lambda), emmagatzematge (S3, EBS), bases de dades (RDS, DynamoDB) i xarxes (VPC).</li>
+      <li>Enteniment de les pràctiques de seguretat i compliment normatiu a AWS, incloent IAM i el model de responsabilitat compartida.</li>
+    </ul>
+  </article>
+  <article>
+    <h3>Coursera: Google Cloud Fundamentals — Core Infrastructure (2022-07 – 2022-08)</h3>
+    <p><a href="https://www.coursera.org/account/accomplishments/verify/VC7M2GJN5DHM" target="_blank">Certificat</a></p>
+    <ul>
+      <li>Comprensió del propòsit i el valor dels productes i serveis de Google Cloud.</li>
+      <li>Comprensió de l'organització i control de la infraestructura a Google Cloud.</li>
+      <li>Comprensió bàsica de la creació d'una infraestructura bàsica a Google Cloud.</li>
+      <li>Comprensió i destresa sobre les opcions d'emmagatzematge de Google Cloud.</li>
+    </ul>
+  </article>
+  <article>
+    <h3>Grau Professional en Piano (2012-09 – 2022-06)</h3>
+    <p><a href="https://emmat.incaciutat.com/" target="_blank">EMMAT</a></p>
+    <ul>
+      <li>Enteniment del llenguatge musical i harmonia barroca.</li>
+      <li>Interpretacions en solitari i música de cambra (clarinet, flauta, piano).</li>
+      <li>Improvisació barroca, harmonització de baix xifrat, lectura a vista.</li>
+      <li>Anàlisi musical (Barroc fins segle XX), informàtica musical i producció.<br/>Experiència amb els següents programes: Audacity, Musescore3, LMMS, Sibelius7, Reaper.<br/>Gravacions amb Focusrite Scarlett 2i2 i Zoom H4.</li>
+    </ul>
+  </article>
+  <article>
+    <h3>Certificació de Linux Essentials (2019-07 – 2020-06)</h3>
+    <p><a href="https://lpi.org/v/LPI000456258/gjlxpst22w" target="_blank">Veure certificació</a></p>
+    <ul>
+      <li>Comprensió de la indústria de Linux i el codi obert i coneixement de les aplicacions de codi obert més populars.</li>
+      <li>Comprensió dels components principals del sistema operatiu Linux.</li>
+      <li>Comprensió bàsica de la línia de comandes de Linux.</li>
+      <li>Comprensió bàsica de temes relacionats amb seguretat i administració (gestió d'usuaris/grups i permisos).</li>
+    </ul>
+  </article>
+  <article>
+    <h3>Tècnic Superior en Desenvolupament d'Aplicacions Web (2018-09 – 2020-06)</h3>
+    <p><a href="https://paucasesnovescifp.cat" target="_blank">CIFP Pau Casesnoves</a></p>
+    <ul>
+      <li><strong>Programació:</strong> Java, servlets, Spring Boot.</li>
+      <li><strong>Bases de dades:</strong> MySQL, MongoDB, CRUD, Slim Framework.</li>
+      <li><strong>Disseny web:</strong> HTML5, CSS3, JS, JQuery, Bootstrap4.</li>
+      <li><strong>Administració i sistemes Linux:</strong> Conceptes bàsics i introducció.</li>
+      <li><strong>Màrqueting:</strong> Arquitectura de marca, tècniques de publicitat.</li>
+      <li><strong>Projecte Final:</strong> <a href="https://pamboliada.cat" target="_blank">Pamboliada</a>, clon de Google Maps per cercar restaurants de <a href="https://ca.wikipedia.org/wiki/Pa_amb_oli" target="_blank">pa amb oli</a>. <a href="https://github.com/antonialoytorrens/pa-amb-oli" target="_blank">Codi font</a>.</li>
+    </ul>
+    <p><a href="https://github.com/antonialoytorrens-DAW2018-2020" target="_blank">Veure l'arxiu complet</a>.</p>
+  </article>
+</section>

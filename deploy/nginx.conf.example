@@ -1,0 +1,46 @@
+# Example nginx configuration for the sblg portfolio.
+#
+# The build produces /ca, /es and /en but NO artifact at the site root (/).
+# nginx negotiates the language from the browser's Accept-Language header and
+# redirects "/" to the matching language. Everything else is served statically.
+#
+# Note: this inspects only the first language token in Accept-Language (not the
+# full q-value list, e.g. "en;q=0.8, ca;q=0.9"). That is good enough for three
+# languages; full q-value parsing would require njs or Lua.
+
+# Map Accept-Language -> preferred language. Catalan is the default/fallback.
+map $http_accept_language $pref_lang {
+    default   ca;
+    ~*^es     es;
+    ~*^en     en;
+    ~*^ca     ca;
+}
+
+server {
+    listen       80;
+    server_name  antonialoytorrens.com www.antonialoytorrens.com;
+
+    root   /var/www/portfolio/public;
+    index  index.html;
+
+    # Language negotiation happens only at the bare root.
+    location = / {
+        return 302 /$pref_lang/;
+    }
+
+    # Serve pretty directory URLs (/ca/educacio/ -> /ca/educacio/index.html).
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # Long-lived caching for static assets.
+    location /assets/ {
+        expires 30d;
+        access_log off;
+    }
+
+    # Atom feeds.
+    location ~* \.xml$ {
+        types { } default_type application/atom+xml;
+    }
+}

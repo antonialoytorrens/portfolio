@@ -1,0 +1,10 @@
+<section class="profile">
+    <img class="avatar" alt="avatar" src="/assets/img/avatar.png" />
+    <h2>Antoni Aloy Torrens</h2>
+    <h3>Programador, Desenvolupador Web i Pianista</h3>
+</section>
+
+<section class="profiledesc">
+    <p>Soc programador i desenvolupador web amb experiència en projectes tecnològics diversos.</p>
+    <p>A més, tinc àmplia formació musical com a pianista i organista, cosa que em permet aplicar disciplina i precisió en la resolució de problemes complexos.</p>
+</section>
