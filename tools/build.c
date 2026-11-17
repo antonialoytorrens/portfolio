@@ -80,7 +80,8 @@ static void pathf(char *dst, size_t n, const char *fmt, ...)
 static void load_cfg(void)
 {
 	char ybuf[16];
-	char *p;
+	char *owned;
+	char *tok;
 	char *save = NULL;
 	const char *year_env = getenv("YEAR");
 
@@ -115,14 +116,16 @@ static void load_cfg(void)
 	}
 	if (!C.year)
 		die("oom");
-	p = strdup(C.langs_raw);
-	if (!p)
+	owned = strdup(C.langs_raw);
+	if (!owned)
 		die("oom");
-	for (save = NULL, p = strtok_r(p, " \t", &save); p; p = strtok_r(NULL, " \t", &save)) {
+	for (save = NULL, tok = strtok_r(owned, " \t", &save); tok;
+		tok = strtok_r(NULL, " \t", &save)) {
 		if (C.nlang == MAXLANG)
 			die("too many languages");
-		C.langv[C.nlang++] = strdup(p);
+		C.langv[C.nlang++] = strdup(tok);
 	}
+	free(owned);
 }
 
 static int lang_ok(const char *lang)
@@ -195,7 +198,7 @@ static void must_mkdir(const char *path)
 static strvec *list_md(const char *dir)
 {
 	DIR *d = opendir(dir);
-	struct dirent *de;
+	const struct dirent *de;
 	strvec *v;
 
 	if (!d)
@@ -306,6 +309,29 @@ static void sblg_run(char **flags, size_t nflags, const char *out,
 	strvec_free(av);
 }
 
+static char *html_lang_slot(char *html)
+{
+	const char *from = "lang=\"en\"";
+	const char *to = "lang=\"@@lang@@\"";
+	const char *hit = strstr(html, from);
+	char *out;
+	size_t pre;
+	size_t n;
+
+	if (!hit)
+		return html;
+	pre = (size_t)(hit - html);
+	n = strlen(html) + strlen(to) - strlen(from);
+	out = malloc(n + 1);
+	if (!out)
+		die("oom");
+	memcpy(out, html, pre);
+	memcpy(out + pre, to, strlen(to));
+	memcpy(out + pre + strlen(to), hit + strlen(from), strlen(hit + strlen(from)) + 1);
+	free(html);
+	return out;
+}
+
 static char *assemble(const char *tpl)
 {
 	char head[PATH_MAX];
@@ -320,7 +346,7 @@ static char *assemble(const char *tpl)
 	pathf(head, sizeof head, "%s/partials/head.html", C.templates);
 	pathf(mid, sizeof mid, "%s/%s.html", C.templates, tpl);
 	pathf(foot, sizeof foot, "%s/partials/foot.html", C.templates);
-	a = must_read(head);
+	a = html_lang_slot(must_read(head));
 	b = must_read(mid);
 	c = must_read(foot);
 	ab = concat(a, b);
@@ -348,15 +374,9 @@ static void linkify_file(const char *path, const char *lang, const char *slug)
 	free(out);
 }
 
-static void publish(const char *lang, const char *blogslug, const char *tpl,
-	const char *work, const char *out, int dolink,
-	char **flags, size_t nflags, char **files, size_t nfiles,
-	const inject_item *inj, size_t ninj, kvmap *page)
+static kvmap *publish_map(const char *lang, kvmap *page)
 {
 	kvmap *map = NULL;
-	char *raw;
-	char *step;
-	char *baked = NULL;
 
 	if (kv_new(&map) != 0)
 		die("oom");
@@ -367,6 +387,18 @@ static void publish(const char *lang, const char *blogslug, const char *tpl,
 		die("oom");
 	if (kv_merge(map, page) != 0)
 		die("oom");
+	return map;
+}
+
+static void publish(const char *lang, const char *blogslug, const char *tpl,
+	const char *work, const char *out, int dolink,
+	char **flags, size_t nflags, char **files, size_t nfiles,
+	const inject_item *inj, size_t ninj, kvmap *page)
+{
+	kvmap *map = publish_map(lang, page);
+	char *raw;
+	char *step;
+	char *baked = NULL;
 
 	raw = assemble(tpl);
 	if (ninj) {
@@ -393,59 +425,27 @@ static void run_mk(char **argv)
 		die("mkarticle %s", argv[1]);
 }
 
-static void build_one(const char *lang)
+static strvec *load_posts(const char *lang, char *blogdir, size_t n)
 {
-	kvmap *jm;
-	const char *sb;
-	const char *se;
-	const char *sp;
-	const char *sx;
-	char dir[PATH_MAX];
-	char blogdir[PATH_MAX];
 	strvec *posts;
-	strvec *frags;
-	size_t i;
-	char intro[PATH_MAX];
-	char src[PATH_MAX];
-	char *html;
-	size_t hlen;
-	const char *th;
-	const char *tb;
-	const char *thead;
-	kvmap *page;
-	inject_item inj[2];
-	char item[PATH_MAX];
-	char **files;
-	size_t nfiles;
-	char work[PATH_MAX];
-	char out[PATH_MAX];
-	char *cflag[1];
 
-	if (!lang_ok(lang))
-		die("usage: make build-one LANG=ca|es|en");
-	jm = lang_map(lang);
-	sb = need(jm, "slug.blog");
-	se = need(jm, "slug.education");
-	sp = need(jm, "slug.projects");
-	sx = need(jm, "slug.experience");
-	printf("==> Building language '%s'\n", lang);
-
-	pathf(dir, sizeof dir, "%s/%s/blog", C.work, lang);
-	must_mkdir(dir);
-	pathf(dir, sizeof dir, "%s/%s", C.public_dir, lang);
-	must_mkdir(dir);
-
-	pathf(blogdir, sizeof blogdir, "%s/%s/blog", C.content, lang);
+	pathf(blogdir, n, "%s/%s/blog", C.content, lang);
 	posts = list_md(blogdir);
-	if (!posts || strvec_len(posts) == 0) {
-		strvec_free(posts);
-		pathf(blogdir, sizeof blogdir, "%s/%s/blog", C.content, C.srclang);
-		posts = list_md(blogdir);
-	}
+	if (posts && strvec_len(posts) > 0)
+		return posts;
+	strvec_free(posts);
+	pathf(blogdir, n, "%s/%s/blog", C.content, C.srclang);
+	posts = list_md(blogdir);
 	if (!posts)
-		posts = strvec_new();
+		return strvec_new();
+	return posts;
+}
 
-	frags = strvec_new();
+static void render_posts(const char *lang, const char *blogdir, const char *sb,
+	const strvec *posts, strvec *frags)
+{
+	size_t i;
+
 	for (i = 0; i < strvec_len(posts); i++) {
 		char base[256];
 		char xml[PATH_MAX];
@@ -469,69 +469,106 @@ static void build_one(const char *lang)
 		run_mk(args);
 		strvec_push(frags, xml);
 	}
+}
+
+static char **frag_files(const strvec *frags, size_t *nfiles)
+{
+	char **files;
+	size_t i;
+
+	*nfiles = strvec_len(frags);
+	files = *nfiles ? malloc(*nfiles * sizeof *files) : NULL;
+	for (i = 0; i < *nfiles; i++)
+		files[i] = strvec_get(frags, i);
+	return files;
+}
+
+static void build_home(const char *lang, const char *sb, const char *item,
+	char **files, size_t nfiles)
+{
+	char src[PATH_MAX];
+	char intro[PATH_MAX];
+	char *html = NULL;
+	size_t hlen = 0;
+	kvmap *jm = lang_map(lang);
+	const char *th;
+	kvmap *page;
+	inject_item inj[2];
+	char work[PATH_MAX];
+	char out[PATH_MAX];
 
 	pagesrc(lang, "index", src, sizeof src);
 	pathf(intro, sizeof intro, "%s/%s/intro.html", C.work, lang);
-	html = NULL;
-	hlen = 0;
 	if (run_cmd(C.lowdown, src, &html, &hlen) != 0)
 		die("lowdown %s", src);
 	must_write(intro, html, hlen);
 	free(html);
-
 	th = need(jm, "title.home");
-	pathf(item, sizeof item, "%s/partials/postitem.html", C.templates);
 	page = page_new("about", th, th, "", NULL);
 	inj[0].key = "home_intro";
 	inj[0].path = intro;
 	inj[1].key = "post_item";
 	inj[1].path = item;
-	nfiles = strvec_len(frags);
-	files = nfiles ? malloc(nfiles * sizeof *files) : NULL;
-	for (i = 0; i < nfiles; i++)
-		files[i] = strvec_get(frags, i);
 	pathf(work, sizeof work, "%s/%s/tmpl-index.html", C.work, lang);
 	pathf(out, sizeof out, "%s/%s/index.html", C.public_dir, lang);
 	publish(lang, sb, "index", work, out, 1, NULL, 0, files, nfiles, inj, 2, page);
 	kv_free(page);
+}
 
-	{
-		const char *names[] = {"education", "projects", "experience"};
-		const char *slugs[] = {se, sp, sx};
-		size_t pi;
+static void build_sections(const char *lang, const char *sb,
+	const char *se, const char *sp, const char *sx)
+{
+	const char *names[] = {"education", "projects", "experience"};
+	const char *slugs[] = {se, sp, sx};
+	size_t pi;
+	char *cflag[1];
 
-		cflag[0] = "-c";
-		for (pi = 0; pi < 3; pi++) {
-			char md[PATH_MAX];
-			char xml[PATH_MAX];
-			char *one[1];
-			char *args[8];
+	cflag[0] = "-c";
+	for (pi = 0; pi < 3; pi++) {
+		char dir[PATH_MAX];
+		char md[PATH_MAX];
+		char xml[PATH_MAX];
+		char *one[1];
+		char *args[8];
+		char work[PATH_MAX];
+		char out[PATH_MAX];
+		kvmap *page;
 
-			pathf(dir, sizeof dir, "%s/%s/%s", C.public_dir, lang, slugs[pi]);
-			must_mkdir(dir);
-			pagesrc(lang, names[pi], md, sizeof md);
-			pathf(xml, sizeof xml, "%s/%s/page-%s.xml", C.work, lang, names[pi]);
-			args[0] = C.mkart;
-			args[1] = md;
-			args[2] = "--lang";
-			args[3] = (char *)lang;
-			args[4] = "-o";
-			args[5] = xml;
-			args[6] = NULL;
-			run_mk(args);
-			page = page_new(names[pi], "${sblg-title}", "${sblg-titletext}",
-				"${sblg-aside}", names[pi]);
-			one[0] = xml;
-			pathf(work, sizeof work, "%s/%s/tmpl-%s.html", C.work, lang, names[pi]);
-			pathf(out, sizeof out, "%s/index.html", dir);
-			publish(lang, sb, "page", work, out, 0, cflag, 1, one, 1, NULL, 0, page);
-			kv_free(page);
-		}
+		pathf(dir, sizeof dir, "%s/%s/%s", C.public_dir, lang, slugs[pi]);
+		must_mkdir(dir);
+		pagesrc(lang, names[pi], md, sizeof md);
+		pathf(xml, sizeof xml, "%s/%s/page-%s.xml", C.work, lang, names[pi]);
+		args[0] = C.mkart;
+		args[1] = md;
+		args[2] = "--lang";
+		args[3] = (char *)lang;
+		args[4] = "-o";
+		args[5] = xml;
+		args[6] = NULL;
+		run_mk(args);
+		page = page_new(names[pi], "${sblg-title}", "${sblg-titletext}",
+			"${sblg-aside}", names[pi]);
+		one[0] = xml;
+		pathf(work, sizeof work, "%s/%s/tmpl-%s.html", C.work, lang, names[pi]);
+		pathf(out, sizeof out, "%s/index.html", dir);
+		publish(lang, sb, "page", work, out, 0, cflag, 1, one, 1, NULL, 0, page);
+		kv_free(page);
 	}
+}
+
+static void build_blog_index(const char *lang, const char *sb, const char *item,
+	char **files, size_t nfiles)
+{
+	char dir[PATH_MAX];
+	kvmap *jm = lang_map(lang);
+	const char *tb = need(jm, "title.blog");
+	kvmap *page;
+	inject_item inj[1];
+	char work[PATH_MAX];
+	char out[PATH_MAX];
 
 	pathf(dir, sizeof dir, "%s/%s/%s", C.public_dir, lang, sb);
 	must_mkdir(dir);
-	tb = need(jm, "title.blog");
 	page = page_new("blog", tb, tb, "", "blog");
 	inj[0].key = "post_item";
 	inj[0].path = item;
@@ -539,99 +576,178 @@ static void build_one(const char *lang)
 	pathf(out, sizeof out, "%s/index.html", dir);
 	publish(lang, sb, "blog", work, out, 1, NULL, 0, files, nfiles, inj, 1, page);
 	kv_free(page);
+}
+
+static void stem_xml(const char *frag, char *stemname, size_t n)
+{
+	const char *base = strrchr(frag, '/');
+	size_t bl;
+
+	base = base ? base + 1 : frag;
+	bl = strlen(base);
+	if (bl > 4 && strcmp(base + bl - 4, ".xml") == 0)
+		bl -= 4;
+	if (bl >= n)
+		die("name too long");
+	memcpy(stemname, base, bl);
+	stemname[bl] = 0;
+}
+
+static void build_post_pages(const char *lang, const char *sb, char **files, size_t nfiles)
+{
+	char dir[PATH_MAX];
+	size_t i;
+	char *cflag[1];
 
 	pathf(dir, sizeof dir, "%s/%s/%s/post", C.public_dir, lang, sb);
 	must_mkdir(dir);
+	cflag[0] = "-c";
 	for (i = 0; i < nfiles; i++) {
-		const char *frag = files[i];
-		const char *base = strrchr(frag, '/');
 		char stemname[256];
 		char *one[1];
-		size_t bl;
+		char work[PATH_MAX];
+		char out[PATH_MAX];
+		kvmap *page;
 
-		base = base ? base + 1 : frag;
-		bl = strlen(base);
-		if (bl > 4 && strcmp(base + bl - 4, ".xml") == 0)
-			bl -= 4;
-		if (bl >= sizeof stemname)
-			die("name too long");
-		memcpy(stemname, base, bl);
-		stemname[bl] = 0;
+		stem_xml(files[i], stemname, sizeof stemname);
 		page = page_new("blog", "${sblg-title}", "${sblg-titletext}",
 			"${sblg-aside}", "blog");
 		one[0] = files[i];
-		cflag[0] = "-c";
 		pathf(work, sizeof work, "%s/%s/tmpl-post.html", C.work, lang);
 		pathf(out, sizeof out, "%s/%s.html", dir, stemname);
 		publish(lang, sb, "post", work, out, 1, cflag, 1, one, 1, NULL, 0, page);
 		kv_free(page);
 	}
+}
+
+static void publish_tag(const char *lang, const char *sb, const char *tb,
+	const char *thead, const char *item, const char *tag,
+	char **files, size_t nfiles)
+{
+	char title[512];
+	char dir[PATH_MAX];
+	kvmap *page;
+	inject_item inj[1];
+	char work[PATH_MAX];
+	char out[PATH_MAX];
+
+	snprintf(title, sizeof title, "%s %s", thead, tag);
+	page = page_new("blog", tb, title, "", "blog");
+	if (kv_put(page, "tag", tag) != 0)
+		die("oom");
+	inj[0].key = "post_item";
+	inj[0].path = item;
+	pathf(dir, sizeof dir, "%s/%s/%s/tag", C.public_dir, lang, sb);
+	pathf(work, sizeof work, "%s/%s/tmpl-tag-%s.html", C.work, lang, tag);
+	pathf(out, sizeof out, "%s/%s.html", dir, tag);
+	publish(lang, sb, "tag", work, out, 1, NULL, 0, files, nfiles, inj, 1, page);
+	kv_free(page);
+}
+
+static void build_tag_pages(const char *lang, const char *sb, const char *item,
+	char **files, size_t nfiles)
+{
+	char dir[PATH_MAX];
+	kvmap *jm = lang_map(lang);
+	const char *tb = need(jm, "title.blog");
+	const char *thead = need(jm, "tag.heading");
+	strvec *av;
+	char *listed = NULL;
+	strvec *tags = NULL;
+	size_t i;
+	size_t t;
 
 	pathf(dir, sizeof dir, "%s/%s/%s/tag", C.public_dir, lang, sb);
 	must_mkdir(dir);
-	thead = need(jm, "tag.heading");
-	if (nfiles) {
-		strvec *av = strvec_new();
-		char *listed = NULL;
-		strvec *tags = NULL;
-		size_t t;
+	if (!nfiles)
+		return;
+	av = strvec_new();
+	strvec_push(av, C.sblg);
+	strvec_push(av, "-l");
+	for (i = 0; i < nfiles; i++)
+		strvec_push(av, files[i]);
+	if (strvec_capture(av, &listed, NULL) != 0)
+		die("sblg -l");
+	strvec_free(av);
+	if (tags_collect(listed, &tags) != 0)
+		die("tags");
+	free(listed);
+	for (t = 0; t < strvec_len(tags); t++)
+		publish_tag(lang, sb, tb, thead, item, strvec_get(tags, t), files, nfiles);
+	strvec_free(tags);
+}
 
-		strvec_push(av, C.sblg);
-		strvec_push(av, "-l");
-		for (i = 0; i < nfiles; i++)
-			strvec_push(av, files[i]);
-		if (strvec_capture(av, &listed, NULL) != 0)
-			die("sblg -l");
-		strvec_free(av);
-		if (tags_collect(listed, &tags) != 0)
-			die("tags");
-		free(listed);
-		for (t = 0; t < strvec_len(tags); t++) {
-			const char *tag = strvec_get(tags, t);
-			char title[512];
+static void build_atom(const char *lang, kvmap *jm, char **files, size_t nfiles)
+{
+	char atom_in[PATH_MAX];
+	char atom_tmpl[PATH_MAX];
+	char atom_out[PATH_MAX];
+	char *raw;
+	char *baked = NULL;
+	char *aflag[1];
+	kvmap *page;
 
-			snprintf(title, sizeof title, "%s %s", thead, tag);
-			page = page_new("blog", tb, title, "", "blog");
-			if (kv_put(page, "tag", tag) != 0)
-				die("oom");
-			inj[0].key = "post_item";
-			inj[0].path = item;
-			pathf(work, sizeof work, "%s/%s/tmpl-tag-%s.html", C.work, lang, tag);
-			pathf(out, sizeof out, "%s/%s.html", dir, tag);
-			publish(lang, sb, "tag", work, out, 1, NULL, 0, files, nfiles, inj, 1, page);
-			kv_free(page);
-		}
-		strvec_free(tags);
-	}
+	pathf(atom_in, sizeof atom_in, "%s/atom.in.xml", C.templates);
+	raw = must_read(atom_in);
+	if (kv_new(&page) != 0)
+		die("oom");
+	if (kv_merge(page, jm) != 0)
+		die("oom");
+	if (kv_put(page, "lang", lang) != 0 || kv_put(page, "author", C.author) != 0 ||
+		kv_put(page, "year", C.year) != 0 || kv_put(page, "base_url", C.base) != 0)
+		die("oom");
+	if (subst_apply(raw, page, &baked) != 0)
+		die("subst atom");
+	free(raw);
+	kv_free(page);
+	pathf(atom_tmpl, sizeof atom_tmpl, "%s/%s/atom-tmpl.xml", C.work, lang);
+	must_write(atom_tmpl, baked, strlen(baked));
+	free(baked);
+	pathf(atom_out, sizeof atom_out, "%s/%s/atom.xml", C.public_dir, lang);
+	aflag[0] = "-a";
+	sblg_run(aflag, 1, atom_out, atom_tmpl, files, nfiles);
+}
 
-	{
-		char atom_in[PATH_MAX];
-		char atom_tmpl[PATH_MAX];
-		char atom_out[PATH_MAX];
-		char *raw;
-		char *baked = NULL;
-		char *aflag[1];
+static void build_one(const char *lang)
+{
+	kvmap *jm;
+	const char *sb;
+	const char *se;
+	const char *sp;
+	const char *sx;
+	char dir[PATH_MAX];
+	char blogdir[PATH_MAX];
+	strvec *posts;
+	strvec *frags;
+	char **files;
+	size_t nfiles;
+	char item[PATH_MAX];
 
-		pathf(atom_in, sizeof atom_in, "%s/atom.in.xml", C.templates);
-		raw = must_read(atom_in);
-		if (kv_new(&page) != 0)
-			die("oom");
-		if (kv_merge(page, jm) != 0)
-			die("oom");
-		if (kv_put(page, "lang", lang) != 0 || kv_put(page, "author", C.author) != 0 ||
-			kv_put(page, "year", C.year) != 0 || kv_put(page, "base_url", C.base) != 0)
-			die("oom");
-		if (subst_apply(raw, page, &baked) != 0)
-			die("subst atom");
-		free(raw);
-		kv_free(page);
-		pathf(atom_tmpl, sizeof atom_tmpl, "%s/%s/atom-tmpl.xml", C.work, lang);
-		must_write(atom_tmpl, baked, strlen(baked));
-		free(baked);
-		pathf(atom_out, sizeof atom_out, "%s/%s/atom.xml", C.public_dir, lang);
-		aflag[0] = "-a";
-		sblg_run(aflag, 1, atom_out, atom_tmpl, files, nfiles);
-	}
+	if (!lang_ok(lang))
+		die("usage: make build-one LANG=ca|es|en");
+	jm = lang_map(lang);
+	sb = need(jm, "slug.blog");
+	se = need(jm, "slug.education");
+	sp = need(jm, "slug.projects");
+	sx = need(jm, "slug.experience");
+	printf("==> Building language '%s'\n", lang);
+
+	pathf(dir, sizeof dir, "%s/%s/blog", C.work, lang);
+	must_mkdir(dir);
+	pathf(dir, sizeof dir, "%s/%s", C.public_dir, lang);
+	must_mkdir(dir);
+
+	posts = load_posts(lang, blogdir, sizeof blogdir);
+	frags = strvec_new();
+	render_posts(lang, blogdir, sb, posts, frags);
+	files = frag_files(frags, &nfiles);
+	pathf(item, sizeof item, "%s/partials/postitem.html", C.templates);
+	build_home(lang, sb, item, files, nfiles);
+	build_sections(lang, sb, se, sp, sx);
+	build_blog_index(lang, sb, item, files, nfiles);
+	build_post_pages(lang, sb, files, nfiles);
+	build_tag_pages(lang, sb, item, files, nfiles);
+	build_atom(lang, jm, files, nfiles);
 
 	free(files);
 	strvec_free(frags);
@@ -645,6 +761,7 @@ static void assets(void)
 	char reset[PATH_MAX];
 	char styles[PATH_MAX];
 	char bundle[PATH_MAX];
+	char vendor[PATH_MAX];
 	char *a;
 	char *b;
 	char *both;
@@ -656,7 +773,7 @@ static void assets(void)
 		die("rm %s", dest);
 	if (copy_tree("assets", dest) != 0)
 		die("copy assets");
-	pathf(reset, sizeof reset, "%s/css/reset.css", dest);
+	pathf(reset, sizeof reset, "%s/css/vendor/reset.css", dest);
 	pathf(styles, sizeof styles, "%s/css/styles.css", dest);
 	pathf(bundle, sizeof bundle, "%s/css/bundle.css", dest);
 	a = must_read(reset);
@@ -668,6 +785,8 @@ static void assets(void)
 	free(both);
 	if (unlink(reset) != 0 || unlink(styles) != 0)
 		die("unlink css");
+	pathf(vendor, sizeof vendor, "%s/css/vendor", dest);
+	rmdir(vendor);
 }
 
 static void all(void)
@@ -687,6 +806,7 @@ static void all(void)
 			build_one(C.langv[i]);
 			fflush(stdout);
 			fflush(stderr);
+			PROFILE_FLUSH();
 			_exit(0);
 		}
 		pids[i] = pid;

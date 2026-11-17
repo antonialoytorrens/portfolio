@@ -19,6 +19,25 @@ static void test_link(void)
 	free(out);
 }
 
+static void test_edges(void)
+{
+	char *out = NULL;
+	const char *raw = "<span class=\"sblg-tag\">w<b>b</span>";
+
+	TEST_ASSERT_EQUAL_INT(-1, linkify(NULL, "ca", "blog", &out));
+	TEST_ASSERT_EQUAL_INT(-1, linkify("a", NULL, "blog", &out));
+	TEST_ASSERT_EQUAL_INT(-1, linkify("a", "ca", NULL, &out));
+	TEST_ASSERT_EQUAL_INT(0, linkify("hello", "ca", "blog", &out));
+	TEST_ASSERT_EQUAL_STRING("hello", out);
+	free(out);
+	TEST_ASSERT_EQUAL_INT(0, linkify("<span class=\"sblg-tag\">web", "ca", "blog", &out));
+	TEST_ASSERT_EQUAL_STRING("<span class=\"sblg-tag\">web", out);
+	free(out);
+	TEST_ASSERT_EQUAL_INT(0, linkify(raw, "ca", "blog", &out));
+	TEST_ASSERT_EQUAL_STRING(raw, out);
+	free(out);
+}
+
 static void test_tags(void)
 {
 	strvec *tags = NULL;
@@ -29,12 +48,29 @@ static void test_tags(void)
 	TEST_ASSERT_EQUAL_STRING("lonely", strvec_get(tags, 1));
 	TEST_ASSERT_EQUAL_STRING("web", strvec_get(tags, 2));
 	strvec_free(tags);
+	TEST_ASSERT_EQUAL_INT(0, tags_collect(NULL, &tags));
+	TEST_ASSERT_EQUAL_UINT(0, strvec_len(tags));
+	strvec_free(tags);
+	TEST_ASSERT_EQUAL_INT(0, tags_collect("", &tags));
+	TEST_ASSERT_EQUAL_UINT(0, strvec_len(tags));
+	strvec_free(tags);
+	TEST_ASSERT_EQUAL_INT(0, tags_collect("a\tweb\textra\r\n", &tags));
+	TEST_ASSERT_EQUAL_UINT(1, strvec_len(tags));
+	TEST_ASSERT_EQUAL_STRING("web", strvec_get(tags, 0));
+	strvec_free(tags);
+	TEST_ASSERT_EQUAL_INT(0, tags_collect("solo", &tags));
+	TEST_ASSERT_EQUAL_UINT(1, strvec_len(tags));
+	TEST_ASSERT_EQUAL_STRING("solo", strvec_get(tags, 0));
+	strvec_free(tags);
+	TEST_ASSERT_EQUAL_UINT(0, strvec_len(NULL));
+	strvec_free(NULL);
 }
 
 int main(void)
 {
 	UNITY_BEGIN();
 	RUN_TEST(test_link);
+	RUN_TEST(test_edges);
 	RUN_TEST(test_tags);
 	return UNITY_END();
 }

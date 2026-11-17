@@ -1,0 +1,11 @@
+cppcheck --project=build/compile_commands.json --enable=all --inline-suppr \
+	--xml --xml-version=2 --suppress=missingIncludeSystem \
+	--suppress=checkersReport \
+	--suppress='*:external/*' \
+	--check-level=exhaustive \
+	--quiet --checkers-report=build/report/cppcheck-checkers-report.txt \
+	> build/report/cppcheck-report.xml 2>&1
+clang-tidy -p build --quiet \
+	--header-filter='(.*/)?tools/.*' \
+	--extra-arg=-Qunused-arguments \
+	tools/build.c tools/mkarticle.c tools/util.c tools/kv.c tools/fs.c tools/proc.c > build/report/clang-tidy-report.txt 2>&1

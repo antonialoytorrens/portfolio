@@ -39,12 +39,36 @@ static void test_inject(void)
 	TEST_ASSERT_EQUAL_INT(0, inject_apply("  @@post_item@@\nnext\n", &item, 1, &out));
 	TEST_ASSERT_EQUAL_STRING("ITEM\nnext\n", out);
 	free(out);
+	TEST_ASSERT_EQUAL_INT(-1, inject_apply(NULL, &item, 1, &out));
+	TEST_ASSERT_EQUAL_INT(0, inject_apply("plain", &item, 0, &out));
+	TEST_ASSERT_EQUAL_STRING("plain", out);
+	free(out);
+	item.key = "missing";
+	item.path = "/no/such/portfolio-inject";
+	TEST_ASSERT_EQUAL_INT(-1, inject_apply("@@missing@@\n", &item, 1, &out));
+}
+
+static void test_subst_edges(void)
+{
+	kvmap *m = NULL;
+	char *out = NULL;
+
+	TEST_ASSERT_EQUAL_INT(0, kv_new(&m));
+	TEST_ASSERT_EQUAL_INT(-1, subst_apply(NULL, m, &out));
+	TEST_ASSERT_EQUAL_INT(0, subst_apply("plain", m, &out));
+	TEST_ASSERT_EQUAL_STRING("plain", out);
+	free(out);
+	TEST_ASSERT_EQUAL_INT(0, subst_apply("@@open", m, &out));
+	TEST_ASSERT_EQUAL_STRING("@@open", out);
+	free(out);
+	kv_free(m);
 }
 
 int main(void)
 {
 	UNITY_BEGIN();
 	RUN_TEST(test_subst);
+	RUN_TEST(test_subst_edges);
 	RUN_TEST(test_inject);
 	return UNITY_END();
 }

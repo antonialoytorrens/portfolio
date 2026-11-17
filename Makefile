@@ -22,7 +22,7 @@ CJSON_CFLAGS := $(shell pkg-config --cflags libcjson 2>/dev/null)
 CJSON_LIBS   := $(shell pkg-config --libs libcjson 2>/dev/null)
 INCLUDES  = -Itools -Iexternal/stb -Iexternal/unity $(CJSON_CFLAGS)
 
-TEST_CFLAGS  = $(CPPFLAGS) $(INCLUDES) $(CFLAGS) -g -O0 \
+TEST_CFLAGS  = $(CPPFLAGS) $(INCLUDES) $(CFLAGS) -g -O0 -DCOVERAGE \
 	-fprofile-instr-generate -fcoverage-mapping
 TEST_LDFLAGS = -fprofile-instr-generate
 
@@ -34,12 +34,14 @@ REPORT_DIR = $(BUILD_DIR)/report
 PROF_DIR   = $(BUILD_DIR)/prof
 COMPILE_DB = $(BUILD_DIR)/compile_commands.json
 
-C_SRC = tools/build.c tools/mkarticle.c tools/util.c
+C_SRC = tools/build.c tools/mkarticle.c tools/util.c tools/kv.c tools/fs.c tools/proc.c
 C_OBJ = $(patsubst tools/%.c,$(OBJ_DIR)/%.o,$(C_SRC))
 
 UNITY = external/unity/unity.c
-UTIL  = tools/util.c
-TEST_BINS = bin/test_json bin/test_subst bin/test_mkarticle bin/test_date bin/test_linkify
+UTIL  = tools/util.c tools/kv.c tools/fs.c tools/proc.c
+COV_BINS = bin/build-cov bin/mkarticle-cov
+TEST_BINS = bin/test_json bin/test_subst bin/test_mkarticle bin/test_date bin/test_linkify \
+	bin/test_fs bin/test_proc bin/test_cli
 
 .PHONY: all assets build-one clean serve rsync help test update-external \
 	docker-build dockershell sonarqube coverage scan-cppcheck scan-clang-tidy \
@@ -56,7 +58,7 @@ build-one: bin/build bin/mkarticle
 
 clean:
 	rm -rf $(PUBLIC_DIR) $(WORK_DIR) $(BUILD_DIR)
-	rm -f bin/build bin/mkarticle $(TEST_BINS)
+	rm -f bin/build bin/mkarticle $(TEST_BINS) $(COV_BINS)
 
 serve: bin/build bin/mkarticle
 	./bin/build serve
@@ -77,9 +79,10 @@ help: bin/build
 docker-build:
 	docker compose build
 
-test: $(TEST_BINS) | $(PROF_DIR)
+test: $(TEST_BINS) $(COV_BINS) | $(PROF_DIR)
+	rm -f $(PROF_DIR)/*.profraw
 	@for bin in $(TEST_BINS); do \
-		LLVM_PROFILE_FILE="$(PROF_DIR)/$$(basename $$bin).profraw" $$bin || exit 1; \
+		LLVM_PROFILE_FILE="$(CURDIR)/$(PROF_DIR)/$$(basename $$bin)-%p.profraw" $$bin || exit 1; \
 	done
 
 update-external:
@@ -95,7 +98,7 @@ coverage: test | $(REPORT_DIR)
 	$(LLVM_COV) export \
 		-format=lcov \
 		-instr-profile=$(PROF_DIR)/coverage.profdata \
-		$(addprefix -object=,$(TEST_BINS)) \
+		$(addprefix -object=,$(TEST_BINS) $(COV_BINS)) \
 		> $(REPORT_DIR)/coverage.lcov
 	$(LCOV2COBERTURA) -b $(CURDIR) \
 		-e '^external' \
@@ -103,7 +106,7 @@ coverage: test | $(REPORT_DIR)
 		$(REPORT_DIR)/coverage.lcov
 
 scan-cppcheck: $(COMPILE_DB) | $(REPORT_DIR)
-	$(CPPCHECK) --project=$(COMPILE_DB) --enable=all \
+	$(CPPCHECK) --project=$(COMPILE_DB) --enable=all --inline-suppr \
 		--xml --xml-version=2 --suppress=missingIncludeSystem \
 		--suppress=checkersReport \
 		--suppress='*:external/*' \
@@ -127,6 +130,7 @@ sonarqube: scan-sonar coverage
 	$(SONAR_SCANNER) \
 		-Dsonar.host.url=$(SONAR_HOST_URL) \
 		-Dsonar.token=$(SONAR_TOKEN) \
+		-Dsonar.verbose=true \
 		-Dsonar.projectKey=$(SONAR_PROJECT_KEY)
 
 bin $(OBJ_DIR) $(REPORT_DIR) $(PROF_DIR):
@@ -138,11 +142,19 @@ $(COMPILE_DB): $(C_OBJ)
 $(OBJ_DIR)/%.o: tools/%.c tools/util.h | $(OBJ_DIR)
 	$(CC) $(CPPFLAGS) $(INCLUDES) $(CFLAGS) -MJ $@.json -c -o $@ $<
 
-bin/build: $(OBJ_DIR)/build.o $(OBJ_DIR)/util.o | bin
+LIB_OBJ = $(OBJ_DIR)/util.o $(OBJ_DIR)/kv.o $(OBJ_DIR)/fs.o $(OBJ_DIR)/proc.o
+
+bin/build: $(OBJ_DIR)/build.o $(LIB_OBJ) | bin
 	$(CC) -o $@ $^ $(CJSON_LIBS)
 
-bin/mkarticle: $(OBJ_DIR)/mkarticle.o $(OBJ_DIR)/util.o | bin
+bin/mkarticle: $(OBJ_DIR)/mkarticle.o $(LIB_OBJ) | bin
 	$(CC) -o $@ $^ $(CJSON_LIBS)
 
 bin/test_%: tests/test_%.c $(UTIL) tools/util.h $(UNITY) | bin
 	$(CC) $(TEST_CFLAGS) $(TEST_LDFLAGS) -o $@ tests/test_$*.c $(UTIL) $(UNITY) $(CJSON_LIBS)
+
+bin/build-cov: tools/build.c $(UTIL) tools/util.h | bin
+	$(CC) $(TEST_CFLAGS) $(TEST_LDFLAGS) -o $@ tools/build.c $(UTIL) $(CJSON_LIBS)
+
+bin/mkarticle-cov: tools/mkarticle.c $(UTIL) tools/util.h | bin
+	$(CC) $(TEST_CFLAGS) $(TEST_LDFLAGS) -o $@ tools/mkarticle.c $(UTIL) $(CJSON_LIBS)
