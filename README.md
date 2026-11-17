@@ -37,7 +37,7 @@ make rsync REMOTE_HOST=… REMOTE_USER=… REMOTE_PATH=…   # deploy
 make update-external     # refresh Unity and stb_ds
 ```
 
-Output goes to `public/` (git-ignored). The site root `/` is **not** generated:
+Output goes to `public/`. The site root `/` is **not** generated:
 language selection is done by the web server (see `deploy/nginx.conf.example`).
 
 ## How it works
