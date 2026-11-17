@@ -42,7 +42,7 @@ UTIL  = tools/util.c
 TEST_BINS = bin/test_json bin/test_subst bin/test_mkarticle bin/test_date bin/test_linkify
 
 .PHONY: all assets build-one clean serve rsync help test update-external \
-	dockershell sonarqube coverage scan-cppcheck scan-clang-tidy \
+	docker-build dockershell sonarqube coverage scan-cppcheck scan-clang-tidy \
 	scan-flawfinder scan-sonar
 
 all: bin/build bin/mkarticle
@@ -71,7 +71,11 @@ help: bin/build
 	@echo "make scan-sonar       cppcheck, clang-tidy, flawfinder"
 	@echo "make sonarqube        reports, coverage, sonar-scanner"
 	@echo "make update-external  refresh Unity, stb_ds"
+	@echo "make docker-build     build portfolio-ci image"
 	@echo "make dockershell      shell in portfolio-ci container"
+
+docker-build:
+	docker compose build
 
 test: $(TEST_BINS) | $(PROF_DIR)
 	@for bin in $(TEST_BINS); do \
