@@ -16,7 +16,10 @@ RUN apt-get update \
 	&& apt-get update \
 	&& apt-get install -yq --no-install-recommends \
 	make \
-	gcc \
+	clang \
+	llvm \
+	clang-tidy \
+	libclang-rt-19-dev \
 	pkgconf \
 	libcjson-dev \
 	lowdown \
@@ -25,9 +28,12 @@ RUN apt-get update \
 	curl \
 	libxml2-utils \
 	mini-httpd \
+	cppcheck \
+	flawfinder \
 	# Repositori custom
 	sblg \
 	sonar-scanner \
+	lcov2cobertura \
 	&& apt-get clean && rm -rf /var/lib/apt/lists/* \
 	&& useradd --create-home --shell /bin/bash builder \
 	&& mkdir -p /workspace \
