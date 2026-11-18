@@ -145,7 +145,7 @@ RANDOM_SUFFIX := $(shell bash -c 'echo $$RANDOM')
 LH_PORT       := $(shell bash -c 'echo $$((8080 + $(RANDOM_SUFFIX) % 1000))')
 
 lighthouse: all
-	rm -rf $(LH_DIR) && mkdir -p $(LH_DIR)
+	rm -rf $(LH_DIR) && mkdir -p $(LH_DIR)/desktop $(LH_DIR)/mobile
 	@set -e; \
 	$(MINI_HTTPD) -D -h $(HOST) -p $(LH_PORT) -d $(PUBLIC_DIR) & \
 	LH_PID=$$!; \
@@ -157,7 +157,15 @@ lighthouse: all
 		--no-cache \
 		--build-static \
 		--config-file unlighthouse.config.mjs \
-		--output-path "$(LH_DIR)" \
+		--output-path "$(LH_DIR)/desktop" \
+		--reporter jsonExpanded; \
+	CI=true unlighthouse-ci \
+		--site "http://$(HOST):$(LH_PORT)/$(SRCLANG)/" \
+		--mobile \
+		--no-cache \
+		--build-static \
+		--config-file unlighthouse.config.mjs \
+		--output-path "$(LH_DIR)/mobile" \
 		--reporter jsonExpanded
 
 # I have considered writing a SonarQube plugin for Lighthouse

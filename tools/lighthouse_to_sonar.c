@@ -11,7 +11,8 @@
 #include <string.h>
 
 #define LH_DIR "build/report/lh"
-#define CI_RESULT "build/report/lh/ci-result.json"
+#define CI_RESULT_DESKTOP "build/report/lh/desktop/ci-result.json"
+#define CI_RESULT_MOBILE "build/report/lh/mobile/ci-result.json"
 #define OUT_PATH "build/report/lh-sonar-issues.json"
 #define DEFAULT_FILE "templates/index.html"
 
@@ -22,7 +23,7 @@ struct cat_impact {
 };
 
 static const struct cat_impact IMPACTS[] = {
-	{ "performance", "RELIABILITY", "MEDIUM" },
+	{ "performance", "RELIABILITY", "INFO" },
 	{ "accessibility", "MAINTAINABILITY", "HIGH" },
 	{ "best-practices", "SECURITY", "MEDIUM" },
 	{ "seo", "MAINTAINABILITY", "MEDIUM" },
@@ -99,8 +100,12 @@ static int add_rule(cJSON *rules, const char *rule_id, const char *cat,
 		return -1;
 	}
 	attr = (strcmp(cat, "performance") == 0) ? "EFFICIENT" : "CONVENTIONAL";
-	std_sev = (strcmp(severity, "HIGH") == 0 || strcmp(severity, "BLOCKER") == 0)
-		? "MAJOR" : "MINOR";
+	if (strcmp(severity, "INFO") == 0)
+		std_sev = "INFO";
+	else if (strcmp(severity, "HIGH") == 0 || strcmp(severity, "BLOCKER") == 0)
+		std_sev = "MAJOR";
+	else
+		std_sev = "MINOR";
 	snprintf(name, sizeof name, "Unlighthouse: %s", cat);
 	snprintf(desc, sizeof desc,
 		"Category score below 1.0 for %s (Unlighthouse site scan).", cat);
@@ -212,7 +217,8 @@ static int write_empty(void)
 	return rc;
 }
 
-static int process_ci_result(cJSON *root, cJSON *rules, cJSON *issues, int *nissues)
+static int process_ci_result(cJSON *root, cJSON *rules, cJSON *issues,
+	int *nissues, size_t *nroutes, const char *device)
 {
 	const cJSON *routes;
 	const cJSON *route;
@@ -220,6 +226,7 @@ static int process_ci_result(cJSON *root, cJSON *rules, cJSON *issues, int *niss
 	routes = cJSON_GetObjectItemCaseSensitive(root, "routes");
 	if (!cJSON_IsArray(routes))
 		return -1;
+	*nroutes += (size_t)cJSON_GetArraySize(routes);
 
 	cJSON_ArrayForEach(route, routes) {
 		const cJSON *path_j;
@@ -261,8 +268,8 @@ static int process_ci_result(cJSON *root, cJSON *rules, cJSON *issues, int *niss
 			if (add_rule(rules, rule_id, cat_id, quality, severity) != 0)
 				return -1;
 			n = snprintf(msg, sizeof msg,
-				"[%s] category score=%g @ %s",
-				cat_id, score_j->valuedouble, path);
+				"[%s/%s] category score=%g @ %s",
+				cat_id, device, score_j->valuedouble, path);
 			if (n < 0 || (size_t)n >= sizeof msg)
 				return -1;
 			if (add_issue(issues, rule_id, msg, file_path) != 0)
@@ -273,47 +280,76 @@ static int process_ci_result(cJSON *root, cJSON *rules, cJSON *issues, int *niss
 	return 0;
 }
 
-int main(void)
+/* Returns 1 if processed, 0 if missing, -1 on error. */
+static int load_ci_result(const char *path, const char *device,
+	cJSON *rules, cJSON *issues, int *nissues, size_t *nroutes)
 {
 	char *text;
 	cJSON *root;
+	int rc;
+
+	text = read_file(path, NULL);
+	if (!text) {
+		fprintf(stderr, "lighthouse_to_sonar: missing %s\n", path);
+		return 0;
+	}
+	root = cJSON_Parse(text);
+	free(text);
+	if (!root) {
+		fprintf(stderr, "lighthouse_to_sonar: parse %s\n", path);
+		return -1;
+	}
+	rc = process_ci_result(root, rules, issues, nissues, nroutes, device);
+	cJSON_Delete(root);
+	if (rc != 0) {
+		fprintf(stderr, "lighthouse_to_sonar: process %s\n", path);
+		return -1;
+	}
+	return 1;
+}
+
+int main(void)
+{
 	cJSON *rules;
 	cJSON *issues;
 	int nissues = 0;
 	size_t nroutes = 0;
-	const cJSON *routes;
-
-	text = read_file(CI_RESULT, NULL);
-	if (!text) {
-		if (mkdir_p(LH_DIR) != 0 || write_empty() != 0)
-			die("lighthouse_to_sonar: write empty %s", OUT_PATH);
-		fprintf(stderr,
-			"lighthouse_to_sonar: missing %s; wrote empty %s\n",
-			CI_RESULT, OUT_PATH);
-		return 0;
-	}
-
-	root = cJSON_Parse(text);
-	free(text);
-	if (!root)
-		die("lighthouse_to_sonar: parse %s", CI_RESULT);
+	int nfiles = 0;
+	int rc;
 
 	rules = cJSON_CreateArray();
 	issues = cJSON_CreateArray();
 	if (!rules || !issues)
 		die("oom");
 
-	if (process_ci_result(root, rules, issues, &nissues) != 0) {
-		cJSON_Delete(root);
+	rc = load_ci_result(CI_RESULT_DESKTOP, "desktop", rules, issues,
+		&nissues, &nroutes);
+	if (rc < 0) {
 		cJSON_Delete(rules);
 		cJSON_Delete(issues);
-		die("lighthouse_to_sonar: process %s", CI_RESULT);
+		die("lighthouse_to_sonar: desktop");
 	}
+	nfiles += rc;
 
-	routes = cJSON_GetObjectItemCaseSensitive(root, "routes");
-	if (cJSON_IsArray(routes))
-		nroutes = (size_t)cJSON_GetArraySize(routes);
-	cJSON_Delete(root);
+	rc = load_ci_result(CI_RESULT_MOBILE, "mobile", rules, issues,
+		&nissues, &nroutes);
+	if (rc < 0) {
+		cJSON_Delete(rules);
+		cJSON_Delete(issues);
+		die("lighthouse_to_sonar: mobile");
+	}
+	nfiles += rc;
+
+	if (nfiles == 0) {
+		cJSON_Delete(rules);
+		cJSON_Delete(issues);
+		if (mkdir_p(LH_DIR) != 0 || write_empty() != 0)
+			die("lighthouse_to_sonar: write empty %s", OUT_PATH);
+		fprintf(stderr,
+			"lighthouse_to_sonar: no ci-result.json; wrote empty %s\n",
+			OUT_PATH);
+		return 0;
+	}
 
 	if (write_payload(rules, issues) != 0) {
 		cJSON_Delete(rules);
