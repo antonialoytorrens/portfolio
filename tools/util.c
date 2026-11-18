@@ -606,6 +606,31 @@ int article_prelude(const char *text, size_t len, const char *source,
 	return 0;
 }
 
+static const char *tag_span_end(const char *tag, const char *close)
+{
+	const char *end = strstr(tag, close);
+
+	if (!end)
+		return NULL;
+	if (memchr(tag, '<', (size_t)(end - tag)))
+		return NULL;
+	return end;
+}
+
+static void append_tag_link(buf *b, const char *tag, size_t tlen,
+	const char *lang, const char *slug)
+{
+	buf_str(b, "<a href=\"/");
+	buf_str(b, lang);
+	buf_str(b, "/");
+	buf_str(b, slug);
+	buf_str(b, "/tag/");
+	buf_add(b, tag, tlen);
+	buf_str(b, ".html\" class=\"sblg-tag\">");
+	buf_add(b, tag, tlen);
+	buf_str(b, "</a>");
+}
+
 int linkify(const char *in, const char *lang, const char *slug, char **out)
 {
 	static const char open[] = "<span class=\"sblg-tag\">";
@@ -622,7 +647,6 @@ int linkify(const char *in, const char *lang, const char *slug, char **out)
 		const char *hit = strstr(p, open);
 		const char *tag;
 		const char *end;
-		const char *lt;
 		size_t gap;
 
 		if (!hit) {
@@ -635,23 +659,14 @@ int linkify(const char *in, const char *lang, const char *slug, char **out)
 		else if (prev_tag)
 			buf_str(&b, " ");
 		tag = hit + olen;
-		end = strstr(tag, close);
-		lt = end ? memchr(tag, '<', (size_t)(end - tag)) : NULL;
-		if (!end || lt) {
+		end = tag_span_end(tag, close);
+		if (!end) {
 			buf_add(&b, hit, olen);
 			p = hit + olen;
 			prev_tag = 0;
 			continue;
 		}
-		buf_str(&b, "<a href=\"/");
-		buf_str(&b, lang);
-		buf_str(&b, "/");
-		buf_str(&b, slug);
-		buf_str(&b, "/tag/");
-		buf_add(&b, tag, (size_t)(end - tag));
-		buf_str(&b, ".html\" class=\"sblg-tag\">");
-		buf_add(&b, tag, (size_t)(end - tag));
-		buf_str(&b, "</a>");
+		append_tag_link(&b, tag, (size_t)(end - tag), lang, slug);
 		p = end + clen;
 		prev_tag = 1;
 	}

@@ -18,6 +18,7 @@ RUN apt-get update \
 		> /etc/apt/sources.list.d/master.debci.antonialoytorrens.com.list \
 	&& apt-get update \
 	&& apt-get install -yq --no-install-recommends \
+	nano \
 	make \
 	clang \
 	llvm \

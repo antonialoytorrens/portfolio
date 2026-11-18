@@ -18,6 +18,7 @@ SONAR_SCANNER  ?= sonar-scanner
 MINI_HTTPD     ?= mini_httpd
 HOST           ?= 127.0.0.1
 PORT           ?= 8080
+LH_BIN         ?= unlighthouse
 CLANG_RESOURCE_INCLUDE := $(shell $(CC) -print-resource-dir)/include
 SONAR_CXX_INCLUDES = tools,external/stb,/usr/include,/usr/include/x86_64-linux-gnu,$(CLANG_RESOURCE_INCLUDE)
 
@@ -40,7 +41,7 @@ PROF_DIR    = $(BUILD_DIR)/prof
 COMPILE_DB  = $(BUILD_DIR)/compile_commands.json
 LH_DIR      = $(REPORT_DIR)/lh
 
-C_SRC = tools/build.c tools/mkarticle.c tools/lighthouse_to_sonar.c \
+C_SRC = tools/build.c tools/mkarticle.c tools/lhtosonar.c \
 	tools/util.c tools/kv.c tools/fs.c tools/proc.c
 C_OBJ = $(patsubst tools/%.c,$(OBJ_DIR)/%.o,$(C_SRC))
 
@@ -54,7 +55,7 @@ SRCLANG ?= ca
 
 .PHONY: all assets build-one clean serve run rsync help test update-external \
 	docker-build dockershell sonarqube coverage scan-cppcheck scan-clang-tidy \
-	scan-flawfinder scan-sonar lighthouse lh-sonar
+	scan-flawfinder scan-sonar lighthouse lighthouse-ci lh-sonar
 
 all: bin/build bin/mkarticle
 	./bin/build all
@@ -67,7 +68,7 @@ build-one: bin/build bin/mkarticle
 
 clean:
 	rm -rf $(PUBLIC_DIR) $(WORK_DIR) $(BUILD_DIR)
-	rm -f bin/build bin/mkarticle bin/lighthouse_to_sonar $(TEST_BINS) $(COV_BINS)
+	rm -f bin/build bin/mkarticle bin/lhtosonar $(TEST_BINS) $(COV_BINS)
 
 serve: bin/build bin/mkarticle
 	./bin/build serve
@@ -85,7 +86,8 @@ help: bin/build
 	@echo "make scan-sonar       cppcheck, clang-tidy, flawfinder"
 	@echo "make run              serve public/ with mini_httpd (HOST/PORT)"
 	@echo "make lighthouse       Unlighthouse crawl (ephemeral port)"
-	@echo "make sonarqube        cxx reports, coverage, lighthouse, sonar-scanner"
+	@echo "make lighthouse-ci    Unlighthouse crawl in CI mode (for sonarqube)"
+	@echo "make sonarqube        cxx reports, coverage, lighthouse-ci, sonar-scanner"
 	@echo "make update-external  refresh external dependencies"
 	@echo "make docker-build     build portfolio-ci image"
 	@echo "make dockershell      shell in portfolio-ci container"
@@ -151,7 +153,7 @@ lighthouse: all
 	LH_PID=$$!; \
 	trap 'kill $$LH_PID 2>/dev/null' EXIT; \
 	sleep 0.2; \
-	CI=true unlighthouse-ci \
+	$(LH_CI_ENV) $(LH_BIN) \
 		--site "http://$(HOST):$(LH_PORT)/$(SRCLANG)/" \
 		--desktop \
 		--no-cache \
@@ -159,7 +161,7 @@ lighthouse: all
 		--config-file unlighthouse.config.mjs \
 		--output-path "$(LH_DIR)/desktop" \
 		--reporter jsonExpanded; \
-	CI=true unlighthouse-ci \
+	$(LH_CI_ENV) $(LH_BIN) \
 		--site "http://$(HOST):$(LH_PORT)/$(SRCLANG)/" \
 		--mobile \
 		--no-cache \
@@ -168,11 +170,15 @@ lighthouse: all
 		--output-path "$(LH_DIR)/mobile" \
 		--reporter jsonExpanded
 
+lighthouse-ci: LH_CI_ENV := CI=true
+lighthouse-ci: LH_BIN := unlighthouse-ci
+lighthouse-ci: lighthouse
+
 # I have considered writing a SonarQube plugin for Lighthouse
 # but I think the software is not prepared for non-source code files.
 # See: https://community.sonarsource.com/t/how-to-add-measure-on-a-virtual-resource/58304
-lh-sonar: lighthouse bin/lighthouse_to_sonar
-	./bin/lighthouse_to_sonar
+lh-sonar: lighthouse-ci bin/lhtosonar
+	./bin/lhtosonar
 
 sonarqube: scan-sonar coverage lh-sonar
 	$(SONAR_SCANNER) \
@@ -198,7 +204,7 @@ bin/build: $(OBJ_DIR)/build.o $(LIB_OBJ) | bin
 bin/mkarticle: $(OBJ_DIR)/mkarticle.o $(LIB_OBJ) | bin
 	$(CC) -o $@ $^ $(CJSON_LIBS)
 
-bin/lighthouse_to_sonar: $(OBJ_DIR)/lighthouse_to_sonar.o $(LIB_OBJ) | bin
+bin/lhtosonar: $(OBJ_DIR)/lhtosonar.o $(LIB_OBJ) | bin
 	$(CC) -o $@ $^ $(CJSON_LIBS)
 
 bin/test_%: tests/test_%.c $(UTIL) tools/util.h $(UNITY) | bin

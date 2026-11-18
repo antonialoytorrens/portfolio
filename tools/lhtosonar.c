@@ -29,19 +29,39 @@ static const struct cat_impact IMPACTS[] = {
 	{ "seo", "MAINTAINABILITY", "MEDIUM" },
 };
 
+static const char *PAGE_MARKERS[] = {
+	"/educ", "/experi", "/project", "/proyect",
+};
+
+static const char *blog_file(const char *path)
+{
+	if (strstr(path, "/post/"))
+		return "templates/post.html";
+	if (strstr(path, "/tag/"))
+		return "templates/tag.html";
+	return "templates/blog.html";
+}
+
+static int path_has_any(const char *path, const char *const *markers, size_t n)
+{
+	size_t i;
+
+	for (i = 0; i < n; i++) {
+		if (strstr(path, markers[i]))
+			return 1;
+	}
+	return 0;
+}
+
 static const char *file_for_path(const char *path)
 {
 	if (!path)
 		return DEFAULT_FILE;
-	if (strstr(path, "/blog/") && strstr(path, "/post/"))
-		return "templates/post.html";
-	if (strstr(path, "/blog/") && strstr(path, "/tag/"))
-		return "templates/tag.html";
 	if (strstr(path, "/blog/"))
-		return "templates/blog.html";
+		return blog_file(path);
 	/* /ca/, /es/, /en/ index or section pages */
-	if (strstr(path, "/educ") || strstr(path, "/experi")
-	    || strstr(path, "/project") || strstr(path, "/proyect"))
+	if (path_has_any(path, PAGE_MARKERS,
+	    sizeof PAGE_MARKERS / sizeof PAGE_MARKERS[0]))
 		return "templates/page.html";
 	return DEFAULT_FILE;
 }
@@ -76,6 +96,26 @@ static cJSON *find_rule(cJSON *rules, const char *id)
 	return NULL;
 }
 
+static const char *std_severity(const char *severity)
+{
+	if (strcmp(severity, "INFO") == 0)
+		return "INFO";
+	if (strcmp(severity, "HIGH") == 0 || strcmp(severity, "BLOCKER") == 0)
+		return "MAJOR";
+	return "MINOR";
+}
+
+static int json_add_strings(cJSON *obj, const char *const (*fields)[2], size_t n)
+{
+	size_t i;
+
+	for (i = 0; i < n; i++) {
+		if (!cJSON_AddStringToObject(obj, fields[i][0], fields[i][1]))
+			return -1;
+	}
+	return 0;
+}
+
 static int add_rule(cJSON *rules, const char *rule_id, const char *cat,
 	const char *quality, const char *severity)
 {
@@ -86,6 +126,8 @@ static int add_rule(cJSON *rules, const char *rule_id, const char *cat,
 	char desc[256];
 	const char *attr;
 	const char *std_sev;
+	const char *rule_fields[7][2];
+	const char *impact_fields[2][2];
 
 	if (find_rule(rules, rule_id))
 		return 0;
@@ -100,25 +142,32 @@ static int add_rule(cJSON *rules, const char *rule_id, const char *cat,
 		return -1;
 	}
 	attr = (strcmp(cat, "performance") == 0) ? "EFFICIENT" : "CONVENTIONAL";
-	if (strcmp(severity, "INFO") == 0)
-		std_sev = "INFO";
-	else if (strcmp(severity, "HIGH") == 0 || strcmp(severity, "BLOCKER") == 0)
-		std_sev = "MAJOR";
-	else
-		std_sev = "MINOR";
+	std_sev = std_severity(severity);
 	snprintf(name, sizeof name, "Unlighthouse: %s", cat);
 	snprintf(desc, sizeof desc,
 		"Category score below 1.0 for %s (Unlighthouse site scan).", cat);
 
-	if (!cJSON_AddStringToObject(rule, "id", rule_id)
-	    || !cJSON_AddStringToObject(rule, "name", name)
-	    || !cJSON_AddStringToObject(rule, "description", desc)
-	    || !cJSON_AddStringToObject(rule, "engineId", "lighthouse")
-	    || !cJSON_AddStringToObject(rule, "cleanCodeAttribute", attr)
-	    || !cJSON_AddStringToObject(rule, "type", "CODE_SMELL")
-	    || !cJSON_AddStringToObject(rule, "severity", std_sev)
-	    || !cJSON_AddStringToObject(impact, "softwareQuality", quality)
-	    || !cJSON_AddStringToObject(impact, "severity", severity)) {
+	rule_fields[0][0] = "id";
+	rule_fields[0][1] = rule_id;
+	rule_fields[1][0] = "name";
+	rule_fields[1][1] = name;
+	rule_fields[2][0] = "description";
+	rule_fields[2][1] = desc;
+	rule_fields[3][0] = "engineId";
+	rule_fields[3][1] = "lighthouse";
+	rule_fields[4][0] = "cleanCodeAttribute";
+	rule_fields[4][1] = attr;
+	rule_fields[5][0] = "type";
+	rule_fields[5][1] = "CODE_SMELL";
+	rule_fields[6][0] = "severity";
+	rule_fields[6][1] = std_sev;
+	impact_fields[0][0] = "softwareQuality";
+	impact_fields[0][1] = quality;
+	impact_fields[1][0] = "severity";
+	impact_fields[1][1] = severity;
+
+	if (json_add_strings(rule, rule_fields, 7) != 0
+	    || json_add_strings(impact, impact_fields, 2) != 0) {
 		cJSON_Delete(rule);
 		cJSON_Delete(impacts);
 		cJSON_Delete(impact);
@@ -217,6 +266,78 @@ static int write_empty(void)
 	return rc;
 }
 
+static int sn_ok(int n, size_t cap)
+{
+	return n >= 0 && (size_t)n < cap;
+}
+
+static int score_failed(const cJSON *cat, const cJSON **score_j)
+{
+	*score_j = cJSON_GetObjectItemCaseSensitive(cat, "score");
+	if (!cJSON_IsNumber(*score_j))
+		return 1;
+	return (*score_j)->valuedouble >= 1.0;
+}
+
+static int process_category(cJSON *cat, const char *path, const char *file_path,
+	const char *device, cJSON *rules, cJSON *issues, int *nissues)
+{
+	const cJSON *score_j;
+	const char *cat_id;
+	const char *quality;
+	const char *severity;
+	char rule_id[128];
+	char msg[512];
+	int n;
+
+	if (!cat->string || strcmp(cat->string, "pwa") == 0)
+		return 0;
+	cat_id = cat->string;
+	if (score_failed(cat, &score_j))
+		return 0;
+
+	impact_for_cat(cat_id, &quality, &severity);
+	n = snprintf(rule_id, sizeof rule_id, "lh-category-%s", cat_id);
+	if (!sn_ok(n, sizeof rule_id))
+		return -1;
+	if (add_rule(rules, rule_id, cat_id, quality, severity) != 0)
+		return -1;
+	n = snprintf(msg, sizeof msg,
+		"[%s/%s] category score=%g @ %s",
+		cat_id, device, score_j->valuedouble, path);
+	if (!sn_ok(n, sizeof msg))
+		return -1;
+	if (add_issue(issues, rule_id, msg, file_path) != 0)
+		return -1;
+	(*nissues)++;
+	return 0;
+}
+
+static int process_route(const cJSON *route, cJSON *rules, cJSON *issues,
+	int *nissues, const char *device)
+{
+	const cJSON *path_j;
+	const cJSON *cats;
+	cJSON *cat;
+	const char *path;
+	const char *file_path;
+
+	path_j = cJSON_GetObjectItemCaseSensitive(route, "path");
+	path = (cJSON_IsString(path_j) && path_j->valuestring)
+		? path_j->valuestring : "/";
+	file_path = file_for_path(path);
+	cats = cJSON_GetObjectItemCaseSensitive(route, "categories");
+	if (!cJSON_IsObject(cats))
+		return 0;
+
+	for (cat = cats->child; cat; cat = cat->next) {
+		if (process_category(cat, path, file_path, device,
+		    rules, issues, nissues) != 0)
+			return -1;
+	}
+	return 0;
+}
+
 static int process_ci_result(cJSON *root, cJSON *rules, cJSON *issues,
 	int *nissues, size_t *nroutes, const char *device)
 {
@@ -229,53 +350,8 @@ static int process_ci_result(cJSON *root, cJSON *rules, cJSON *issues,
 	*nroutes += (size_t)cJSON_GetArraySize(routes);
 
 	cJSON_ArrayForEach(route, routes) {
-		const cJSON *path_j;
-		const cJSON *cats;
-		const cJSON *cat;
-		const char *path;
-		const char *file_path;
-
-		path_j = cJSON_GetObjectItemCaseSensitive(route, "path");
-		path = (cJSON_IsString(path_j) && path_j->valuestring)
-			? path_j->valuestring : "/";
-		file_path = file_for_path(path);
-		cats = cJSON_GetObjectItemCaseSensitive(route, "categories");
-		if (!cJSON_IsObject(cats))
-			continue;
-
-		for (cat = cats->child; cat; cat = cat->next) {
-			const cJSON *score_j;
-			const char *cat_id;
-			const char *quality;
-			const char *severity;
-			char rule_id[128];
-			char msg[512];
-			int n;
-
-			if (!cat->string)
-				continue;
-			cat_id = cat->string;
-			if (strcmp(cat_id, "pwa") == 0)
-				continue;
-			score_j = cJSON_GetObjectItemCaseSensitive(cat, "score");
-			if (!cJSON_IsNumber(score_j) || score_j->valuedouble >= 1.0)
-				continue;
-
-			impact_for_cat(cat_id, &quality, &severity);
-			n = snprintf(rule_id, sizeof rule_id, "lh-category-%s", cat_id);
-			if (n < 0 || (size_t)n >= sizeof rule_id)
-				return -1;
-			if (add_rule(rules, rule_id, cat_id, quality, severity) != 0)
-				return -1;
-			n = snprintf(msg, sizeof msg,
-				"[%s/%s] category score=%g @ %s",
-				cat_id, device, score_j->valuedouble, path);
-			if (n < 0 || (size_t)n >= sizeof msg)
-				return -1;
-			if (add_issue(issues, rule_id, msg, file_path) != 0)
-				return -1;
-			(*nissues)++;
-		}
+		if (process_route(route, rules, issues, nissues, device) != 0)
+			return -1;
 	}
 	return 0;
 }
@@ -290,19 +366,19 @@ static int load_ci_result(const char *path, const char *device,
 
 	text = read_file(path, NULL);
 	if (!text) {
-		fprintf(stderr, "lighthouse_to_sonar: missing %s\n", path);
+		fprintf(stderr, "lhtosonar: missing %s\n", path);
 		return 0;
 	}
 	root = cJSON_Parse(text);
 	free(text);
 	if (!root) {
-		fprintf(stderr, "lighthouse_to_sonar: parse %s\n", path);
+		fprintf(stderr, "lhtosonar: parse %s\n", path);
 		return -1;
 	}
 	rc = process_ci_result(root, rules, issues, nissues, nroutes, device);
 	cJSON_Delete(root);
 	if (rc != 0) {
-		fprintf(stderr, "lighthouse_to_sonar: process %s\n", path);
+		fprintf(stderr, "lhtosonar: process %s\n", path);
 		return -1;
 	}
 	return 1;
@@ -327,7 +403,7 @@ int main(void)
 	if (rc < 0) {
 		cJSON_Delete(rules);
 		cJSON_Delete(issues);
-		die("lighthouse_to_sonar: desktop");
+		die("lhtosonar: desktop");
 	}
 	nfiles += rc;
 
@@ -336,7 +412,7 @@ int main(void)
 	if (rc < 0) {
 		cJSON_Delete(rules);
 		cJSON_Delete(issues);
-		die("lighthouse_to_sonar: mobile");
+		die("lhtosonar: mobile");
 	}
 	nfiles += rc;
 
@@ -344,9 +420,9 @@ int main(void)
 		cJSON_Delete(rules);
 		cJSON_Delete(issues);
 		if (mkdir_p(LH_DIR) != 0 || write_empty() != 0)
-			die("lighthouse_to_sonar: write empty %s", OUT_PATH);
+			die("lhtosonar: write empty %s", OUT_PATH);
 		fprintf(stderr,
-			"lighthouse_to_sonar: no ci-result.json; wrote empty %s\n",
+			"lhtosonar: no ci-result.json; wrote empty %s\n",
 			OUT_PATH);
 		return 0;
 	}
@@ -354,11 +430,11 @@ int main(void)
 	if (write_payload(rules, issues) != 0) {
 		cJSON_Delete(rules);
 		cJSON_Delete(issues);
-		die("lighthouse_to_sonar: write %s", OUT_PATH);
+		die("lhtosonar: write %s", OUT_PATH);
 	}
 	cJSON_Delete(rules);
 	cJSON_Delete(issues);
-	printf("lighthouse_to_sonar: %d issue(s) from %zu route(s) -> %s\n",
+	printf("lhtosonar: %d issue(s) from %zu route(s) -> %s\n",
 		nissues, nroutes, OUT_PATH);
 	return 0;
 }
