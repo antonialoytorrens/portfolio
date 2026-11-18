@@ -22,6 +22,10 @@
   "title.projects": "Proyectos",
   "title.experience": "Experiencia",
 
+  "desc.home": "Portfolio de Antoni Aloy Torrens: programador, desarrollador web y pianista.",
+  "desc.blog": "Artículos sobre desarrollo web, Linux y tecnología.",
+  "desc.tag": "Entradas del blog etiquetadas con",
+
   "latest_posts": "Últimas entradas",
   "view_all_posts": "Ver todas las entradas",
   "read_more": "Leer más",

@@ -26,6 +26,9 @@ static const char json_ok[] =
 	"  \"slug.experience\": \"experience\",\n"
 	"  \"title.home\": \"Home\",\n"
 	"  \"title.blog\": \"Blog\",\n"
+	"  \"desc.home\": \"Home description\",\n"
+	"  \"desc.blog\": \"Blog description\",\n"
+	"  \"desc.tag\": \"Tagged with\",\n"
 	"  \"tag.heading\": \"Tag\"\n"
 	"}\n";
 

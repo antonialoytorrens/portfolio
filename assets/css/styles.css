@@ -1,6 +1,6 @@
 /* -------- FONTS -------- */
+/* Unmodified upstream static TTFs only (no subset / no self-made WOFF2). */
 
-/* Static fallback for IE11 and pre-2018 browsers */
 @font-face {
     font-family: "Merriweather";
     src: url("/assets/fonts/Merriweather/static/Merriweather_24pt-Regular.ttf") format("truetype");
@@ -14,22 +14,6 @@
     src: url("/assets/fonts/Merriweather/static/Merriweather_24pt-Bold.ttf") format("truetype");
     font-weight: 700;
     font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Merriweather";
-    src: url("/assets/fonts/Merriweather/static/Merriweather_24pt-Italic.ttf") format("truetype");
-    font-weight: 400;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Merriweather";
-    src: url("/assets/fonts/Merriweather/static/Merriweather_24pt-BoldItalic.ttf") format("truetype");
-    font-weight: 700;
-    font-style: italic;
     font-display: swap;
 }
 
@@ -50,70 +34,11 @@
 }
 
 @font-face {
-    font-family: "Roboto";
-    src: url("/assets/fonts/Roboto/static/Roboto-Italic.ttf") format("truetype");
-    font-weight: 400;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Roboto";
-    src: url("/assets/fonts/Roboto/static/Roboto-BoldItalic.ttf") format("truetype");
-    font-weight: 700;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Fira Code VF";
+    font-family: "Fira Code";
     src: url("/assets/fonts/Fira_Code/static/FiraCode-Regular.ttf") format("truetype");
     font-weight: 400;
     font-style: normal;
     font-display: swap;
-}
-
-/* Variable fonts for modern browsers (Chrome 66+, Firefox 62+, Safari 11+) */
-@supports (font-variation-settings: normal) {
-    @font-face {
-        font-family: "Merriweather";
-        src: url("/assets/fonts/Merriweather/Merriweather-VariableFont_opsz,wdth,wght.ttf") format("truetype");
-        font-weight: 100 900;
-        font-style: normal;
-        font-display: swap;
-    }
-
-    @font-face {
-        font-family: "Merriweather";
-        src: url("/assets/fonts/Merriweather/Merriweather-Italic-VariableFont_opsz,wdth,wght.ttf") format("truetype");
-        font-weight: 100 900;
-        font-style: italic;
-        font-display: swap;
-    }
-
-    @font-face {
-        font-family: "Roboto";
-        src: url("/assets/fonts/Roboto/Roboto-VariableFont_wdth,wght.ttf") format("truetype");
-        font-weight: 100 900;
-        font-style: normal;
-        font-display: swap;
-    }
-
-    @font-face {
-        font-family: "Roboto";
-        src: url("/assets/fonts/Roboto/Roboto-Italic-VariableFont_wdth,wght.ttf") format("truetype");
-        font-weight: 100 900;
-        font-style: italic;
-        font-display: swap;
-    }
-
-    @font-face {
-        font-family: "Fira Code VF";
-        src: url("/assets/fonts/Fira_Code/FiraCode-VariableFont_wght.ttf") format("truetype");
-        font-weight: 300 700;
-        font-style: normal;
-        font-display: swap;
-    }
 }
 
 /* -------- BASE -------- */
@@ -153,7 +78,7 @@ h2 {
 }
 
 code {
-    font-family: "Fira Code VF", monospace;
+    font-family: "Fira Code", monospace;
     background: var(--color-code-bg);
     padding: 0 2px;
     border-radius: 2px;
@@ -316,7 +241,7 @@ footer {
 /* -------- ASIDE -------- */
 
 aside {
-    font-family: "Merriweather", Georgia, serif;
+    font-family: Georgia, "Times New Roman", Times, serif;
     font-style: italic;
     color: var(--color-muted);
     font-size: 17px;
@@ -361,19 +286,19 @@ aside {
     border-bottom: none;
 }
 
-.post-item h3 {
+.post-item h2 {
     font-size: 19px;
     font-size: 1.2rem;
     margin: 0 0 0.5rem 0;
 }
 
-.post-item h3 a,
-.post-item h3 a:visited {
+.post-item h2 a,
+.post-item h2 a:visited {
     color: var(--color-accent-text);
     text-decoration: none;
 }
 
-.post-item h3 a:hover {
+.post-item h2 a:hover {
     color: var(--color-accent-text-hover);
     text-decoration: underline;
 }
@@ -481,7 +406,7 @@ aside {
     box-shadow: 0 0 0 2px var(--color-dot-halo);
 }
 
-.listing h3 {
+.listing h2 {
     font-size: 20px;
     font-size: 1.25rem;
     color: var(--color-heading);
@@ -489,12 +414,12 @@ aside {
     font-weight: bold;
 }
 
-.listing h3 a {
+.listing h2 a {
     color: inherit;
     text-decoration: none;
 }
 
-.listing h3 a:hover {
+.listing h2 a:hover {
     text-decoration: underline;
     color: var(--color-link);
 }

@@ -1,5 +1,5 @@
 <section class="profile">
-    <img class="avatar" alt="avatar" src="/assets/img/avatar.png" />
+    <img class="avatar" alt="avatar" src="/assets/img/avatar.png" width="160" height="160" />
     <h2>Antoni Aloy Torrens</h2>
     <h3>Programador, Desenvolupador Web i Pianista</h3>
 </section>

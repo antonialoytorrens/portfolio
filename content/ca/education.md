@@ -4,15 +4,15 @@ description: Formació acadèmica, musical i certificacions tècniques d'Antoni 
 ---
 <section class="listing">
   <article>
-    <h3>Grau Professional en Orgue (2022-10 – Actualitat)</h3>
+    <h2>Grau Professional en Orgue (2022-10 – Actualitat)</h2>
     <p><a href="https://emmat.incaciutat.com/" target="_blank">EMMAT</a></p>
   </article>
   <article>
-    <h3>Grau d'Enginyeria Informàtica (2020-07 – Actualitat)</h3>
+    <h2>Grau d'Enginyeria Informàtica (2020-07 – Actualitat)</h2>
     <p><a href="https://uoc.edu" target="_blank">Universitat Oberta de Catalunya</a></p>
   </article>
   <article>
-    <h3>AWS Partner: AWS Cloud Practitioner Essentials (2022-07 – 2022-08)</h3>
+    <h2>AWS Partner: AWS Cloud Practitioner Essentials (2022-07 – 2022-08)</h2>
     <p><a href="https://antonialoytorrens.com/assets/img/education/aws-cloud-practitioner-essentials.png" target="_blank">Certificat</a></p>
     <ul>
       <li>Comprensió dels conceptes fonamentals del núvol i del valor aportat per AWS Cloud.</li>
@@ -22,7 +22,7 @@ description: Formació acadèmica, musical i certificacions tècniques d'Antoni 
     </ul>
   </article>
   <article>
-    <h3>Coursera: Google Cloud Fundamentals — Core Infrastructure (2022-07 – 2022-08)</h3>
+    <h2>Coursera: Google Cloud Fundamentals — Core Infrastructure (2022-07 – 2022-08)</h2>
     <p><a href="https://www.coursera.org/account/accomplishments/verify/VC7M2GJN5DHM" target="_blank">Certificat</a></p>
     <ul>
       <li>Comprensió del propòsit i el valor dels productes i serveis de Google Cloud.</li>
@@ -32,7 +32,7 @@ description: Formació acadèmica, musical i certificacions tècniques d'Antoni 
     </ul>
   </article>
   <article>
-    <h3>Grau Professional en Piano (2012-09 – 2022-06)</h3>
+    <h2>Grau Professional en Piano (2012-09 – 2022-06)</h2>
     <p><a href="https://emmat.incaciutat.com/" target="_blank">EMMAT</a></p>
     <ul>
       <li>Enteniment del llenguatge musical i harmonia barroca.</li>
@@ -42,7 +42,7 @@ description: Formació acadèmica, musical i certificacions tècniques d'Antoni 
     </ul>
   </article>
   <article>
-    <h3>Certificació de Linux Essentials (2019-07 – 2020-06)</h3>
+    <h2>Certificació de Linux Essentials (2019-07 – 2020-06)</h2>
     <p><a href="https://lpi.org/v/LPI000456258/gjlxpst22w" target="_blank">Veure certificació</a></p>
     <ul>
       <li>Comprensió de la indústria de Linux i el codi obert i coneixement de les aplicacions de codi obert més populars.</li>
@@ -52,7 +52,7 @@ description: Formació acadèmica, musical i certificacions tècniques d'Antoni 
     </ul>
   </article>
   <article>
-    <h3>Tècnic Superior en Desenvolupament d'Aplicacions Web (2018-09 – 2020-06)</h3>
+    <h2>Tècnic Superior en Desenvolupament d'Aplicacions Web (2018-09 – 2020-06)</h2>
     <p><a href="https://paucasesnovescifp.cat" target="_blank">CIFP Pau Casesnoves</a></p>
     <ul>
       <li><strong>Programació:</strong> Java, servlets, Spring Boot.</li>

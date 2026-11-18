@@ -504,7 +504,7 @@ static void build_home(const char *lang, const char *sb, const char *item,
 	must_write(intro, html, hlen);
 	free(html);
 	th = need(jm, "title.home");
-	page = page_new("about", th, th, "", NULL);
+	page = page_new("about", th, th, need(jm, "desc.home"), NULL);
 	inj[0].key = "home_intro";
 	inj[0].path = intro;
 	inj[1].key = "post_item";
@@ -569,7 +569,7 @@ static void build_blog_index(const char *lang, const char *sb, const char *item,
 
 	pathf(dir, sizeof dir, "%s/%s/%s", C.public_dir, lang, sb);
 	must_mkdir(dir);
-	page = page_new("blog", tb, tb, "", "blog");
+	page = page_new("blog", tb, tb, need(jm, "desc.blog"), "blog");
 	inj[0].key = "post_item";
 	inj[0].path = item;
 	pathf(work, sizeof work, "%s/%s/tmpl-blog.html", C.work, lang);
@@ -632,7 +632,13 @@ static void publish_tag(const char *lang, const char *sb, const char *tb,
 	char out[PATH_MAX];
 
 	snprintf(title, sizeof title, "%s %s", thead, tag);
-	page = page_new("blog", tb, title, "", "blog");
+	{
+		kvmap *jm = lang_map(lang);
+		char desc[512];
+
+		snprintf(desc, sizeof desc, "%s %s.", need(jm, "desc.tag"), tag);
+		page = page_new("blog", tb, title, desc, "blog");
+	}
 	if (kv_put(page, "tag", tag) != 0)
 		die("oom");
 	inj[0].key = "post_item";

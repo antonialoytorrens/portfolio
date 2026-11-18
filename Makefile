@@ -86,7 +86,7 @@ help: bin/build
 	@echo "make run              serve public/ with mini_httpd (HOST/PORT)"
 	@echo "make lighthouse       Unlighthouse crawl (ephemeral port)"
 	@echo "make sonarqube        cxx reports, coverage, lighthouse, sonar-scanner"
-	@echo "make update-external  refresh Unity, stb_ds"
+	@echo "make update-external  refresh external dependencies"
 	@echo "make docker-build     build portfolio-ci image"
 	@echo "make dockershell      shell in portfolio-ci container"
 

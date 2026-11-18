@@ -16,7 +16,7 @@ description: Contribucions Open Source, desenvolupament web i projectes acadèmi
         <p>PostmarketOS és un sistema operatiu de codi obert basat en Alpine Linux, dissenyat per a telèfons intel·ligents. El seu objectiu és allargar la vida útil dels dispositius mòbils amb un enfocament en la seguretat, la privacitat i la llibertat de l'usuari.</p>
       </div>
       <div class="project-img-container">
-        <img class="project-img" src="/assets/img/projects/postmarketos.gif" alt="" loading="lazy" />
+        <img class="project-img" src="/assets/img/projects/postmarketos.gif" alt="" loading="lazy" width="200" height="200" />
       </div>
     </article>
 
@@ -27,7 +27,7 @@ description: Contribucions Open Source, desenvolupament web i projectes acadèmi
         <p>Alpine Linux és una distribució lleugera i orientada a la seguretat, molt popular en el món dels contenidors per la seva eficiència. Està basada en musl libc i BusyBox, cosa que li permet tenir una mida molt reduïda i una superfície d'atac mínima.</p>
       </div>
       <div class="project-img-container">
-        <img class="project-img" src="/assets/img/projects/alpine.gif" alt="" loading="lazy" />
+        <img class="project-img" src="/assets/img/projects/alpine.gif" alt="" loading="lazy" width="200" height="200" />
       </div>
     </article>
 
@@ -42,7 +42,7 @@ description: Contribucions Open Source, desenvolupament web i projectes acadèmi
         <p>Jardines Alegres S.L. crea espais exteriors únics mitjançant serveis de disseny i execució de projectes de jardineria, incloent la instal·lació de sistemes d'irrigació i la preparació del terreny. A més, ofereix manteniment periòdic de gespes, poda d'arbres i arbusts, i treballs especialitzats de plantació.</p>
       </div>
       <div class="project-img-container">
-        <img class="project-img" src="/assets/img/projects/jardinesalegres.gif" alt="" loading="lazy" />
+        <img class="project-img" src="/assets/img/projects/jardinesalegres.gif" alt="" loading="lazy" width="200" height="200" />
       </div>
     </article>
 
@@ -53,7 +53,7 @@ description: Contribucions Open Source, desenvolupament web i projectes acadèmi
         <p>El seu treball combina l'arquitectura moderna amb materials tradicionals, buscant una simbiosi entre funcionalitat i disseny. Té una àmplia experiència en la gestió d'obres complexes, des de la redacció del projecte fins a l'acabament de l'obra.</p>
       </div>
       <div class="project-img-container">
-        <img class="project-img" src="/assets/img/projects/architektmallorca.gif" alt="" loading="lazy" />
+        <img class="project-img" src="/assets/img/projects/architektmallorca.gif" alt="" loading="lazy" width="200" height="200" />
       </div>
     </article>
 
@@ -64,7 +64,7 @@ description: Contribucions Open Source, desenvolupament web i projectes acadèmi
         <p>És un compositor graduat pel Conservatori Superior de les Illes Balears, especialitzat en música per a cinema, televisió i videojocs. El seu treball ha estat premiat internacionalment i estrenat en orquestres i festivals de cinema.</p>
       </div>
       <div class="project-img-container">
-        <img class="project-img" src="/assets/img/projects/juanluisescriva.gif" alt="" loading="lazy" />
+        <img class="project-img" src="/assets/img/projects/juanluisescriva.gif" alt="" loading="lazy" width="200" height="200" />
       </div>
     </article>
 
@@ -75,7 +75,7 @@ description: Contribucions Open Source, desenvolupament web i projectes acadèmi
         <p>Aquest arquitecte independent ofereix serveis de planificació, gestió de projectes i consultoria a les Illes Balears. Posa un fort èmfasi en la construcció sostenible, l'eficiència energètica i l'ús de materials locals en els seus dissenys.</p>
       </div>
       <div class="project-img-container">
-        <img class="project-img" src="/assets/img/projects/architektbalearen.gif" alt="" loading="lazy" />
+        <img class="project-img" src="/assets/img/projects/architektbalearen.gif" alt="" loading="lazy" width="200" height="200" />
       </div>
     </article>
 
@@ -86,7 +86,7 @@ description: Contribucions Open Source, desenvolupament web i projectes acadèmi
         <p>És una psicòloga especialitzada en l'àrea de la sexualitat, la identitat de gènere i la teràpia de parella. També ofereix teràpia individual per a la gestió emocional, l'ansietat i la simptomatologia depressiva.</p>
       </div>
       <div class="project-img-container">
-        <img class="project-img" src="/assets/img/projects/ainalomaspsicologa.gif" alt="" loading="lazy" />
+        <img class="project-img" src="/assets/img/projects/ainalomaspsicologa.gif" alt="" loading="lazy" width="200" height="200" />
       </div>
     </article>
 
@@ -101,7 +101,7 @@ description: Contribucions Open Source, desenvolupament web i projectes acadèmi
         <p>Aquest projecte acadèmic consisteix en una aplicació web funcional per demostrar les competències adquirides. El seu objectiu era aplicar coneixements de <em>backend</em> i <em>frontend</em> en el desenvolupament d'un cas pràctic de principi a fi.</p>
       </div>
       <div class="project-img-container">
-        <img class="project-img" src="/assets/img/projects/pamboliada.gif" alt="" loading="lazy" />
+        <img class="project-img" src="/assets/img/projects/pamboliada.gif" alt="" loading="lazy" width="200" height="200" />
       </div>
     </article>
 
