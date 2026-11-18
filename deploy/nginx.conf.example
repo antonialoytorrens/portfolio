@@ -1,27 +1,34 @@
-# Example nginx configuration for the sblg portfolio.
-#
-# The build produces /ca, /es and /en but NO artifact at the site root (/).
-# nginx negotiates the language from the browser's Accept-Language header and
-# redirects "/" to the matching language. Everything else is served statically.
-#
-# Note: this inspects only the first language token in Accept-Language (not the
-# full q-value list, e.g. "en;q=0.8, ca;q=0.9"). That is good enough for three
-# languages; full q-value parsing would require njs or Lua.
-
-# Map Accept-Language -> preferred language. Catalan is the default/fallback.
+# Map Accept-Language -> preferred language. English is the default/fallback
+# when the header is missing or does not match ca/es/en.
 map $http_accept_language $pref_lang {
-    default   ca;
+    default   en;
     ~*^es     es;
     ~*^en     en;
     ~*^ca     ca;
 }
 
+# ---------------------------------------------------------------------------
+# HTTP
+# ---------------------------------------------------------------------------
 server {
     listen       80;
+    listen       [::]:80;
     server_name  antonialoytorrens.com www.antonialoytorrens.com;
 
     root   /var/www/portfolio/public;
     index  index.html;
+
+    access_log /var/log/nginx/antonialoytorrens.com_access.log;
+    error_log  /var/log/nginx/antonialoytorrens.com_error.log;
+
+    gzip on;
+    gzip_vary on;
+    gzip_proxied any;
+    gzip_comp_level 6;
+    gzip_types text/plain text/css text/xml application/json application/javascript
+               application/xml+rss application/atom+xml image/svg+xml;
+
+    add_header Content-Security-Policy "default-src 'none'; connect-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'" always;
 
     # Language negotiation happens only at the bare root.
     location = / {
@@ -33,13 +40,60 @@ server {
         try_files $uri $uri/ =404;
     }
 
-    # Long-lived caching for static assets.
+    # Long-lived caching for static assets (no add_header here: keeps CSP).
     location /assets/ {
-        expires 30d;
+        expires 1y;
         access_log off;
     }
 
     # Atom feeds.
+    location ~* \.xml$ {
+        types { } default_type application/atom+xml;
+    }
+}
+
+# ---------------------------------------------------------------------------
+# HTTPS (Let's Encrypt / Certbot)
+# ---------------------------------------------------------------------------
+server {
+    listen       443 ssl;
+    listen       [::]:443 ssl;
+    http2        on;
+    server_name  antonialoytorrens.com www.antonialoytorrens.com;
+
+    ssl_certificate     /etc/letsencrypt/live/antonialoytorrens.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/antonialoytorrens.com/privkey.pem;   # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf;                               # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;                                 # managed by Certbot
+
+    root   /var/www/portfolio/public;
+    index  index.html;
+
+    access_log /var/log/nginx/antonialoytorrens.com_access.log;
+    error_log  /var/log/nginx/antonialoytorrens.com_error.log;
+
+    gzip on;
+    gzip_vary on;
+    gzip_proxied any;
+    gzip_comp_level 6;
+    gzip_types text/plain text/css text/xml application/json application/javascript
+               application/xml+rss application/atom+xml image/svg+xml;
+
+    add_header Content-Security-Policy "default-src 'none'; connect-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'" always;
+
+    location = / {
+        return 302 /$pref_lang/;
+    }
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location /assets/ {
+        expires 1y;
+        access_log off;
+    }
+
     location ~* \.xml$ {
         types { } default_type application/atom+xml;
     }
