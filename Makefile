@@ -170,7 +170,6 @@ sonarqube: scan-sonar coverage lh-sonar
 	$(SONAR_SCANNER) \
 		-Dsonar.host.url=$(SONAR_HOST_URL) \
 		-Dsonar.token=$(SONAR_TOKEN) \
-		-Dsonar.verbose=true \
 		-Dsonar.projectKey=$(SONAR_PROJECT_KEY) \
 		-Dsonar.cxx.includeDirectories=$(SONAR_CXX_INCLUDES)
 
