@@ -1,10 +1,13 @@
 FROM debian:trixie-slim
 
+# unlighthouse 0.17.4 is the last compatible release with Debian 13
+ENV UNLIGHTHOUSE_VERSION=0.17.4
+
 ENV DEBIAN_FRONTEND=noninteractive
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
 
-# Repositori custom propi
+# Custom repo
 ADD https://master.debci.antonialoytorrens.com/key.gpg \
 	/etc/apt/keyrings/master.debci.antonialoytorrens.com.gpg
 RUN apt-get update \
@@ -19,7 +22,7 @@ RUN apt-get update \
 	clang \
 	llvm \
 	clang-tidy \
-	libclang-rt-19-dev \
+	libclang-rt-dev \
 	pkgconf \
 	libcjson-dev \
 	lowdown \
@@ -30,14 +33,22 @@ RUN apt-get update \
 	mini-httpd \
 	cppcheck \
 	flawfinder \
-	# Repositori custom
+	nodejs \
+	npm \
+	chromium \
+	# Custom repo
 	sblg \
 	sonar-scanner \
 	lcov2cobertura \
 	&& apt-get clean && rm -rf /var/lib/apt/lists/* \
 	&& useradd --create-home --shell /bin/bash builder \
 	&& mkdir -p /workspace \
-	&& chown builder:builder /workspace
+	&& chown builder:builder /workspace \
+	&& npm install -g "unlighthouse@${UNLIGHTHOUSE_VERSION}" \
+	&& npm cache clean --force
+
+# mini_httpd lives in /usr/sbin (not on Debian's default non-root PATH).
+ENV PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin"
 
 USER builder
 WORKDIR /workspace

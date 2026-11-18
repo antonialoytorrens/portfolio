@@ -15,6 +15,9 @@ CPPCHECK       ?= cppcheck
 FLAWFINDER     ?= flawfinder
 LCOV2COBERTURA ?= lcov2xml
 SONAR_SCANNER  ?= sonar-scanner
+MINI_HTTPD     ?= mini_httpd
+HOST           ?= 127.0.0.1
+PORT           ?= 8080
 CLANG_RESOURCE_INCLUDE := $(shell $(CC) -print-resource-dir)/include
 SONAR_CXX_INCLUDES = tools,external/stb,/usr/include,/usr/include/x86_64-linux-gnu,$(CLANG_RESOURCE_INCLUDE)
 
@@ -30,13 +33,15 @@ TEST_LDFLAGS = -fprofile-instr-generate
 
 PUBLIC_DIR ?= public
 WORK_DIR   ?= .work
-BUILD_DIR  = build
-OBJ_DIR    = $(BUILD_DIR)/obj
-REPORT_DIR = $(BUILD_DIR)/report
-PROF_DIR   = $(BUILD_DIR)/prof
-COMPILE_DB = $(BUILD_DIR)/compile_commands.json
+BUILD_DIR   = build
+OBJ_DIR     = $(BUILD_DIR)/obj
+REPORT_DIR  = $(BUILD_DIR)/report
+PROF_DIR    = $(BUILD_DIR)/prof
+COMPILE_DB  = $(BUILD_DIR)/compile_commands.json
+LH_DIR      = $(REPORT_DIR)/lh
 
-C_SRC = tools/build.c tools/mkarticle.c tools/util.c tools/kv.c tools/fs.c tools/proc.c
+C_SRC = tools/build.c tools/mkarticle.c tools/lighthouse_to_sonar.c \
+	tools/util.c tools/kv.c tools/fs.c tools/proc.c
 C_OBJ = $(patsubst tools/%.c,$(OBJ_DIR)/%.o,$(C_SRC))
 
 UNITY = external/unity/unity.c
@@ -45,9 +50,11 @@ COV_BINS = bin/build-cov bin/mkarticle-cov
 TEST_BINS = bin/test_json bin/test_subst bin/test_mkarticle bin/test_date bin/test_linkify \
 	bin/test_fs bin/test_proc bin/test_cli
 
-.PHONY: all assets build-one clean serve rsync help test update-external \
+SRCLANG ?= ca
+
+.PHONY: all assets build-one clean serve run rsync help test update-external \
 	docker-build dockershell sonarqube coverage scan-cppcheck scan-clang-tidy \
-	scan-flawfinder scan-sonar
+	scan-flawfinder scan-sonar lighthouse lh-sonar
 
 all: bin/build bin/mkarticle
 	./bin/build all
@@ -60,10 +67,13 @@ build-one: bin/build bin/mkarticle
 
 clean:
 	rm -rf $(PUBLIC_DIR) $(WORK_DIR) $(BUILD_DIR)
-	rm -f bin/build bin/mkarticle $(TEST_BINS) $(COV_BINS)
+	rm -f bin/build bin/mkarticle bin/lighthouse_to_sonar $(TEST_BINS) $(COV_BINS)
 
 serve: bin/build bin/mkarticle
 	./bin/build serve
+
+run:
+	$(MINI_HTTPD) -D -h $(HOST) -p $(PORT) -d $(PUBLIC_DIR)
 
 rsync: bin/build bin/mkarticle
 	./bin/build rsync
@@ -73,7 +83,9 @@ help: bin/build
 	@echo "make test             unit tests"
 	@echo "make coverage         Cobertura XML for SonarQube"
 	@echo "make scan-sonar       cppcheck, clang-tidy, flawfinder"
-	@echo "make sonarqube        reports, coverage, sonar-scanner"
+	@echo "make run              serve public/ with mini_httpd (HOST/PORT)"
+	@echo "make lighthouse       Unlighthouse crawl (ephemeral port)"
+	@echo "make sonarqube        cxx reports, coverage, lighthouse, sonar-scanner"
 	@echo "make update-external  refresh Unity, stb_ds"
 	@echo "make docker-build     build portfolio-ci image"
 	@echo "make dockershell      shell in portfolio-ci container"
@@ -128,7 +140,33 @@ scan-flawfinder: | $(REPORT_DIR)
 
 scan-sonar: scan-cppcheck scan-clang-tidy scan-flawfinder
 
-sonarqube: scan-sonar coverage
+# NOTE: no PWA scan. Ephemeral port = 8080 + (0..999).
+RANDOM_SUFFIX := $(shell bash -c 'echo $$RANDOM')
+LH_PORT       := $(shell bash -c 'echo $$((8080 + $(RANDOM_SUFFIX) % 1000))')
+
+lighthouse: all
+	rm -rf $(LH_DIR) && mkdir -p $(LH_DIR)
+	@set -e; \
+	$(MINI_HTTPD) -D -h $(HOST) -p $(LH_PORT) -d $(PUBLIC_DIR) & \
+	LH_PID=$$!; \
+	trap 'kill $$LH_PID 2>/dev/null' EXIT; \
+	sleep 0.2; \
+	CI=true unlighthouse-ci \
+		--site "http://$(HOST):$(LH_PORT)/$(SRCLANG)/" \
+		--desktop \
+		--no-cache \
+		--build-static \
+		--config-file unlighthouse.config.mjs \
+		--output-path "$(LH_DIR)" \
+		--reporter jsonExpanded
+
+# I have considered writing a SonarQube plugin for Lighthouse
+# but I think the software is not prepared for non-source code files.
+# See: https://community.sonarsource.com/t/how-to-add-measure-on-a-virtual-resource/58304
+lh-sonar: lighthouse bin/lighthouse_to_sonar
+	./bin/lighthouse_to_sonar
+
+sonarqube: scan-sonar coverage lh-sonar
 	$(SONAR_SCANNER) \
 		-Dsonar.host.url=$(SONAR_HOST_URL) \
 		-Dsonar.token=$(SONAR_TOKEN) \
@@ -136,7 +174,7 @@ sonarqube: scan-sonar coverage
 		-Dsonar.projectKey=$(SONAR_PROJECT_KEY) \
 		-Dsonar.cxx.includeDirectories=$(SONAR_CXX_INCLUDES)
 
-bin $(OBJ_DIR) $(REPORT_DIR) $(PROF_DIR):
+bin $(WORK_DIR) $(OBJ_DIR) $(REPORT_DIR) $(PROF_DIR):
 	mkdir -p $@
 
 $(COMPILE_DB): $(C_OBJ)
@@ -151,6 +189,9 @@ bin/build: $(OBJ_DIR)/build.o $(LIB_OBJ) | bin
 	$(CC) -o $@ $^ $(CJSON_LIBS)
 
 bin/mkarticle: $(OBJ_DIR)/mkarticle.o $(LIB_OBJ) | bin
+	$(CC) -o $@ $^ $(CJSON_LIBS)
+
+bin/lighthouse_to_sonar: $(OBJ_DIR)/lighthouse_to_sonar.o $(LIB_OBJ) | bin
 	$(CC) -o $@ $^ $(CJSON_LIBS)
 
 bin/test_%: tests/test_%.c $(UTIL) tools/util.h $(UNITY) | bin
