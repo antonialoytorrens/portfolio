@@ -19,9 +19,6 @@ MINI_HTTPD     ?= mini_httpd
 HOST           ?= 127.0.0.1
 PORT           ?= 8080
 LH_BIN         ?= unlighthouse
-CLANG_RESOURCE_INCLUDE := $(shell $(CC) -print-resource-dir)/include
-SONAR_CXX_INCLUDES = tools,external/stb,/usr/include,/usr/include/x86_64-linux-gnu,$(CLANG_RESOURCE_INCLUDE)
-
 CFLAGS   ?= -std=c99 -Wall -Wextra -pedantic
 CPPFLAGS ?= -D_POSIX_C_SOURCE=200809L
 CJSON_CFLAGS := $(shell pkg-config --cflags libcjson 2>/dev/null)
@@ -185,7 +182,7 @@ sonarqube: scan-sonar coverage lh-sonar
 		-Dsonar.host.url=$(SONAR_HOST_URL) \
 		-Dsonar.token=$(SONAR_TOKEN) \
 		-Dsonar.projectKey=$(SONAR_PROJECT_KEY) \
-		-Dsonar.cxx.includeDirectories=$(SONAR_CXX_INCLUDES)
+		-Dsonar.cxx.includeDirectories=tools,external/stb,/usr/include,/usr/include/x86_64-linux-gnu,$$($(CC) -print-resource-dir)/include
 
 bin $(WORK_DIR) $(OBJ_DIR) $(REPORT_DIR) $(PROF_DIR):
 	mkdir -p $@
